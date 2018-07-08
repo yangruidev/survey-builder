@@ -1,5 +1,12 @@
+//@flow
 import React, { Component } from "react";
-class App extends Component {
+
+type Props = {
+  //foo: number
+  //bar?: string
+};
+
+class App extends Component<Props> {
   render() {
     return (
       <div>
