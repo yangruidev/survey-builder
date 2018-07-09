@@ -1,16 +1,20 @@
 //@flow
 import React, { Component } from "react";
+import "../styles/basic.scss";
+import "bootstrap/dist/css/bootstrap.min.css";
+import NavigationBar from "./Navbar.jsx";
+import Body from "./Body.jsx";
 
-type Props = {
-  //foo: number
-  //bar?: string
-};
+type Props = {};
 
 class App extends Component<Props> {
   render() {
     return (
       <div>
-        <h1>React app starter</h1>
+        <NavigationBar title="Survey Builder" />
+        <div className="container">
+          <Body />
+        </div>
       </div>
     );
   }

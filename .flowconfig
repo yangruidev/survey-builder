@@ -7,5 +7,8 @@
 [lints]
 
 [options]
+module.name_mapper.extension='css' -> '<PROJECT_ROOT>/flow/stubs/css-module.js.flow'
+module.name_mapper.extension='scss' -> '<PROJECT_ROOT>/flow/stubs/css-module.js.flow'
+
 
 [strict]
