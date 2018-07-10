@@ -1,0 +1,13 @@
+.sb-container {
+  display: grid;
+  grid-template-columns: 1fr 300px 1fr;
+  grid-template-rows: repeat(2, 50px) 200px;
+  grid-gap: 1rem;
+}
+
+.sb-btn-wrapper {
+  grid-row-start: 2;
+  grid-row-end: 3;
+  grid-column-start: 2;
+  grid-column-end: 3;
+}

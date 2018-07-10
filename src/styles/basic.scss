@@ -5,3 +5,7 @@ html {
     font-family: $font-stack;
     color: $basic-font-color;
 }
+
+* {
+    border-radius: 0 !important;
+}
