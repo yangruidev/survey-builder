@@ -1,5 +1,4 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import App from "./components/App";
+//@flow
+import init from './components/SurveyBuilder.jsx';
 
-ReactDOM.render(<App />, document.getElementById("app"));
+init();
