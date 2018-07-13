@@ -1,11 +1,14 @@
 $font-stack: "source-sans-pro","Helvetica Neue",Helvetica,Arial,sans-serif;
-$basic-font-color: #484c55;
+$primary-color-dark:   #1976D2;
+$primary-color:        #2196F3;
+$primary-color-light:  #BBDEFB;
+$primary-color-text:   #FFFFFF;
+$accent-color:         #FFC107;
+$primary-text-color:   #212121;
+$secondary-text-color: #757575;
+$divider-color:        #BDBDBD;
 
 html {
     font-family: $font-stack;
-    color: $basic-font-color;
-}
-
-* {
-    border-radius: 0 !important;
+    color: $primary-color-text;
 }
