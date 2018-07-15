@@ -7,9 +7,9 @@ type Props = {
 
 const Footer = (props: Props) => {
   return (
-    <footer class="footer">
-      <div class="container">
-        <span class="text-muted">{props.content}</span>
+    <footer className="footer">
+      <div className="container">
+        <span className="text-muted">{props.content}</span>
       </div>
     </footer>
   );

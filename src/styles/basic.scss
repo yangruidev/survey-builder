@@ -20,6 +20,9 @@ body {
 
 a {
   color: $primary-color;
+  &:hover {
+    text-decoration: none;
+  }
 }
 
 .wrapper {

@@ -5,43 +5,49 @@ import { Provider, connect } from 'react-redux';
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import '../styles/override-bootstrap.scss';
 import '../styles/basic.scss';
-import Home from './Pages/Home/Home.jsx';
-
+import App from './Pages/App';
 import buildReducer from '../reducers/buildReducer';
 
-const store = createStore(combineReducers({
-  buildReducer
-}), applyMiddleware(thunk));
+const store = createStore(
+  combineReducers({
+    buildReducer
+  }),
+  applyMiddleware(thunk)
+);
 
 const mapStateToProps = state => {
   return {
     questions: state.questions
-  }
-}
+  };
+};
 
 const mapDispatchToProps = dispatch => {
   return {
     //function list
-  }
-}
+  };
+};
 
-const SurveryBuilder = connect(mapStateToProps, mapDispatchToProps)(Home);
+const SurveryBuilder = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);
 
 const root = document.getElementById('app');
 let init = () => {
-  alert("root element is missing");
+  alert('root element is missing');
 };
 
-if(root) {
+if (root) {
   init = () => {
     ReactDOM.render(
       <Provider store={store}>
         <SurveryBuilder />
       </Provider>,
       root
-    );  
-  }
+    );
+  };
 }
 
 export default init;
