@@ -1,20 +1,28 @@
 import React from 'react';
-import { Base, Grid } from 'reakit';
-import { Button } from '../../Components/StyledComponents.jsx';
-import NavigationBar from '../../Components/Navbar.jsx';
 import 'bootstrap';
-import NavBar from '../../Components/Navbar.jsx';
+import { Link } from 'react-router-dom';
+
+import RouterWrapper from '../../Base/RouterWrapper.jsx';
+import NavBar from '../../Lib/Navbar.jsx';
+import Footer from '../../Base/Footer.jsx';
+import { RoundButton } from '../../Base/Button.jsx';
+import CreateNew from '../CreateNew/CreateNew.jsx';
 
 const Home = () => {
+  const routeConfig = [{ key: 'new', path: '/new', component: CreateNew }];
+
   return (
-    <Base>
-      <NavBar title='Survey Builder' />
-      <Grid columns="repeat(3, 1fr)" autoRows="auto" gap="1vw">
-        <Grid.Item columnStart='2' columnEnd='3'>
-          <Button>Create a new survey</Button>
-        </Grid.Item>
-      </Grid>
-    </Base>
+    <div className="wrapper">
+      <nav>
+        <NavBar title="Survey Builder" routeConfig={routeConfig} />
+      </nav>
+      <main>
+        <div className="container">Hello World</div>
+      </main>
+      <footer>
+        <Footer content="Hello world" />
+      </footer>
+    </div>
   );
 };
 
