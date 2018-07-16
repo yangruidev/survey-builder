@@ -29,7 +29,7 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-const SurveryBuilder = connect(
+const Root = connect(
   mapStateToProps,
   mapDispatchToProps
 )(App);
@@ -43,7 +43,7 @@ if (root) {
   init = () => {
     ReactDOM.render(
       <Provider store={store}>
-        <SurveryBuilder />
+        <Root />
       </Provider>,
       root
     );

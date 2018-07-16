@@ -9,7 +9,7 @@ type Props = {
 
 const Editor = (props: Props) => {
   const { questions, current } = props;
-  return <div>{}</div>;
+  return <div>this is an editor</div>;
 };
 
 export default Editor;

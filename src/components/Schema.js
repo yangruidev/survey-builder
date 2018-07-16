@@ -1,7 +1,7 @@
 const Question = {
-  id: string
-  type: string,
-  text: string,
+  id: String,
+  type: String,
+  text: String,
   option: Object
 };
 

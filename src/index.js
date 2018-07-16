@@ -1,4 +1,4 @@
 //@flow
-import init from './components/SurveyBuilder.jsx';
+import init from './components/Root.jsx';
 
 init();

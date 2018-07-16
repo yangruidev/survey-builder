@@ -9,11 +9,13 @@ type Props = {};
 
 const Main = (props: Props) => {
   return (
-    <Switch>
-      <Route path="/new" component={New} />
-      <Route path="/manage" component={Manage} />
-      <Route path="/" component={Home} />
-    </Switch>
+    <div className="container">
+      <Switch>
+        <Route path="/new" component={New} />
+        <Route path="/manage" component={Manage} />
+        <Route path="/" component={Home} />
+      </Switch>
+    </div>
   );
 };
 
