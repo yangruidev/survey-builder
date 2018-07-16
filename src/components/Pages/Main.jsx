@@ -11,7 +11,8 @@ const Main = (props: Props) => {
   return (
     <div className="container">
       <Switch>
-        <Route path="/new" component={New} />
+        {/*temp change for dev*/}
+        <Route path="/" component={New} />
         <Route path="/manage" component={Manage} />
         <Route path="/" component={Home} />
       </Switch>

@@ -1,7 +1,7 @@
 //@flow
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider, connect } from 'react-redux';
+import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -17,35 +17,18 @@ const store = createStore(
   applyMiddleware(thunk)
 );
 
-const mapStateToProps = state => {
-  return {
-    questions: state.questions
-  };
-};
-
-const mapDispatchToProps = dispatch => {
-  return {
-    //function list
-  };
-};
-
-const Root = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(App);
-
-const root = document.getElementById('app');
+const app = document.getElementById('app');
 let init = () => {
   alert('root element is missing');
 };
 
-if (root) {
+if (app) {
   init = () => {
     ReactDOM.render(
       <Provider store={store}>
-        <Root />
+        <App />
       </Provider>,
-      root
+      app
     );
   };
 }
