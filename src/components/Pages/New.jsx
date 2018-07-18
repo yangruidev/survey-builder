@@ -4,9 +4,11 @@ import { addNewQuestion } from '../../actions/buildSurvey';
 import SurveyForm from '../Lib/SurveyForm';
 
 const mapStateToProps = state => {
+  const { questions, currentQuestionId } = state.buildReducer;
+
   return {
-    questions: state.questions,
-    currentQuestionId: state.currentQuestionId
+    questions,
+    currentQuestionId
   };
 };
 

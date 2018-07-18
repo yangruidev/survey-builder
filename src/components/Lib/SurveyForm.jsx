@@ -1,22 +1,21 @@
 //@flow
 import React from 'react';
-import type { Question } from '../../Schema';
-import Questions from './Questions';
+import type { QuestionOptionsPair } from '../../Schema';
+import QuestionOptionsList from './QuestionOptionsList';
 import AddNewQuestion from './AddNewQuestion';
 
 type Props = {
-  questions: Array<Question>,
+  questions: Array<QuestionOptionsPair>,
   currentQuestionId: number,
   addNewQuestion: () => void
 };
 
 const SurveyForm = (props: Props) => {
   const { questions, currentQuestionId, addNewQuestion } = props;
-  //this component is not updated on add new question...
 
   return (
     <div>
-      <Questions questions={questions} current={currentQuestionId} />
+      <QuestionOptionsList questions={questions} current={currentQuestionId} />
       <AddNewQuestion add={addNewQuestion} />
     </div>
   );

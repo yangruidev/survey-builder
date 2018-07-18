@@ -1,5 +1,5 @@
 //@flow
-export type Question = {
+export type QuestionOptionsPair = {
   id: string,
   type: string,
   text: string,

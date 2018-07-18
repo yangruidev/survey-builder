@@ -1,13 +1,14 @@
 //@flow
 import React from 'react';
-import type { Question } from '../../Schema';
+import type { QuestionOptionsPair } from '../../Schema';
+import QuestionOptions from './QuestionOptions';
 
 type Props = {
-  questions: Array<Question>
+  questions: Array<QuestionOptionsPair>
 };
 
 //can list component be generalized???
-const Questions = (props: Props) => {
+const QuestionOptionsList = (props: Props) => {
   const { questions } = props;
   if (questions) {
     return <div>{renderQuestionList(questions)}</div>;
@@ -19,11 +20,11 @@ const Questions = (props: Props) => {
 const renderQuestionList = questions => {
   return questions.map(q => {
     return (
-      <div>
-        {q.text} | {q.type}
+      <div key={q.id}>
+        <QuestionOptions {...q} />
       </div>
     );
   });
 };
 
-export default Questions;
+export default QuestionOptionsList;

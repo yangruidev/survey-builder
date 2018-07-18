@@ -1,10 +1,10 @@
 //@flow
 import uuidv4 from 'uuid';
-import type { Question, ReduxAction } from '../Schema';
+import type { QuestionOptionsPair, ReduxAction } from '../Schema';
 import { ADD_NEW_QUESTION } from '../actions/buildSurvey';
 
 type State = {
-  questions: Question[],
+  questions: QuestionOptionsPair[],
   currentQuestionId: number
 };
 
@@ -17,14 +17,14 @@ const buildReducer = (state: State, action: ReduxAction) => {
   if (!state) {
     state = DEFAULT_STATE;
   }
-  let questionList: Question[] =
+  let questionList: QuestionOptionsPair[] =
     state && state.questions && state.questions.length > 0
       ? state.questions.slice()
       : [];
 
   switch (action.type) {
     case ADD_NEW_QUESTION:
-      const newBlankQuestion: Question = {
+      const newBlankQuestion: QuestionOptionsPair = {
         id: uuidv4(),
         text: '',
         type: 'Multiple Choice',
