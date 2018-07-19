@@ -25,6 +25,7 @@ a {
   }
 }
 
+//layout
 .wrapper {
   display: grid;
   height: 100%;
@@ -46,4 +47,15 @@ main {
 
 footer {
   grid-area: footer;
+}
+
+//flex
+.flex-container {
+  display: flex;
+
+  @for $perc from 1 through 100 {
+    .flex-item-#{$perc} {
+      flex-basis: calc(100% / (100 / #{$perc}));
+    }
+  }
 }

@@ -1,6 +1,6 @@
 //@flow
 import uuidv4 from 'uuid';
-import type { QuestionOptionsPair, ReduxAction } from '../Schema';
+import type { QuestionOptionsPair, ReduxAction } from '../models/Schema';
 import { ADD_NEW_QUESTION } from '../actions/buildSurvey';
 
 type State = {

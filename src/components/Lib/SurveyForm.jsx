@@ -1,6 +1,6 @@
 //@flow
 import React from 'react';
-import type { QuestionOptionsPair } from '../../Schema';
+import type { QuestionOptionsPair } from '../../models/Schema';
 import QuestionOptionsList from './QuestionOptionsList';
 import AddNewQuestion from './AddNewQuestion';
 

@@ -1,6 +1,6 @@
 //@flow
 import React from 'react';
-import type { QuestionOptionsPair } from '../../Schema';
+import type { QuestionOptionsPair } from '../../models/Schema';
 import QuestionOptions from './QuestionOptions';
 
 type Props = {
@@ -18,10 +18,10 @@ const QuestionOptionsList = (props: Props) => {
 };
 
 const renderQuestionList = questions => {
-  return questions.map(q => {
+  return questions.map((q, index) => {
     return (
       <div key={q.id}>
-        <QuestionOptions {...q} />
+        <QuestionOptions {...q} index={index} />
       </div>
     );
   });
