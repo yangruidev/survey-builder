@@ -1,0 +1,13 @@
+.navbar-nav {
+  -ms-flex-direction: row;
+  flex-direction: row;
+}
+
+.navbar-nav .nav-link {
+  margin-left: 1rem;
+}
+
+.form-control {
+  border-radius: 0;
+  -webkit-appearance: none;
+}
