@@ -1,5 +1,5 @@
 //@flow
-import type { QuestionOptionsPair } from '../models/Schema';
+import type { Question } from '../models/Schema';
 
 const ADD_NEW_QUESTION = 'ADD_NEW_QUESTION';
 

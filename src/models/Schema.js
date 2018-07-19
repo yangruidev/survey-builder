@@ -1,9 +1,8 @@
 //@flow
-export type QuestionOptionsPair = {
+export type Question = {
   id: string,
   type: string,
   text: string,
-  options: ?Object,
   dirty: boolean
 };
 

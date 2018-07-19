@@ -1,6 +1,6 @@
 //@flow
 import React from 'react';
-import type { QuestionOptionsPair } from '../../models/Schema';
+import type { Question } from '../../models/Schema';
 import { QuestionTypes as questionTypes } from '../../models/Config';
 import Select from '../Base/Select';
 import Input from '../Base/Input';
@@ -9,20 +9,18 @@ type State = {
   index: number,
   id: string,
   text: string,
-  options: ?Object,
   type: string,
   dirty: boolean
 };
 
-class QuestionOptions extends React.Component<QuestionOptionsPair, State> {
-  constructor(props: QuestionOptionsPair) {
+class QuestionBlock extends React.Component<Question, State> {
+  constructor(props: Question) {
     super(props);
     this.state = {
       index: 0,
       id: '0',
       text: '',
-      options: {},
-      type: questionTypes[0].value,
+      type: '',
       dirty: false
     };
     (this: any).updateQuestionText = this.updateQuestionText.bind(this);
@@ -42,7 +40,7 @@ class QuestionOptions extends React.Component<QuestionOptionsPair, State> {
   }
 
   render() {
-    const { id, type, text, options, index } = this.state;
+    const { id, type, text, index } = this.state;
     return (
       <div className="flex-container">
         <div className="flex-item-10">Q{index + 1}</div>
@@ -68,4 +66,4 @@ class QuestionOptions extends React.Component<QuestionOptionsPair, State> {
   }
 }
 
-export default QuestionOptions;
+export default QuestionBlock;

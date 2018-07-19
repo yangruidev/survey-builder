@@ -1,11 +1,11 @@
 //@flow
 import React from 'react';
-import type { QuestionOptionsPair } from '../../models/Schema';
-import QuestionOptionsList from './QuestionOptionsList';
+import type { Question } from '../../models/Schema';
+import QuestionBlockList from './QuestionBlockList';
 import AddNewQuestion from './AddNewQuestion';
 
 type Props = {
-  questions: Array<QuestionOptionsPair>,
+  questions: Array<Question>,
   currentQuestionId: number,
   addNewQuestion: () => void
 };
@@ -15,7 +15,7 @@ const SurveyForm = (props: Props) => {
 
   return (
     <div>
-      <QuestionOptionsList questions={questions} current={currentQuestionId} />
+      <QuestionBlockList questions={questions} current={currentQuestionId} />
       <AddNewQuestion add={addNewQuestion} />
     </div>
   );
