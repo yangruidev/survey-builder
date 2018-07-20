@@ -1,5 +1,6 @@
 //@flow
 import React from 'react';
+import { debounce } from 'underscore';
 import type { Question } from '../../models/Schema';
 import { QuestionTypes as questionTypes } from '../../models/Config';
 import Select from '../Base/Select';
@@ -13,8 +14,13 @@ type State = {
   dirty: boolean
 };
 
-class QuestionBlock extends React.Component<Question, State> {
-  constructor(props: Question) {
+type Props = {
+  question: Question,
+  updateQuestion: (q: Question) => void
+};
+
+class QuestionBlock extends React.Component<Props, State> {
+  constructor(props: Props) {
     super(props);
     this.state = {
       index: 0,
@@ -23,20 +29,35 @@ class QuestionBlock extends React.Component<Question, State> {
       type: '',
       dirty: false
     };
+    (this: any).updateQuestionTextLocal = this.updateQuestionTextLocal.bind(
+      this
+    );
     (this: any).updateQuestionText = this.updateQuestionText.bind(this);
     (this: any).updateQuestionType = this.updateQuestionType.bind(this);
   }
 
-  updateQuestionText(value: string) {
-    this.setState({ text: value });
+  updateQuestionTextLocal(text: string) {
+    this.setState({ text });
   }
 
-  updateQuestionType(value: string) {
-    this.setState({ type: value });
+  updateQuestionText(text: string) {
+    if (text !== this.props.question.text) {
+      this.props.updateQuestion({ ...this.props.question, text });
+    }
+  }
+
+  updateQuestionType(type: string) {
+    if (type !== this.props.question.type) {
+      this.props.updateQuestion({ ...this.props.question, type });
+    }
   }
 
   componentDidMount() {
-    this.setState({ ...this.props });
+    this.setState({ ...this.props.question });
+  }
+
+  static getDerivedStateFromProps(props: Props, state: State) {
+    return props.question;
   }
 
   render() {
@@ -48,7 +69,8 @@ class QuestionBlock extends React.Component<Question, State> {
           <Input
             type="text"
             value={text}
-            handleChange={this.updateQuestionText}
+            handleBlur={this.updateQuestionText}
+            handleChange={this.updateQuestionTextLocal}
             placeholder="Enter your question"
             cssClass="form-control"
           />

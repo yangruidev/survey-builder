@@ -2,7 +2,8 @@
 import uuidv4 from 'uuid';
 import type { Question, ReduxAction } from '../models/Schema';
 import { QuestionTypes as questionTypes } from '../models/Config';
-import { ADD_NEW_QUESTION } from '../actions/buildSurvey';
+import { ADD_NEW_QUESTION, UPDATE_QUESTION } from '../actions/buildSurvey';
+import { insertItem, removeItem, updateItemInArray } from '../utilities';
 
 type State = {
   questions: Array<Question>,
@@ -33,6 +34,12 @@ const buildReducer = (state: State, action: ReduxAction) => {
       };
       questionList.push(newBlankQuestion);
       return { ...state, questions: questionList };
+
+    case UPDATE_QUESTION:
+      console.log(action.payload);
+      const newList = updateItemInArray(questionList, action.payload);
+      return { ...state, questions: newList };
+
     default:
       return { ...state };
   }

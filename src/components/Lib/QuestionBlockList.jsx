@@ -5,25 +5,27 @@ import QuestionBuilder from './QuestionBuilder';
 import OptionsBuilder from './OptionsBuilder';
 
 type Props = {
-  questions: Array<Question>
+  questions: Array<Question>,
+  updateQuestion: (q: Question) => void
 };
 
-//can list component be generalized???
 const QuestionBlockList = (props: Props) => {
-  const { questions } = props;
-  if (questions) {
-    return <div>{renderList(questions)}</div>;
+  if (props.questions) {
+    return <div>{renderList(props)}</div>;
   } else {
     return <div>No question yet</div>;
   }
 };
 
-const renderList = questions => {
-  console.log(questions);
+const renderList = ({ questions, updateQuestion }) => {
   return questions.map((q, index) => {
     return (
       <div key={q.id}>
-        <QuestionBuilder {...q} index={index} />
+        <QuestionBuilder
+          question={q}
+          updateQuestion={updateQuestion}
+          index={index}
+        />
         <OptionsBuilder type={q.type} />
       </div>
     );
