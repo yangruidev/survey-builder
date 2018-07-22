@@ -1,48 +1,65 @@
 //@flow
 import uuidv4 from 'uuid';
-import type { Question, ReduxAction } from '../models/Schema';
+import type { QuestionType, ComboType, ReduxAction } from '../models/Schema';
 import { QuestionTypes as questionTypes } from '../models/Config';
 import { ADD_NEW_QUESTION, UPDATE_QUESTION } from '../actions/buildSurvey';
-import { insertItem, removeItem, updateItemInArray } from '../utilities';
+import { insertItem, removeItem, updateItemPropInArray } from '../utilities';
 
 type State = {
-  questions: Array<Question>,
-  currentQuestionId: number
+  combos: Array<ComboType>,
+  currentComboId: string
 };
 
 const DEFAULT_STATE: State = {
-  questions: [],
-  currentQuestionId: 0
+  combos: [],
+  currentComboId: ''
 };
 
 const buildReducer = (state: State, action: ReduxAction) => {
   if (!state) {
     state = DEFAULT_STATE;
   }
-  let questionList: Array<Question> =
-    state && state.questions && state.questions.length > 0
-      ? state.questions.slice()
+  let comboList: Array<ComboType> =
+    state && state.combos && state.combos.length > 0
+      ? state.combos.slice()
       : [];
 
   switch (action.type) {
     case ADD_NEW_QUESTION:
-      const newBlankQuestion: Question = {
-        id: uuidv4(),
-        text: '',
-        type: questionTypes[0].value,
-        dirty: false
+      const newBlankQuestion: QuestionType = createQuestion();
+      const newCombo: ComboType = {
+        question: newBlankQuestion,
+        options: {
+          id: uuidv4(),
+          type: newBlankQuestion.type,
+          optionsObject: null
+        }
       };
-      questionList.push(newBlankQuestion);
-      return { ...state, questions: questionList };
+      comboList.push(newCombo);
+      return { ...state, combos: comboList };
 
     case UPDATE_QUESTION:
-      console.log(action.payload);
-      const newList = updateItemInArray(questionList, action.payload);
-      return { ...state, questions: newList };
+      const { comboId, question } = action.payload;
+      const newList = updateItemPropInArray(
+        comboList,
+        comboId,
+        'question',
+        question
+      );
+      return { ...state, combos: newList };
 
     default:
       return { ...state };
   }
+};
+
+const createQuestion = () => {
+  return {
+    id: uuidv4(),
+    text: '',
+    type: questionTypes[0].value,
+    dirty: false
+  };
 };
 
 export default buildReducer;

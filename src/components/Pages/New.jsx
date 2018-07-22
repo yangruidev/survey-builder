@@ -1,16 +1,16 @@
 //@flow
 import React from 'react';
 import { connect } from 'react-redux';
-import type { Question } from '../../models/Schema';
+import type { QuestionType } from '../../models/Schema';
 import { addNewQuestion, updateQuestion } from '../../actions/buildSurvey';
-import SurveyForm from '../Lib/SurveyForm';
+import ComboContainer from '../Lib/ComboContainer';
 
 const mapStateToProps = state => {
-  const { questions, currentQuestionId } = state.buildReducer;
+  const { combos, currentComboId } = state.buildReducer;
 
   return {
-    questions,
-    currentQuestionId
+    combos,
+    currentComboId
   };
 };
 
@@ -19,7 +19,7 @@ const mapDispatchToProps = dispatch => {
     addNewQuestion: () => {
       dispatch(addNewQuestion());
     },
-    updateQuestion: (question: Question) => {
+    updateQuestion: (question: QuestionType) => {
       dispatch(updateQuestion(question));
     }
   };
@@ -28,6 +28,6 @@ const mapDispatchToProps = dispatch => {
 const New = connect(
   mapStateToProps,
   mapDispatchToProps
-)(SurveyForm);
+)(ComboContainer);
 
 export default New;

@@ -18,4 +18,20 @@ function updateItemInArray<T>(array: Array<T>, newItem: T) {
   });
 }
 
-export { insertItem, removeItem, updateItemInArray };
+//Update a property of an item (find by Id) in an array
+function updateItemPropInArray<T>(
+  array: Array<T>,
+  newItemId: string,
+  newItemPropName: string,
+  newItemPropValue: T
+) {
+  return array.map(item => {
+    if (item.id !== newItemId) {
+      return item;
+    } else {
+      return { ...item, newItemPropName: newItemPropValue };
+    }
+  });
+}
+
+export { insertItem, removeItem, updateItemInArray, updateItemPropInArray };

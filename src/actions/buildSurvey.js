@@ -1,5 +1,5 @@
 //@flow
-import type { Question } from '../models/Schema';
+import type { QuestionType } from '../models/Schema';
 
 const ADD_NEW_QUESTION = 'ADD_NEW_QUESTION';
 const UPDATE_QUESTION = 'UPDATE_QUESTION';
@@ -11,7 +11,7 @@ const addNewQuestion = () => {
   };
 };
 
-const updateQuestion = (question: Question) => {
+const updateQuestion = (question: QuestionType) => {
   return {
     type: UPDATE_QUESTION,
     payload: question

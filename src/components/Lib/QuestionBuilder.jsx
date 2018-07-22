@@ -1,7 +1,7 @@
 //@flow
 import React from 'react';
 import { debounce } from 'underscore';
-import type { Question } from '../../models/Schema';
+import type { QuestionType } from '../../models/Schema';
 import { QuestionTypes as questionTypes } from '../../models/Config';
 import Select from '../Base/Select';
 import Input from '../Base/Input';
@@ -15,8 +15,8 @@ type State = {
 };
 
 type Props = {
-  question: Question,
-  updateQuestion: (q: Question) => void
+  question: QuestionType,
+  updateQuestion: (q: QuestionType) => void
 };
 
 class QuestionBlock extends React.Component<Props, State> {
@@ -29,15 +29,8 @@ class QuestionBlock extends React.Component<Props, State> {
       type: '',
       dirty: false
     };
-    (this: any).updateQuestionTextLocal = this.updateQuestionTextLocal.bind(
-      this
-    );
     (this: any).updateQuestionText = this.updateQuestionText.bind(this);
     (this: any).updateQuestionType = this.updateQuestionType.bind(this);
-  }
-
-  updateQuestionTextLocal(text: string) {
-    this.setState({ text });
   }
 
   updateQuestionText(text: string) {
@@ -70,7 +63,6 @@ class QuestionBlock extends React.Component<Props, State> {
             type="text"
             value={text}
             handleBlur={this.updateQuestionText}
-            handleChange={this.updateQuestionTextLocal}
             placeholder="Enter your question"
             cssClass="form-control"
           />

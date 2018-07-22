@@ -9,10 +9,12 @@ import '../styles/override-bootstrap.scss';
 import '../styles/basic.scss';
 import App from './Pages/App';
 import buildReducer from '../reducers/buildReducer';
+import multipleReducer from './Lib/optionBuilders/multipleChoice/multipleReducer';
 
 const store = createStore(
   combineReducers({
-    buildReducer
+    buildReducer,
+    multipleReducer
   }),
   applyMiddleware(thunk)
 );
