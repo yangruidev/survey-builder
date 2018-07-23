@@ -50,11 +50,11 @@ footer {
 }
 
 //flex
-.flex-container {
+.fx-ctn {
   display: flex;
 
   @for $perc from 1 through 100 {
-    .flex-item-#{$perc} {
+    .fi-#{$perc} {
       flex-basis: calc(100% / (100 / #{$perc}));
     }
   }

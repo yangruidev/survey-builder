@@ -3,7 +3,7 @@ import React from 'react';
 import 'bootstrap';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-import NavBar from '../Lib/Navbar';
+import NavBar from '../Shared/Navbar';
 import Footer from '../Base/Footer';
 import Main from './Main';
 
