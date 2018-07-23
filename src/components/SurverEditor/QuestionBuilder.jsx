@@ -1,8 +1,8 @@
 //@flow
 import React from 'react';
 import { debounce } from 'underscore';
-import type { QuestionType } from '../../models/Schema';
-import { QuestionTypes as questionTypes } from '../../models/Config';
+import type { QuestionType } from './models/schema';
+import { QuestionTypes as questionTypes } from './models/config';
 import Select from '../Base/Select';
 import Input from '../Base/Input';
 
@@ -16,7 +16,8 @@ type State = {
 
 type Props = {
   question: QuestionType,
-  updateQuestion: (q: QuestionType) => void
+  updateQuestion: (q: QuestionType) => void,
+  updateCombo: (propName: string, propValue: string) => void
 };
 
 class QuestionBlock extends React.Component<Props, State> {
@@ -30,7 +31,7 @@ class QuestionBlock extends React.Component<Props, State> {
       dirty: false
     };
     (this: any).updateQuestionText = this.updateQuestionText.bind(this);
-    (this: any).updateQuestionType = this.updateQuestionType.bind(this);
+    (this: any).updateComboType = this.updateComboType.bind(this);
   }
 
   updateQuestionText(text: string) {
@@ -39,9 +40,9 @@ class QuestionBlock extends React.Component<Props, State> {
     }
   }
 
-  updateQuestionType(type: string) {
+  updateComboType(type: string) {
     if (type !== this.props.question.type) {
-      this.props.updateQuestion({ ...this.props.question, type });
+      this.props.updateCombo('type', type);
     }
   }
 
@@ -56,9 +57,9 @@ class QuestionBlock extends React.Component<Props, State> {
   render() {
     const { id, type, text, index } = this.state;
     return (
-      <div className="flex-container">
-        <div className="flex-item-10">Q{index + 1}</div>
-        <div className="flex-item-50">
+      <div className="fx-ctn">
+        <div className="fi-10">Q{index + 1}</div>
+        <div className="fi-50">
           <Input
             type="text"
             value={text}
@@ -67,11 +68,11 @@ class QuestionBlock extends React.Component<Props, State> {
             cssClass="form-control"
           />
         </div>
-        <div className="flex-item-40">
+        <div className="fi-40">
           <Select
             value={type}
             options={questionTypes}
-            handleChange={this.updateQuestionType}
+            handleChange={this.updateComboType}
             cssClass="form-control"
           />
         </div>

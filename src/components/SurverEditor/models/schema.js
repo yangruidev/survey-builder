@@ -1,5 +1,6 @@
 //@flow
 export type ComboType = {
+  id: string,
   question: QuestionType,
   options: OptionsType
 };
@@ -10,14 +11,17 @@ export type ReduxAction = {
 };
 
 export type OptionsType = {
-  id: string,
   type: string,
   optionsObject: ?Object
 };
 
 export type QuestionType = {
-  id: string,
   type: string,
   text: string,
   dirty: boolean
+};
+
+export type ChoiceType = {
+  id: string,
+  text: string
 };

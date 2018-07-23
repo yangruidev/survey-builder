@@ -1,6 +1,6 @@
 //@flow
 import React, { Component } from 'react';
-import type { ChoiceType } from '../schema';
+import type { ChoiceType } from '../../models/schema';
 import Input from '../../../Base/Input';
 
 type Props = {
@@ -9,17 +9,12 @@ type Props = {
   updateChoice: (c: ChoiceType) => void
 };
 
-type State = {
-  id: string,
-  text: string
-};
-
-class ChoiceBuilder extends Component<Props, State> {
+class ChoiceBuilder extends Component<Props, ChoiceType> {
   constructor(props: Props) {
     super(props);
     this.state = {
       id: '0',
-      text: 'Enter your option'
+      text: ''
     };
     (this: any).updateText = this.updateText.bind(this);
   }
@@ -34,7 +29,7 @@ class ChoiceBuilder extends Component<Props, State> {
     this.setState({ ...this.props.choice });
   }
 
-  static getDerivedStateFromProps(props: Props, state: State) {
+  static getDerivedStateFromProps(props: Props, state: ChoiceType) {
     return props.choice;
   }
 
@@ -43,9 +38,9 @@ class ChoiceBuilder extends Component<Props, State> {
     const { index } = this.props;
     return (
       <div>
-        <div className="flex-container">
-          <div className="flex-item-10">Label {index + 1}</div>
-          <div className="flex-item-80">
+        <div className="fx-ctn">
+          <div className="fi-10">Label {index + 1}</div>
+          <div className="fi-80">
             <Input
               type="text"
               value={text}
@@ -54,7 +49,7 @@ class ChoiceBuilder extends Component<Props, State> {
               cssClass="form-control"
             />
           </div>
-          <div className="flex-item-10">x</div>
+          <div className="fi-10">x</div>
         </div>
       </div>
     );

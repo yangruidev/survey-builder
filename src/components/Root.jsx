@@ -5,16 +5,16 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../styles/override-bootstrap.scss';
-import '../styles/basic.scss';
+import './styles/override-bootstrap.scss';
+import './styles/basic.scss';
 import App from './Pages/App';
-import buildReducer from '../reducers/buildReducer';
-import multipleReducer from './Lib/optionBuilders/multipleChoice/multipleReducer';
+import buildReducer from './SurverEditor/buildReducer';
+import optionsReducer from './SurverEditor/optionBuilders/optionsReducer';
 
 const store = createStore(
   combineReducers({
     buildReducer,
-    multipleReducer
+    optionsReducer
   }),
   applyMiddleware(thunk)
 );

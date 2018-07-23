@@ -11,4 +11,15 @@ const QuestionTypeCodes = {
   DATE_TIME: 'dateTime'
 };
 
-export { QuestionTypeCodes };
+const CREATE_NEW_COMBO = 'CREATE_NEW_COMBO';
+const UPDATE_QUESTION = 'UPDATE_QUESTION';
+const SAVE_COMBO = 'SAVE_COMBO';
+const UPDATE_COMBO = 'UPDATE_COMBO';
+
+export {
+  QuestionTypeCodes,
+  CREATE_NEW_COMBO,
+  UPDATE_QUESTION,
+  SAVE_COMBO,
+  UPDATE_COMBO
+};

@@ -1,7 +1,7 @@
 //@flow
 import React from 'react';
 import ChoiceBuilder from './ChoiceBuilder';
-import type { ChoiceType } from '../schema';
+import type { ChoiceType } from '../../models/schema';
 
 type Props = {
   choices: Array<ChoiceType>,

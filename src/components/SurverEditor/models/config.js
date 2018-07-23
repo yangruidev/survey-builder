@@ -1,4 +1,5 @@
-import { QuestionTypeCodes } from './Constant';
+import uuidv4 from 'uuid';
+import { QuestionTypeCodes } from './constant';
 
 const QuestionTypes = [
   { text: 'Multiple Choice', value: QuestionTypeCodes.MULTIPLE_CHOICE },
@@ -13,4 +14,10 @@ const QuestionTypes = [
   { text: 'Date / Time', value: QuestionTypeCodes.DATE_TIME }
 ];
 
-export { QuestionTypes };
+const DefaultMultipleChoiceOptions = [
+  { id: uuidv4(), text: 'foo' },
+  { id: uuidv4(), text: 'bar' },
+  { id: uuidv4(), text: 'baz' }
+];
+
+export { QuestionTypes, DefaultMultipleChoiceOptions };

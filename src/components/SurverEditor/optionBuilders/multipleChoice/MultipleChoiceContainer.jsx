@@ -1,7 +1,7 @@
 //@flow
 import React from 'react';
 import ChoiceList from './ChoiceList';
-import type { ChoiceType } from '../schema';
+import type { ChoiceType } from '../../models/schema';
 
 type Props = {
   choices: Array<ChoiceType>,
@@ -11,7 +11,7 @@ type Props = {
 };
 
 const MultipleChoiceContainer = (props: Props) => {
-  const { choices, currentChoiceId, updateChoice } = props;
+  const { choices, currentChoiceId, updateChoice, addNewChoice } = props;
   return (
     <div>
       <ChoiceList
@@ -19,6 +19,7 @@ const MultipleChoiceContainer = (props: Props) => {
         currentChoiceId={currentChoiceId}
         updateChoice={updateChoice}
       />
+      <button onClick={addNewChoice}>Add</button>
     </div>
   );
 };

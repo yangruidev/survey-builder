@@ -1,16 +1,16 @@
 //@flow
 import React from 'react';
 import { connect } from 'react-redux';
-import type { ChoiceType } from '../schema';
+import type { ChoiceType } from '../../models/schema';
 import { addNewChoice, updateChoice } from '../actions/multipleActions';
-import MultipleChoiceOptionBuilder from './MultipleChoiceContainer';
+import MultipleChoiceContainer from './MultipleChoiceContainer';
 
 const mapStateToProps = (state, ownProps) => {
-  const { choices, currentChoiceId } = state.multipleReducer;
-  const { savedChoices } = ownProps.choices;
+  const { choices, currentChoiceId } = state.optionsReducer;
 
   return {
-    choices,
+    //if choices passed from parent is not null, use them, otherwise use default choices
+    choices: ownProps.choices ? ownProps.choices : choices,
     currentChoiceId
   };
 };
@@ -29,6 +29,6 @@ const mapDispatchToProps = dispatch => {
 const MultipleChoiceRoot = connect(
   mapStateToProps,
   mapDispatchToProps
-)(MultipleChoiceOptionBuilder);
+)(MultipleChoiceContainer);
 
 export default MultipleChoiceRoot;

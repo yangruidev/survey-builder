@@ -1,26 +1,28 @@
 //@flow
 import uuidv4 from 'uuid';
-import { updateItemInArray } from '../../../../utilities';
-import type { ChoiceType, ReduxAction } from '../schema';
-import { DefaultMultipleChoiceOptions } from '../config';
+import { updateItemInArray } from '../../../utilities';
+import type { ChoiceType, ReduxAction } from '../models/schema';
+import { DefaultMultipleChoiceOptions, QuestionTypes } from '../models/config';
 import {
   UPDATE_CHOICE,
   ADD_NEW_CHOICE,
   updateChoice,
   addNewChoice
-} from '../actions/multipleActions';
+} from './actions/multipleActions';
 
 type State = {
+  optionsType: string,
   choices: Array<ChoiceType>,
   currentChoiceId: string
 };
 
 const DEFAULT_STATE: State = {
+  optionsType: QuestionTypes[0].value,
   choices: DefaultMultipleChoiceOptions,
   currentChoiceId: ''
 };
 
-const multipleReducer = (state: State, action: ReduxAction) => {
+const optionsReducer = (state: State, action: ReduxAction) => {
   if (!state) {
     state = DEFAULT_STATE;
   }
@@ -30,12 +32,12 @@ const multipleReducer = (state: State, action: ReduxAction) => {
       : [];
 
   switch (action.type) {
+    case 'TEST':
+      console.log(action.payload);
+      return { ...state };
+
     case ADD_NEW_CHOICE:
-      const newBlankChoice: ChoiceType = {
-        id: uuidv4(),
-        text: ''
-      };
-      choiceList.push(newBlankChoice);
+      choiceList.push(createNewChoice());
       return { ...state, choices: choiceList };
 
     case UPDATE_CHOICE:
@@ -47,4 +49,11 @@ const multipleReducer = (state: State, action: ReduxAction) => {
   }
 };
 
-export default multipleReducer;
+function createNewChoice() {
+  return {
+    id: uuidv4(),
+    text: ''
+  };
+}
+
+export default optionsReducer;

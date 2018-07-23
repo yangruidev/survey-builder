@@ -18,20 +18,50 @@ function updateItemInArray<T>(array: Array<T>, newItem: T) {
   });
 }
 
+function createOrUpdateItemInArray<T>(array: Array<T>, newItem: T) {
+  let exist = false;
+  let newArray = [];
+  if (array && array.length > 0) {
+    newArray = array.map(item => {
+      if (item.id !== newItem.id) {
+        return item;
+      } else {
+        exist = true;
+        return newItem;
+      }
+      if (!exist) {
+        newArray.push(newItem);
+      }
+      return newArray;
+    });
+  } else {
+    newArray.push(newItem);
+  }
+  return newArray;
+}
+
 //Update a property of an item (find by Id) in an array
 function updateItemPropInArray<T>(
   array: Array<T>,
   newItemId: string,
   newItemPropName: string,
-  newItemPropValue: T
+  newItemPropValue: Object
 ) {
   return array.map(item => {
     if (item.id !== newItemId) {
       return item;
     } else {
-      return { ...item, newItemPropName: newItemPropValue };
+      const newItem = Object.assign({}, item);
+      newItem[newItemPropName] = newItemPropValue;
+      return newItem;
     }
   });
 }
 
-export { insertItem, removeItem, updateItemInArray, updateItemPropInArray };
+export {
+  insertItem,
+  removeItem,
+  updateItemInArray,
+  updateItemPropInArray,
+  createOrUpdateItemInArray
+};
