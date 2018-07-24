@@ -12,7 +12,7 @@ export type ReduxAction = {
 
 export type OptionsType = {
   type: string,
-  optionsObject: ?Object
+  value: ?Array<Object>
 };
 
 export type QuestionType = {

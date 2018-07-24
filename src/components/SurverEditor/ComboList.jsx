@@ -2,7 +2,9 @@
 import React from 'react';
 import type { QuestionType, ComboType } from './models/schema';
 import QuestionBuilder from './QuestionBuilder';
-import OptionsMgr from './OptionsMgr';
+import OptionsBuilderMgr from './optionBuilders/OptionsBuilderMgr';
+import QuestionViewer from './QuestionViewer';
+import OptionsViewerMgr from './optionsViewers/OptionsViewerMgr';
 
 type Props = {
   current?: string, //combo that checked out being edit
@@ -38,12 +40,17 @@ const renderList = ({
             updateCombo={(name, value) => updateCombo(id, name, value)}
             index={index}
           />
-          <OptionsMgr type={question.type} options={options} />
+          <OptionsBuilderMgr type={question.type} options={options} />
           <button onClick={() => saveCombo(combo)}>Save</button>
         </div>
       );
     } else {
-      return <div key={id}>view only</div>;
+      return (
+        <div key={id}>
+          <QuestionViewer question={question} index={index} />
+          <OptionsViewerMgr options={options} />
+        </div>
+      );
     }
   });
 };

@@ -85,7 +85,7 @@ const initializeCombo = (type = questionTypes[0].value) => {
     type: type,
     options: {
       type: type,
-      optionsObject: null //defer initialization to specific type option builder
+      value: null //defer initialization to specific type option builder
     }
   };
 };

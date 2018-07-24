@@ -25,11 +25,11 @@ const ComboContainer = (props: Props) => {
     updateCombo
   } = props;
 
-  const updatedCombos = combos.map(c => {
+  const updatedCombos: Array<ComboType> = combos.map(c => {
     if (c.id !== currentComboId) {
       return c;
     } else {
-      return { ...c, options: { ...c.options, optionsObject: choices } };
+      return { ...c, options: { ...c.options, value: choices } };
     }
   });
 
