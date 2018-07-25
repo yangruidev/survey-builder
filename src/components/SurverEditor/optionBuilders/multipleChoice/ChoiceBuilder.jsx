@@ -6,6 +6,7 @@ import Input from '../../../Base/Input';
 type Props = {
   index: number,
   choice: ChoiceType,
+  removeChoice: (id: string) => void,
   updateChoice: (c: ChoiceType) => void
 };
 
@@ -35,7 +36,7 @@ class ChoiceBuilder extends Component<Props, ChoiceType> {
 
   render() {
     const { text } = this.state;
-    const { index } = this.props;
+    const { index, choice, removeChoice } = this.props;
     return (
       <div>
         <div className="fx-ctn">
@@ -49,7 +50,11 @@ class ChoiceBuilder extends Component<Props, ChoiceType> {
               cssClass="form-control"
             />
           </div>
-          <div className="fi-10">x</div>
+          <div className="fi-10">
+            <button type="button" onClick={() => removeChoice(choice.id)}>
+              x
+            </button>
+          </div>
         </div>
       </div>
     );

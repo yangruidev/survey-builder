@@ -3,10 +3,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import type { QuestionType, ComboType } from '../SurverEditor/models/schema';
 import {
-  addNewQuestion,
+  invokeWithAllData,
+  initializeNewCombo,
   updateQuestion,
   updateCombo,
-  saveCombo
+  saveCombo,
+  editCombo,
+  deleteCombo
 } from '../SurverEditor/buildActions';
 import ComboContainer from '../SurverEditor/ComboContainer';
 
@@ -23,8 +26,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    addNewQuestion: () => {
-      dispatch(addNewQuestion());
+    initializeNewCombo: () => {
+      dispatch(invokeWithAllData(initializeNewCombo));
     },
     updateQuestion: (comboId: string, question: QuestionType) => {
       dispatch(updateQuestion(comboId, question));
@@ -34,6 +37,12 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
     saveCombo: (combo: ComboType) => {
       dispatch(saveCombo(combo));
+    },
+    editCombo: (comboId: string) => {
+      dispatch(editCombo(comboId));
+    },
+    deleteCombo: (comboId: string) => {
+      dispatch(deleteCombo(comboId));
     }
   };
 };

@@ -3,14 +3,16 @@ import uuidv4 from 'uuid';
 import type { QuestionType, ComboType, ReduxAction } from './models/schema';
 import { QuestionTypes as questionTypes } from './models/config';
 import {
-  CREATE_NEW_COMBO,
+  INITIALIZE_NEW_COMBO,
   UPDATE_QUESTION,
   SAVE_COMBO,
-  UPDATE_COMBO
+  UPDATE_COMBO,
+  EDIT_COMBO,
+  DELETE_COMBO
 } from '../SurverEditor/models/constant';
 import {
   insertItem,
-  removeItem,
+  removeItemById,
   updateItemPropInArray,
   updateItemInArray,
   createOrUpdateItemInArray
@@ -32,15 +34,31 @@ const buildReducer = (state: State, action: ReduxAction) => {
   }
   let comboList: Array<ComboType> = state.combos ? state.combos.slice() : [];
   let newComboList = []; //used for hold updated combolist
+  let combo = null,
+    comboId = null,
+    question = null;
+  if (action.payload) {
+    combo = action.payload.combo;
+    comboId = action.payload.comboId;
+    question = action.payload.question;
+  }
 
   switch (action.type) {
-    case CREATE_NEW_COMBO:
+    case INITIALIZE_NEW_COMBO:
+      const { all } = action.payload;
+      const { choices } = all.optionsReducer;
+      //when initialize new, if there's combo in EDIT state, save the
+      //combo as it is and make the new initlaized combo current
+      newComboList = saveOptionsToCurrentCombo(
+        comboList,
+        state.currentComboId,
+        choices
+      );
       const newCombo: ComboType = initializeCombo();
-      comboList.push(newCombo);
-      return { ...state, combos: comboList, currentComboId: newCombo.id };
+      newComboList.push(newCombo);
+      return { ...state, combos: newComboList, currentComboId: newCombo.id };
 
     case UPDATE_QUESTION:
-      const { comboId, question } = action.payload;
       newComboList = updateItemPropInArray(
         comboList,
         comboId,
@@ -60,10 +78,15 @@ const buildReducer = (state: State, action: ReduxAction) => {
       return { ...state, combos: newComboList };
 
     case SAVE_COMBO:
-      const { combo } = action.payload;
       newComboList = createOrUpdateItemInArray(comboList, combo);
-      console.log(newComboList);
       return { ...state, combos: newComboList, currentComboId: '' };
+
+    case EDIT_COMBO:
+      return { ...state, currentComboId: comboId };
+
+    case DELETE_COMBO:
+      newComboList = removeItemById(comboList, comboId);
+      return { ...state, combos: newComboList };
 
     default:
       return { ...state };
@@ -95,6 +118,16 @@ const updateToAlignWithComboType = combo => {
   const o = { ...combo.options, type: combo.type };
   const c = { ...combo, question: q, options: o };
   return c;
+};
+
+const saveOptionsToCurrentCombo = (comboList, currentComboId, options) => {
+  return (comboList: any).map(c => {
+    if (c.id == currentComboId) {
+      return { ...c, options: { ...c.options, value: options } };
+    } else {
+      return c;
+    }
+  });
 };
 
 export default buildReducer;

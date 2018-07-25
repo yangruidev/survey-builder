@@ -8,10 +8,12 @@ type Props = {
   combos: Array<ComboType>,
   choices: Array<ChoiceType>,
   currentComboId: string,
-  addNewQuestion: () => void,
+  initializeNewCombo: () => void,
   saveCombo: (combo: ComboType) => void,
-  updateQuestion: (id: string, q: QuestionType) => void,
-  updateCombo: (comboId: string, propName: string, propValue: string) => void
+  updateCombo: (comboId: string, propName: string, propValue: string) => void,
+  editCombo: (comboId: string) => void,
+  deleteCombo: (comboId: string) => void,
+  updateQuestion: (id: string, q: QuestionType) => void
 };
 
 const ComboContainer = (props: Props) => {
@@ -19,10 +21,12 @@ const ComboContainer = (props: Props) => {
     combos,
     choices,
     currentComboId,
-    addNewQuestion,
+    initializeNewCombo,
     updateQuestion,
     saveCombo,
-    updateCombo
+    updateCombo,
+    editCombo,
+    deleteCombo
   } = props;
 
   const updatedCombos: Array<ComboType> = combos.map(c => {
@@ -41,8 +45,10 @@ const ComboContainer = (props: Props) => {
         updateQuestion={updateQuestion}
         updateCombo={updateCombo}
         saveCombo={saveCombo}
+        editCombo={editCombo}
+        deleteCombo={deleteCombo}
       />
-      <AddNewQuestion add={addNewQuestion} saveCombo={saveCombo} />
+      <AddNewQuestion add={initializeNewCombo} saveCombo={saveCombo} />
     </div>
   );
 };

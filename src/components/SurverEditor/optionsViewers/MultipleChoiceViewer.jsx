@@ -12,7 +12,7 @@ const MultipleChoiceViewer = (props: Props) => {
   if (choices && choices.length > 0) {
     preview = choices.map(c => {
       return (
-        <div>
+        <div key={c.id}>
           <input type="radio" value={c.text} checked={false} key={c.id} />
           <label>{c.text}</label>
         </div>

@@ -2,7 +2,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import type { ChoiceType } from '../../models/schema';
-import { addNewChoice, updateChoice } from '../actions/multipleActions';
+import {
+  addNewChoice,
+  updateChoice,
+  removeChoice
+} from '../actions/multipleActions';
 import MultipleChoiceContainer from './MultipleChoiceContainer';
 
 const mapStateToProps = (state, ownProps) => {
@@ -22,6 +26,9 @@ const mapDispatchToProps = dispatch => {
     },
     updateChoice: (choice: ChoiceType) => {
       dispatch(updateChoice(choice));
+    },
+    removeChoice: (id: string) => {
+      dispatch(removeChoice(id));
     }
   };
 };

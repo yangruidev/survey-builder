@@ -1,16 +1,25 @@
 //@flow
-import type { QuestionType, ComboType } from './models/schema';
+import { Action, State } from 'redux';
+import type {
+  QuestionType,
+  ComboType,
+  GetStateType,
+  DispatchType,
+  ThunkActionType
+} from './models/schema';
 import {
-  CREATE_NEW_COMBO,
+  INITIALIZE_NEW_COMBO,
   UPDATE_QUESTION,
   SAVE_COMBO,
-  UPDATE_COMBO
+  UPDATE_COMBO,
+  EDIT_COMBO,
+  DELETE_COMBO
 } from './models/constant';
 
-const addNewQuestion = () => {
+const initializeNewCombo = (all: State) => {
   return {
-    type: CREATE_NEW_COMBO,
-    payload: null
+    type: INITIALIZE_NEW_COMBO,
+    payload: { all }
   };
 };
 
@@ -39,4 +48,35 @@ const saveCombo = (combo: ComboType) => {
   };
 };
 
-export { addNewQuestion, updateQuestion, saveCombo, updateCombo };
+const editCombo = (comboId: string) => {
+  return {
+    type: EDIT_COMBO,
+    payload: { comboId }
+  };
+};
+
+const deleteCombo = (comboId: string) => {
+  return {
+    type: DELETE_COMBO,
+    payload: { comboId }
+  };
+};
+
+//Thunk utility, ONLY use when the function needs all data from root state tree
+//TODO: What if need other arguments other than all???
+const invokeWithAllData = (callback: (all: State) => Action) => {
+  return (dispatch: DispatchType, getState: GetStateType) => {
+    const all = getState();
+    return dispatch(callback(all));
+  };
+};
+
+export {
+  initializeNewCombo,
+  invokeWithAllData,
+  updateQuestion,
+  saveCombo,
+  updateCombo,
+  editCombo,
+  deleteCombo
+};

@@ -1,8 +1,10 @@
 //@flow
 import type { ChoiceType } from '../../models/schema';
-
-const UPDATE_CHOICE = 'UPDATE_CHOICE';
-const ADD_NEW_CHOICE = 'ADD_NEW_CHOICE';
+import {
+  UPDATE_CHOICE,
+  ADD_NEW_CHOICE,
+  REMOVE_CHOICE
+} from '../../models/constant';
 
 const updateChoice = (choice: ChoiceType) => {
   return {
@@ -14,8 +16,15 @@ const updateChoice = (choice: ChoiceType) => {
 const addNewChoice = () => {
   return {
     type: ADD_NEW_CHOICE,
-    payload: null
+    payload: {}
   };
 };
 
-export { UPDATE_CHOICE, ADD_NEW_CHOICE, updateChoice, addNewChoice };
+const removeChoice = (id: string) => {
+  return {
+    type: REMOVE_CHOICE,
+    payload: { id }
+  };
+};
+
+export { updateChoice, addNewChoice, removeChoice };

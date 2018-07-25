@@ -11,7 +11,9 @@ type Props = {
   combos: Array<ComboType>,
   updateQuestion: (id: string, q: QuestionType) => void,
   updateCombo: (comboId: string, propName: string, propValue: string) => void,
-  saveCombo: (combo: ComboType) => void
+  saveCombo: (combo: ComboType) => void,
+  editCombo: (comboId: string) => void,
+  deleteCombo: (comboId: string) => void
 };
 
 const ComboList = (props: Props) => {
@@ -27,6 +29,8 @@ const renderList = ({
   updateQuestion,
   updateCombo,
   saveCombo,
+  editCombo,
+  deleteCombo,
   current
 }) => {
   return combos.map((combo, index) => {
@@ -42,6 +46,7 @@ const renderList = ({
           />
           <OptionsBuilderMgr type={question.type} options={options} />
           <button onClick={() => saveCombo(combo)}>Save</button>
+          <button onClick={() => deleteCombo(combo.id)}>Delete</button>
         </div>
       );
     } else {
@@ -49,6 +54,8 @@ const renderList = ({
         <div key={id}>
           <QuestionViewer question={question} index={index} />
           <OptionsViewerMgr options={options} />
+          <button onClick={() => editCombo(combo.id)}>Edit</button>
+          <button onClick={() => deleteCombo(combo.id)}>Delete</button>
         </div>
       );
     }

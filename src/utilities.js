@@ -4,8 +4,8 @@ function insertItem<T>(array: Array<T>, item: T, index: number) {
   return newArray;
 }
 
-function removeItem<T>(array: Array<T>, index: number) {
-  return array.filter((item, i) => i != index);
+function removeItemById<T>(array: Array<T>, id: string) {
+  return array.filter(i => i.id != id);
 }
 
 function updateItemInArray<T>(array: Array<T>, newItem: T) {
@@ -60,7 +60,7 @@ function updateItemPropInArray<T>(
 
 export {
   insertItem,
-  removeItem,
+  removeItemById,
   updateItemInArray,
   updateItemPropInArray,
   createOrUpdateItemInArray
