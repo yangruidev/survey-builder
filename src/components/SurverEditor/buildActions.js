@@ -2,6 +2,7 @@
 import { Action, State } from 'redux';
 import type {
   QuestionType,
+  ChoiceType,
   ComboType,
   GetStateType,
   DispatchType,
@@ -13,7 +14,10 @@ import {
   SAVE_COMBO,
   UPDATE_COMBO,
   EDIT_COMBO,
-  DELETE_COMBO
+  DELETE_COMBO,
+  UPDATE_CHOICE,
+  INITIALIZE_NEW_CHOICE,
+  REMOVE_CHOICE
 } from './models/constant';
 
 const initializeNewCombo = (all: State) => {
@@ -23,28 +27,38 @@ const initializeNewCombo = (all: State) => {
   };
 };
 
-const updateQuestion = (comboId: string, question: QuestionType) => {
+const initializeNewChoice = () => {
   return {
-    type: UPDATE_QUESTION,
-    payload: { comboId, question }
+    type: INITIALIZE_NEW_CHOICE,
+    payload: {}
   };
 };
 
-const updateCombo = (comboId: string, propName: string, propValue: string) => {
+const removeChoice = (choiceId: string) => {
+  return {
+    type: REMOVE_CHOICE,
+    payload: { choiceId }
+  };
+};
+
+const updateQuestion = (question: QuestionType) => {
+  return updateCombo('question', question);
+};
+
+const updateChoice = (choice: ChoiceType) => {
+  return {
+    type: UPDATE_CHOICE,
+    payload: { choice }
+  };
+};
+
+const updateCombo = (propName: string, propValue: Object) => {
   return {
     type: UPDATE_COMBO,
     payload: {
-      comboId,
       propName,
       propValue
     }
-  };
-};
-
-const saveCombo = (combo: ComboType) => {
-  return {
-    type: SAVE_COMBO,
-    payload: { combo }
   };
 };
 
@@ -73,10 +87,12 @@ const invokeWithAllData = (callback: (all: State) => Action) => {
 
 export {
   initializeNewCombo,
-  invokeWithAllData,
+  initializeNewChoice,
   updateQuestion,
-  saveCombo,
+  updateChoice,
+  removeChoice,
   updateCombo,
   editCombo,
-  deleteCombo
+  deleteCombo,
+  invokeWithAllData
 };

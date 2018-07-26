@@ -1,19 +1,21 @@
 //@flow
 import React from 'react';
-import type { QuestionType, ComboType } from './models/schema';
+import type { QuestionType, ComboType, ChoiceType } from './models/schema';
 import QuestionBuilder from './QuestionBuilder';
 import OptionsBuilderMgr from './optionBuilders/OptionsBuilderMgr';
 import QuestionViewer from './QuestionViewer';
 import OptionsViewerMgr from './optionsViewers/OptionsViewerMgr';
 
 type Props = {
-  current?: string, //combo that checked out being edit
   combos: Array<ComboType>,
-  updateQuestion: (id: string, q: QuestionType) => void,
-  updateCombo: (comboId: string, propName: string, propValue: string) => void,
-  saveCombo: (combo: ComboType) => void,
+  currentComboId: string,
+  initializeNewChoice: () => void,
+  updateCombo: (propName: string, propValue: string) => void,
+  updateChoice: (choice: ChoiceType) => void,
   editCombo: (comboId: string) => void,
-  deleteCombo: (comboId: string) => void
+  deleteCombo: (comboId: string) => void,
+  removeChoice: (choiceId: string) => void,
+  updateQuestion: (question: QuestionType) => void
 };
 
 const ComboList = (props: Props) => {
@@ -26,26 +28,30 @@ const ComboList = (props: Props) => {
 
 const renderList = ({
   combos,
+  currentComboId,
   updateQuestion,
   updateCombo,
   saveCombo,
-  editCombo,
   deleteCombo,
-  current
+  editCombo,
+  ...props
 }) => {
   return combos.map((combo, index) => {
     const { id, question, options } = combo;
-    if (current && combo.id == current) {
+    if (currentComboId && combo.id == currentComboId) {
       return (
         <div key={id}>
           <QuestionBuilder
             question={question}
-            updateQuestion={question => updateQuestion(id, question)}
-            updateCombo={(name, value) => updateCombo(id, name, value)}
+            updateQuestion={updateQuestion}
+            updateCombo={updateCombo}
             index={index}
           />
-          <OptionsBuilderMgr type={question.type} options={options} />
-          <button onClick={() => saveCombo(combo)}>Save</button>
+          <OptionsBuilderMgr
+            type={question.type}
+            options={options}
+            {...props}
+          />
           <button onClick={() => deleteCombo(combo.id)}>Delete</button>
         </div>
       );

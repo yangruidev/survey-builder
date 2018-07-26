@@ -9,12 +9,11 @@ import './styles/override-bootstrap.scss';
 import './styles/basic.scss';
 import App from './Pages/App';
 import buildReducer from './SurverEditor/buildReducer';
-import optionsReducer from './SurverEditor/optionBuilders/optionsReducer';
 
 const store = createStore(
   combineReducers({
-    buildReducer,
-    optionsReducer
+    buildReducer
+    //more reducers...
   }),
   applyMiddleware(thunk)
 );

@@ -1,42 +1,51 @@
 //@flow
 import React from 'react';
 import { connect } from 'react-redux';
-import type { QuestionType, ComboType } from '../SurverEditor/models/schema';
+import type {
+  QuestionType,
+  ComboType,
+  ChoiceType
+} from '../SurverEditor/models/schema';
 import {
-  invokeWithAllData,
   initializeNewCombo,
+  initializeNewChoice,
   updateQuestion,
+  updateChoice,
+  removeChoice,
   updateCombo,
-  saveCombo,
   editCombo,
   deleteCombo
 } from '../SurverEditor/buildActions';
 import ComboContainer from '../SurverEditor/ComboContainer';
 
 const mapStateToProps = state => {
-  const { choices } = state.optionsReducer;
   const { combos, currentComboId } = state.buildReducer;
 
   return {
     combos,
-    currentComboId,
-    choices
+    currentComboId
   };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     initializeNewCombo: () => {
-      dispatch(invokeWithAllData(initializeNewCombo));
+      dispatch(initializeNewCombo());
     },
-    updateQuestion: (comboId: string, question: QuestionType) => {
-      dispatch(updateQuestion(comboId, question));
+    initializeNewChoice: () => {
+      dispatch(initializeNewChoice());
     },
-    updateCombo: (comboId: string, propName: string, propValue: string) => {
-      dispatch(updateCombo(comboId, propName, propValue));
+    updateQuestion: (question: QuestionType) => {
+      dispatch(updateQuestion(question));
     },
-    saveCombo: (combo: ComboType) => {
-      dispatch(saveCombo(combo));
+    updateChoice: (choice: ChoiceType) => {
+      dispatch(updateChoice(choice));
+    },
+    removeChoice: (choiceId: string) => {
+      dispatch(removeChoice(choiceId));
+    },
+    updateCombo: (propName: string, propValue: Object) => {
+      dispatch(updateCombo(propName, propValue));
     },
     editCombo: (comboId: string) => {
       dispatch(editCombo(comboId));

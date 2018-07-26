@@ -1,14 +1,17 @@
 //@flow
 import uuidv4 from 'uuid';
 import type { QuestionType, ComboType, ReduxAction } from './models/schema';
-import { QuestionTypes as questionTypes } from './models/config';
+import { QuestionTypes as questionTypes, ChoiceType } from './models/config';
 import {
   INITIALIZE_NEW_COMBO,
   UPDATE_QUESTION,
   SAVE_COMBO,
   UPDATE_COMBO,
   EDIT_COMBO,
-  DELETE_COMBO
+  DELETE_COMBO,
+  INITIALIZE_NEW_CHOICE,
+  UPDATE_CHOICE,
+  REMOVE_CHOICE
 } from '../SurverEditor/models/constant';
 import {
   insertItem,
@@ -17,6 +20,8 @@ import {
   updateItemInArray,
   createOrUpdateItemInArray
 } from '../../utilities';
+import ChoiceBuilder from './optionBuilders/multipleChoice/ChoiceBuilder';
+import ChoiceList from './optionBuilders/multipleChoice/ChoiceList';
 
 type State = {
   combos: Array<ComboType>,
@@ -32,6 +37,10 @@ const buildReducer = (state: State, action: ReduxAction) => {
   if (!state) {
     state = DEFAULT_STATE;
   }
+  let currentCombo = null;
+  if (state.currentComboId) {
+    currentCombo = state.combos.filter(c => c.id == state.currentComboId)[0];
+  }
   let comboList: Array<ComboType> = state.combos ? state.combos.slice() : [];
   let newComboList = []; //used for hold updated combolist
   let combo = null,
@@ -45,25 +54,27 @@ const buildReducer = (state: State, action: ReduxAction) => {
 
   switch (action.type) {
     case INITIALIZE_NEW_COMBO:
-      const { all } = action.payload;
-      const { choices } = all.optionsReducer;
-      //when initialize new, if there's combo in EDIT state, save the
-      //combo as it is and make the new initlaized combo current
-      newComboList = saveOptionsToCurrentCombo(
-        comboList,
-        state.currentComboId,
-        choices
-      );
       const newCombo: ComboType = initializeCombo();
-      newComboList.push(newCombo);
-      return { ...state, combos: newComboList, currentComboId: newCombo.id };
+      comboList.push(newCombo);
+      return { ...state, combos: comboList, currentComboId: newCombo.id };
 
-    case UPDATE_QUESTION:
-      newComboList = updateItemPropInArray(
+    case INITIALIZE_NEW_CHOICE:
+      newComboList = initializeChoiceInCurrentCombo(comboList, currentCombo);
+      return { ...state, combos: newComboList };
+
+    case UPDATE_CHOICE:
+      newComboList = updateChoiceInCurrentCombo(
         comboList,
-        comboId,
-        'question',
-        question
+        currentCombo,
+        action.payload.choice
+      );
+      return { ...state, combos: newComboList };
+
+    case REMOVE_CHOICE:
+      newComboList = removeChoiceFromCurrentCombo(
+        comboList,
+        currentCombo,
+        action.payload.choiceId
       );
       return { ...state, combos: newComboList };
 
@@ -71,7 +82,7 @@ const buildReducer = (state: State, action: ReduxAction) => {
       const { propValue, propName } = action.payload;
       newComboList = updateItemPropInArray(
         comboList,
-        action.payload.comboId,
+        state.currentComboId,
         propName,
         propValue
       ).map(c => updateToAlignWithComboType(c));
@@ -108,9 +119,24 @@ const initializeCombo = (type = questionTypes[0].value) => {
     type: type,
     options: {
       type: type,
-      value: null //defer initialization to specific type option builder
+      value: [initializeChoice(type)]
     }
   };
+};
+
+const initializeChoice = type => {
+  switch (type) {
+    case 'Multiple Choice':
+      return {
+        id: uuidv4(),
+        text: ''
+      };
+    default:
+      return {
+        id: uuidv4(),
+        text: ''
+      };
+  }
 };
 
 const updateToAlignWithComboType = combo => {
@@ -128,6 +154,68 @@ const saveOptionsToCurrentCombo = (comboList, currentComboId, options) => {
       return c;
     }
   });
+};
+
+const initializeChoiceInCurrentCombo = (comboList, currentCombo) => {
+  let newComboList = comboList;
+  if (currentCombo && currentCombo.question) {
+    const newChoice: ChoiceType = initializeChoice(currentCombo.question.type);
+    newComboList = (comboList: any).map(c => {
+      if (c.id === currentCombo.id) {
+        if (c.options.value && c.options.value.length > 0) {
+          const choliceList = c.options.value.slice();
+          choliceList.push(newChoice);
+          c.options = { ...c.options, value: choliceList };
+        } else {
+          c.options = { ...c.options, value: [newChoice] };
+        }
+      }
+      return c;
+    });
+  }
+  return newComboList;
+};
+
+const updateChoiceInCurrentCombo = (comboList, currentCombo, choice) => {
+  let newComboList = comboList;
+  if (currentCombo && currentCombo.question) {
+    newComboList = (comboList: any).map(c => {
+      if (
+        c.id == currentCombo.id &&
+        c.options.value &&
+        c.options.value.length > 0
+      ) {
+        const choliceList = c.options.value.slice();
+        c.options = {
+          ...c.options,
+          value: updateItemInArray(choliceList, choice)
+        };
+      }
+      return c;
+    });
+  }
+  return newComboList;
+};
+
+const removeChoiceFromCurrentCombo = (comboList, currentCombo, choiceId) => {
+  let newComboList = comboList;
+  if (currentCombo && currentCombo.question) {
+    newComboList = (comboList: any).map(c => {
+      if (
+        c.id == currentCombo.id &&
+        c.options.value &&
+        c.options.value.length > 0
+      ) {
+        const choliceList = c.options.value.slice();
+        c.options = {
+          ...c.options,
+          value: removeItemById(choliceList, choiceId)
+        };
+      }
+      return c;
+    });
+  }
+  return newComboList;
 };
 
 export default buildReducer;

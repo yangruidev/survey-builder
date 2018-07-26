@@ -5,7 +5,6 @@ import type { ChoiceType } from '../../models/schema';
 
 type Props = {
   choices: Array<ChoiceType>,
-  currentChoiceId: string,
   updateChoice: (choice: ChoiceType) => void,
   removeChoice: (id: string) => void
 };

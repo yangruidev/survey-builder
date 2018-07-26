@@ -5,29 +5,21 @@ import type { ChoiceType } from '../../models/schema';
 
 type Props = {
   choices: Array<ChoiceType>,
-  currentChoiceId: string,
-  addNewChoice: () => void,
+  initializeNewChoice: () => void,
   updateChoice: (q: ChoiceType) => void,
   removeChoice: (id: string) => void
 };
 
 const MultipleChoiceContainer = (props: Props) => {
-  const {
-    choices,
-    currentChoiceId,
-    updateChoice,
-    addNewChoice,
-    removeChoice
-  } = props;
+  const { choices, updateChoice, initializeNewChoice, removeChoice } = props;
   return (
     <div>
       <ChoiceList
         choices={choices}
-        currentChoiceId={currentChoiceId}
         updateChoice={updateChoice}
         removeChoice={removeChoice}
       />
-      <button onClick={addNewChoice}>Add</button>
+      <button onClick={initializeNewChoice}>Add</button>
     </div>
   );
 };
