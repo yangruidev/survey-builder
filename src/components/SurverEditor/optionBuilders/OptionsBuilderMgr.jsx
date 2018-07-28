@@ -8,7 +8,7 @@ import SingleTextboxOptionBuilder from '../optionBuilders/singleTextbox/SingleTe
 type Props = {
   type: string,
   options: OptionsType,
-  initializeNewChoice: () => void,
+  initializeNewChoiceUnder: (id: string) => void,
   updateChoice: (choice: ChoiceType) => void,
   removeChoice: (choiceId: string) => void
 };

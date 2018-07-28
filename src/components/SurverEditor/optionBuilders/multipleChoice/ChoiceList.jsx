@@ -6,21 +6,16 @@ import type { ChoiceType } from '../../models/schema';
 type Props = {
   choices: Array<ChoiceType>,
   updateChoice: (choice: ChoiceType) => void,
-  removeChoice: (id: string) => void
+  removeChoice: (id: string) => void,
+  initializeNewChoiceUnder: (id: string) => void
 };
 
 const ChoiceList = (props: Props) => {
-  const { choices, updateChoice, removeChoice } = props;
+  const { choices, ...functions } = props;
   if (choices.length > 0) {
     return (choices: any).map((c, index) => {
       return (
-        <ChoiceBuilder
-          key={c.id}
-          choice={c}
-          removeChoice={removeChoice}
-          updateChoice={updateChoice}
-          index={index}
-        />
+        <ChoiceBuilder key={c.id} index={index} choice={c} {...functions} />
       );
     });
   } else {

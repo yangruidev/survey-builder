@@ -50,7 +50,7 @@ class Input extends Component<Props, State> {
         value={value}
         onBlur={e => this.selfHandleBlur(e, handleBlur)}
         onChange={this.handleChange}
-        className={cssClass}
+        className={'${cssClass} input'}
         placeholder={placeholder}
       />
     );

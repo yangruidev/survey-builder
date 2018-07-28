@@ -34,6 +34,13 @@ const initializeNewChoice = () => {
   };
 };
 
+const initializeNewChoiceUnder = (id: string) => {
+  return {
+    type: INITIALIZE_NEW_CHOICE,
+    payload: { id }
+  };
+};
+
 const removeChoice = (choiceId: string) => {
   return {
     type: REMOVE_CHOICE,
@@ -87,7 +94,7 @@ const invokeWithAllData = (callback: (all: State) => Action) => {
 
 export {
   initializeNewCombo,
-  initializeNewChoice,
+  initializeNewChoiceUnder,
   updateQuestion,
   updateChoice,
   removeChoice,

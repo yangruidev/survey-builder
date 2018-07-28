@@ -1,6 +1,5 @@
 //@flow
 import React from 'react';
-import { debounce } from 'underscore';
 import type { QuestionType } from './models/schema';
 import { QuestionTypes as questionTypes } from './models/config';
 import Select from '../Base/Select';
@@ -57,23 +56,21 @@ class QuestionBlock extends React.Component<Props, State> {
   render() {
     const { id, type, text, index } = this.state;
     return (
-      <div className="fx-ctn">
-        <div className="fi-10">Q{index + 1}</div>
-        <div className="fi-50">
+      <div className="fx-ctn field is-grouped">
+        <div className="fi-10 control v-center-h-right">Q{index + 1}</div>
+        <div className="fi-60 control">
           <Input
             type="text"
             value={text}
             handleBlur={this.updateQuestionText}
             placeholder="Enter your question"
-            cssClass="form-control"
           />
         </div>
-        <div className="fi-40">
+        <div className="fi-30 control">
           <Select
             value={type}
             options={questionTypes}
             handleChange={this.updateComboType}
-            cssClass="form-control"
           />
         </div>
       </div>

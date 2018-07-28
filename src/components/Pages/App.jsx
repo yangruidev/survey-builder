@@ -1,6 +1,5 @@
 //@flow
 import React from 'react';
-import 'bootstrap';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import NavBar from '../Shared/Navbar';
@@ -11,14 +10,14 @@ const App = () => {
   return (
     <Router>
       <div className="wrapper">
-        <nav>
+        <nav className="container">
           <NavBar title="Survey Builder" />
         </nav>
-        <main>
+        <main className="container">
           <Main />
         </main>
         <footer>
-          <Footer content="Hello world" />
+          <Footer content="2018" brand="SurveyBuilder" author="Ray" />
         </footer>
       </div>
     </Router>

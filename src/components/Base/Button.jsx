@@ -1,39 +1,73 @@
-import styled, { css } from 'styled-components';
-import { Button } from 'reakit';
+//@flow
+import React from 'react';
 
-const BaseButton = styled.button`
-  border-radius: 3px;
-  padding: 0.5em 1em;
-  margin: 0 1em;
-  background: transparent;
-  color: #2196F3;
-  border: 2px solid #2196F3;
+type Props = {
+  handleClick: (identifier: string) => void,
+  text?: string,
+  size?: string, //small, medium, large
+  type?: string, //primary, link, info, success, warning, danger
+  state?: string, //focused, active, loading, static
+  isDisabled?: boolean,
+  isOutlined?: boolean,
+  isInverted?: boolean,
+  isRounded?: boolean,
+  isTextOnLeft?: boolean,
+  customClass?: string,
+  children?: Object
+};
 
-  &:focus, &:active, &:visited {
-    outline: none;
+const Button = (props: Props) => {
+  const {
+    handleClick,
+    size,
+    type,
+    text,
+    isDisabled,
+    isOutlined,
+    isRounded,
+    isInverted,
+    isTextOnLeft,
+    customClass,
+    state
+  } = props;
+
+  const classNames = [
+    `button`,
+    `${size ? 'is-' + size : ''}`,
+    `${type ? 'is-' + type : 'is-default'}`,
+    `${state ? 'is-' + state : ''}`,
+    `${isOutlined ? 'is-outlined' : ''}`,
+    `${isInverted ? 'is-inverted' : ''}`,
+    `${isRounded ? 'is-rounded' : ''}`,
+    `${customClass ? customClass : ''}`
+  ];
+
+  const buttonProps = {
+    className: classNames.filter(c => c.length > 0).join(' '),
+    onClick: handleClick,
+    disabled: isDisabled
+  };
+
+  return <a {...buttonProps}>{renderTextAndChildren(props)}</a>;
+};
+
+const renderTextAndChildren = ({ children, text, isTextOnLeft }) => {
+  if (isTextOnLeft) {
+    return (
+      <React.Fragment>
+        {text ? <span>{text}</span> : ''}
+        {children}
+      </React.Fragment>
+    );
+  } else {
+    //default
+    return (
+      <React.Fragment>
+        {children}
+        {text ? <span>{text}</span> : ''}
+      </React.Fragment>
+    );
   }
+};
 
-  &:hover {
-    cursor: pointer
-  }
-
-  ${props => props.primary && css`
-    background: #2196F3;
-    color: #FFF;
-    &:hover {
-      background: #1976D2;
-      border-color: #1976D2;
-    }
-  `}
-`;
-
-const RoundButton = BaseButton.extend`
-  border-radius: 22px;
-
-  ${props => props.primary && css`
-    background: #2196F3;
-    color: #FFF;
-  `}
-`;
-
-export { BaseButton, RoundButton };
+export default Button;

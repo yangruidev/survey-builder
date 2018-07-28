@@ -59,8 +59,22 @@ const buildReducer = (state: State, action: ReduxAction) => {
       return { ...state, combos: comboList, currentComboId: newCombo.id };
 
     case INITIALIZE_NEW_CHOICE:
-      newComboList = initializeChoiceInCurrentCombo(comboList, currentCombo);
-      return { ...state, combos: newComboList };
+      if (currentCombo != null) {
+        if (action.payload.id) {
+          newComboList = initializeChoiceInCurrentCombo(
+            comboList,
+            currentCombo,
+            action.payload.id
+          );
+        } else {
+          newComboList = initializeChoiceInCurrentCombo(
+            comboList,
+            currentCombo
+          );
+        }
+        return { ...state, combos: newComboList };
+      }
+      throw new Error('Cannot add new choice when currentCombo is not chosen.');
 
     case UPDATE_CHOICE:
       newComboList = updateChoiceInCurrentCombo(
@@ -156,16 +170,27 @@ const saveOptionsToCurrentCombo = (comboList, currentComboId, options) => {
   });
 };
 
-const initializeChoiceInCurrentCombo = (comboList, currentCombo) => {
+const initializeChoiceInCurrentCombo = (
+  comboList: Array<ComboType>,
+  currentCombo: ComboType,
+  underChoiceId: ?string
+) => {
   let newComboList = comboList;
   if (currentCombo && currentCombo.question) {
     const newChoice: ChoiceType = initializeChoice(currentCombo.question.type);
     newComboList = (comboList: any).map(c => {
       if (c.id === currentCombo.id) {
         if (c.options.value && c.options.value.length > 0) {
-          const choliceList = c.options.value.slice();
-          choliceList.push(newChoice);
-          c.options = { ...c.options, value: choliceList };
+          const choiceList = c.options.value.slice();
+          if (underChoiceId) {
+            // insert under a specific choice if Id provided
+            const position = choiceList.findIndex(c => c.id === underChoiceId);
+            choiceList.splice(position + 1, 0, newChoice);
+          } else {
+            //insert to the last
+            choiceList.push(newChoice);
+          }
+          c.options = { ...c.options, value: choiceList };
         } else {
           c.options = { ...c.options, value: [newChoice] };
         }

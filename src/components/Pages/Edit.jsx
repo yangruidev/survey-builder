@@ -8,7 +8,7 @@ import type {
 } from '../SurverEditor/models/schema';
 import {
   initializeNewCombo,
-  initializeNewChoice,
+  initializeNewChoiceUnder,
   updateQuestion,
   updateChoice,
   removeChoice,
@@ -16,7 +16,7 @@ import {
   editCombo,
   deleteCombo
 } from '../SurverEditor/buildActions';
-import ComboContainer from '../SurverEditor/ComboContainer';
+import FormEditor from '../SurverEditor/FormEditor';
 
 const mapStateToProps = state => {
   const { combos, currentComboId } = state.buildReducer;
@@ -32,8 +32,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     initializeNewCombo: () => {
       dispatch(initializeNewCombo());
     },
-    initializeNewChoice: () => {
-      dispatch(initializeNewChoice());
+    initializeNewChoiceUnder: (id: string) => {
+      dispatch(initializeNewChoiceUnder(id));
     },
     updateQuestion: (question: QuestionType) => {
       dispatch(updateQuestion(question));
@@ -59,6 +59,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 const Edit = connect(
   mapStateToProps,
   mapDispatchToProps
-)(ComboContainer);
+)(FormEditor);
 
 export default Edit;

@@ -1,15 +1,15 @@
 //@flow
 import React from 'react';
 import type { QuestionType, ComboType, ChoiceType } from './models/schema';
-import ComboList from './ComboList';
-import AddNewQuestion from './AddNewQuestion';
-import { updateChoice, removeChoice } from './buildActions';
+import DismissButton from '../Base/DismissButton';
+import Button from '../Base/Button';
+import ButtonGroup from '../Base/ButtonGroup';
 
 type Props = {
-  combos: Array<ComboType>,
-  currentComboId: string,
-  initializeNewCombo: () => void,
-  initializeNewChoice: () => void,
+  render: Object => any,
+  isCurrent: boolean,
+  combo: ComboType,
+  initializeNewChoiceUnder: (id: string) => void,
   updateCombo: (propName: string, propValue: string) => void,
   updateChoice: (choice: ChoiceType) => void,
   editCombo: (comboId: string) => void,
@@ -19,12 +19,29 @@ type Props = {
 };
 
 const ComboContainer = (props: Props) => {
-  const { initializeNewCombo } = props;
+  const {
+    render,
+    combo,
+    deleteCombo,
+    editCombo,
+    isCurrent,
+    ...functions
+  } = props;
 
   return (
-    <div>
-      <ComboList {...props} />
-      <AddNewQuestion add={initializeNewCombo} />
+    <div className="well is-light">
+      {render({ ...combo, ...functions, isCurrent })}
+      <ButtonGroup customClass="top-right-corner">
+        {isCurrent ? null : (
+          <Button
+            type="warning"
+            size="small"
+            text="Edit"
+            handleClick={() => editCombo(combo.id)}
+          />
+        )}
+        <DismissButton handleClick={() => deleteCombo(combo.id)} />
+      </ButtonGroup>
     </div>
   );
 };
