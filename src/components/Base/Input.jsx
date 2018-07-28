@@ -8,7 +8,8 @@ type Props = {
   type?: string,
   placeholder?: string,
   showLabel?: boolean,
-  cssClass?: string
+  cssClass?: string,
+  mode?: string //view, edit(default)
 };
 
 type State = {
@@ -40,9 +41,17 @@ class Input extends Component<Props, State> {
   }
 
   render() {
-    const { type, handleBlur, placeholder, cssClass } = this.props;
+    const { type, handleBlur, placeholder, cssClass, mode } = this.props;
+    const classNames = [
+      `input`,
+      `${mode == 'view' ? 'input-view' : ''}`,
+      `${cssClass ? cssClass : ''}`
+    ];
 
     const { value } = this.state;
+    const inputProps = {
+      disabled: mode == 'view'
+    };
 
     return (
       <input
@@ -50,8 +59,9 @@ class Input extends Component<Props, State> {
         value={value}
         onBlur={e => this.selfHandleBlur(e, handleBlur)}
         onChange={this.handleChange}
-        className={'${cssClass} input'}
+        className={classNames.filter(c => !!c).join(' ')}
         placeholder={placeholder}
+        {...inputProps}
       />
     );
   }

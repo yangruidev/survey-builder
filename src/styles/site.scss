@@ -20,3 +20,111 @@ $input-shadow: none;
 @import '../../node_modules/bulma/sass/layout/hero.sass';
 @import '../../node_modules/bulma/sass/layout/section.sass';
 @import '../../node_modules/bulma/sass/components/_all.sass';
+
+/*Below is customized area*/
+// Set colors
+$element-gutter-width: 0.75rem;
+
+//layout
+body,
+html {
+  height: 100%;
+}
+
+.wrapper {
+  display: grid;
+  height: 100%;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    'nav'
+    'main'
+    'footer';
+  grid-template-rows: 66px 1fr 80px;
+}
+
+nav {
+  grid-area: nav;
+  min-width: 800px;
+}
+
+main {
+  grid-area: main;
+  min-width: 800px;
+}
+
+footer {
+  grid-area: footer;
+  min-width: 800px;
+}
+
+//flex
+.fx-ctn {
+  display: flex;
+
+  @for $perc from 1 through 100 {
+    .fi-#{$perc} {
+      flex-basis: calc(100% / (100 / #{$perc}));
+    }
+  }
+}
+
+//nav
+nav .level {
+  padding: 15px 0;
+}
+
+//helper
+.v-center-h-right {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.well {
+  position: relative;
+  padding: $element-gutter-width 0;
+
+  &.is-light {
+    background-color: $white-ter;
+  }
+
+  + .well {
+    margin-top: $element-gutter-width;
+  }
+}
+
+.top-right-corner {
+  position: absolute;
+  top: $element-gutter-width;
+  right: $element-gutter-width;
+}
+
+//overwrite Bulma style
+.input:focus,
+.input.is-focused,
+.input:active,
+.input.is-active,
+.textarea:focus,
+.textarea.is-focused,
+.textarea:active,
+.textarea.is-active {
+  border-color: $grey-lighter;
+  box-shadow: none;
+}
+
+//custom style
+.input-view {
+  background: transparent;
+  &:focus {
+    border: none;
+    box-shadow: none;
+  }
+  &:hover {
+    border: none;
+    box-shadow: none;
+  }
+}
+
+.display-question {
+  color: $blue;
+}

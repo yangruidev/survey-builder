@@ -5,7 +5,6 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
 import '../styles/site.scss';
-import '../styles/customize.scss';
 import App from './Pages/App';
 import buildReducer from './SurverEditor/buildReducer';
 

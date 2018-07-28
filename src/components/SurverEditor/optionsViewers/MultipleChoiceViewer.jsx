@@ -12,9 +12,16 @@ const MultipleChoiceViewer = (props: Props) => {
   if (choices && choices.length > 0) {
     preview = choices.map(c => {
       return (
-        <div key={c.id}>
-          <input type="radio" value={c.text} checked={false} key={c.id} />
-          <label>{c.text}</label>
+        <div className="fx-ctn field is-grouped" key={c.id}>
+          <div className="fi-10 control" />
+          <div className="fi-60 control">
+            <label className="radio">
+              <input type="radio" value={c.text} checked={false} key={c.id} />
+              <span style={{ display: 'inlineBlock', marginLeft: '0.5rem' }}>
+                {c.text}
+              </span>
+            </label>
+          </div>
         </div>
       );
     });

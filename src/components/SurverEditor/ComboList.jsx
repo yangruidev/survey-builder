@@ -4,7 +4,6 @@ import type { QuestionType, ComboType, ChoiceType } from './models/schema';
 import DismissButton from '../Base/DismissButton';
 import QuestionBuilder from './QuestionBuilder';
 import OptionsBuilderMgr from './optionBuilders/OptionsBuilderMgr';
-import QuestionViewer from './QuestionViewer';
 import OptionsViewerMgr from './optionsViewers/OptionsViewerMgr';
 import ComboContainer from './ComboContainer';
 
@@ -37,21 +36,22 @@ const renderComboList = ({ combos, currentComboId, ...functions }) => {
 
 const renderCombo = props => {
   const { isCurrent, question, options, index, ...funcs } = props;
-  if (isCurrent) {
-    return (
-      <React.Fragment>
-        <QuestionBuilder question={question} {...funcs} index={index} />
+  const mode = isCurrent ? 'edit' : 'view';
+  return (
+    <React.Fragment>
+      <QuestionBuilder
+        question={question}
+        {...funcs}
+        index={index}
+        mode={mode}
+      />
+      {isCurrent ? (
         <OptionsBuilderMgr options={options} type={question.type} {...funcs} />
-      </React.Fragment>
-    );
-  } else {
-    return (
-      <React.Fragment>
-        <QuestionViewer question={question} index={index} />
+      ) : (
         <OptionsViewerMgr options={options} type={question.type} />
-      </React.Fragment>
-    );
-  }
+      )}
+    </React.Fragment>
+  );
 };
 
 const ComboList = (props: Props) => {
