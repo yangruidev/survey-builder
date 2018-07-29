@@ -10,13 +10,18 @@ import ComboContainer from './ComboContainer';
 type Props = {
   combos: Array<ComboType>,
   currentComboId: string,
-  initializeNewChoiceUnder: (id: string) => void,
+  //combo
   updateCombo: (propName: string, propValue: string) => void,
-  updateChoice: (choice: ChoiceType) => void,
   editCombo: (comboId: string) => void,
   deleteCombo: (comboId: string) => void,
+  saveCombo: () => void,
+  //question / option
+  initializeNewChoiceUnder: (id: string) => void,
+  updateChoice: (choice: ChoiceType) => void,
   removeChoice: (choiceId: string) => void,
-  updateQuestion: (question: QuestionType) => void
+  updateQuestion: (question: QuestionType) => void,
+  //general
+  discardChange: () => void
 };
 
 const renderComboList = ({ combos, currentComboId, ...functions }) => {

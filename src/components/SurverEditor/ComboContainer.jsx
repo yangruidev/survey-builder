@@ -9,13 +9,18 @@ type Props = {
   render: Object => any,
   isCurrent: boolean,
   combo: ComboType,
-  initializeNewChoiceUnder: (id: string) => void,
+  //combo
   updateCombo: (propName: string, propValue: string) => void,
-  updateChoice: (choice: ChoiceType) => void,
   editCombo: (comboId: string) => void,
   deleteCombo: (comboId: string) => void,
+  saveCombo: () => void,
+  //question / option
+  initializeNewChoiceUnder: (id: string) => void,
+  updateChoice: (choice: ChoiceType) => void,
   removeChoice: (choiceId: string) => void,
-  updateQuestion: (question: QuestionType) => void
+  updateQuestion: (question: QuestionType) => void,
+  //general
+  discardChange: () => void
 };
 
 const ComboContainer = (props: Props) => {
@@ -24,6 +29,8 @@ const ComboContainer = (props: Props) => {
     combo,
     deleteCombo,
     editCombo,
+    saveCombo,
+    discardChange,
     isCurrent,
     ...functions
   } = props;
@@ -42,6 +49,22 @@ const ComboContainer = (props: Props) => {
         )}
         <DismissButton handleClick={() => deleteCombo(combo.id)} />
       </ButtonGroup>
+      {isCurrent ? (
+        <div className="well-footer">
+          <ButtonGroup>
+            <Button
+              type="primary"
+              text="Save"
+              handleClick={() => saveCombo()}
+            />
+            <Button
+              type="default"
+              text="Cancel"
+              handleClick={() => discardChange()}
+            />
+          </ButtonGroup>
+        </div>
+      ) : null}
     </div>
   );
 };

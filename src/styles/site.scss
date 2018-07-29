@@ -91,6 +91,14 @@ nav .level {
   + .well {
     margin-top: $element-gutter-width;
   }
+
+  .well-footer {
+    padding: $element-gutter-width;
+    padding-bottom: 0;
+    display: flex;
+    justify-content: flex-end;
+    border-top: $control-border-width solid white;
+  }
 }
 
 .top-right-corner {

@@ -11,11 +11,7 @@ type Props = {
 };
 
 const MultipleChoiceContainer = (props: Props) => {
-  return (
-    <div>
-      <ChoiceList {...props} />
-    </div>
-  );
+  return <ChoiceList {...props} />;
 };
 
 export default MultipleChoiceContainer;

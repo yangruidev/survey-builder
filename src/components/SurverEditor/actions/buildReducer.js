@@ -11,7 +11,8 @@ import {
   DELETE_COMBO,
   INITIALIZE_NEW_CHOICE,
   UPDATE_CHOICE,
-  REMOVE_CHOICE
+  REMOVE_CHOICE,
+  DISCARD_CHANGE
 } from '../../SurverEditor/models/constant';
 import {
   insertItem,
@@ -35,15 +36,17 @@ const buildReducer = (state: State, action: ReduxAction) => {
   if (!state) {
     state = DEFAULT_STATE;
   }
-  let currentCombo = null;
+  let comboList: Array<ComboType> = state.combos ? state.combos.slice() : [];
+  let newComboList = []; //used for hold updated combolist
+  let currentCombo = null,
+    combo = null,
+    comboId = null,
+    question = null;
+
   if (state.currentComboId) {
     currentCombo = state.combos.filter(c => c.id == state.currentComboId)[0];
   }
-  let comboList: Array<ComboType> = state.combos ? state.combos.slice() : [];
-  let newComboList = []; //used for hold updated combolist
-  let combo = null,
-    comboId = null,
-    question = null;
+
   if (action.payload) {
     combo = action.payload.combo;
     comboId = action.payload.comboId;
@@ -58,18 +61,11 @@ const buildReducer = (state: State, action: ReduxAction) => {
 
     case INITIALIZE_NEW_CHOICE:
       if (currentCombo != null) {
-        if (action.payload.id) {
-          newComboList = initializeChoiceInCurrentCombo(
-            comboList,
-            currentCombo,
-            action.payload.id
-          );
-        } else {
-          newComboList = initializeChoiceInCurrentCombo(
-            comboList,
-            currentCombo
-          );
-        }
+        newComboList = initializeChoiceInCurrentCombo(
+          comboList,
+          currentCombo,
+          action.payload.id ? action.payload.id : null
+        );
         return { ...state, combos: newComboList };
       }
       throw new Error('Cannot add new choice when currentCombo is not chosen.');
@@ -101,8 +97,8 @@ const buildReducer = (state: State, action: ReduxAction) => {
       return { ...state, combos: newComboList };
 
     case SAVE_COMBO:
-      newComboList = createOrUpdateItemInArray(comboList, combo);
-      return { ...state, combos: newComboList, currentComboId: '' };
+      //TODO: Implement SAVE_COMBO
+      return { ...state, currentComboId: null };
 
     case EDIT_COMBO:
       return { ...state, currentComboId: comboId };
@@ -110,6 +106,9 @@ const buildReducer = (state: State, action: ReduxAction) => {
     case DELETE_COMBO:
       newComboList = removeItemById(comboList, comboId);
       return { ...state, combos: newComboList };
+
+    case DISCARD_CHANGE:
+      return { ...state, currentComboId: null };
 
     default:
       return { ...state };

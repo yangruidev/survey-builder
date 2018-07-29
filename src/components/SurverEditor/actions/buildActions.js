@@ -17,7 +17,8 @@ import {
   DELETE_COMBO,
   UPDATE_CHOICE,
   INITIALIZE_NEW_CHOICE,
-  REMOVE_CHOICE
+  REMOVE_CHOICE,
+  DISCARD_CHANGE
 } from '../models/constant';
 
 const initializeNewCombo = (all: State) => {
@@ -83,6 +84,20 @@ const deleteCombo = (comboId: string) => {
   };
 };
 
+const saveCombo = () => {
+  return {
+    type: SAVE_COMBO,
+    payload: {}
+  };
+};
+
+const discardChange = () => {
+  return {
+    type: DISCARD_CHANGE,
+    payload: {}
+  };
+};
+
 //Thunk utility, ONLY use when the function needs all data from root state tree
 //TODO: What if need other arguments other than all???
 const invokeWithAllData = (callback: (all: State) => Action) => {
@@ -101,5 +116,7 @@ export {
   updateCombo,
   editCombo,
   deleteCombo,
+  saveCombo,
+  discardChange,
   invokeWithAllData
 };

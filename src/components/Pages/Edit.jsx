@@ -14,7 +14,9 @@ import {
   removeChoice,
   updateCombo,
   editCombo,
-  deleteCombo
+  deleteCombo,
+  saveCombo,
+  discardChange
 } from '../SurverEditor/actions/buildActions';
 import FormEditor from '../SurverEditor/FormEditor';
 
@@ -52,6 +54,12 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
     deleteCombo: (comboId: string) => {
       dispatch(deleteCombo(comboId));
+    },
+    saveCombo: () => {
+      dispatch(saveCombo());
+    },
+    discardChange: () => {
+      dispatch(discardChange());
     }
   };
 };

@@ -8,14 +8,19 @@ import { updateChoice, removeChoice } from './actions/buildActions';
 type Props = {
   combos: Array<ComboType>,
   currentComboId: string,
+  //combo
   initializeNewCombo: () => void,
-  initializeNewChoiceUnder: (id: string) => void,
   updateCombo: (propName: string, propValue: string) => void,
-  updateChoice: (choice: ChoiceType) => void,
   editCombo: (comboId: string) => void,
   deleteCombo: (comboId: string) => void,
+  saveCombo: () => void,
+  //question / option
+  initializeNewChoiceUnder: (id: string) => void,
+  updateChoice: (choice: ChoiceType) => void,
   removeChoice: (choiceId: string) => void,
-  updateQuestion: (question: QuestionType) => void
+  updateQuestion: (question: QuestionType) => void,
+  //general
+  discardChange: () => void
 };
 
 const FormEditor = (props: Props) => {
@@ -24,7 +29,9 @@ const FormEditor = (props: Props) => {
   return (
     <React.Fragment>
       <ComboList {...functions} />
-      <AddNewQuestion add={initializeNewCombo} />
+      <div style={{ marginTop: '0.75rem' }}>
+        <AddNewQuestion add={initializeNewCombo} />
+      </div>
     </React.Fragment>
   );
 };
