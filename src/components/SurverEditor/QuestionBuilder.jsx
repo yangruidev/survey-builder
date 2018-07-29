@@ -1,6 +1,5 @@
 //@flow
 import React from 'react';
-import { debounce } from 'underscore';
 import type { QuestionType } from './models/schema';
 import { QuestionTypes as questionTypes } from './models/config';
 import Select from '../Base/Select';
@@ -17,7 +16,8 @@ type State = {
 type Props = {
   question: QuestionType,
   updateQuestion: (q: QuestionType) => void,
-  updateCombo: (propName: string, propValue: string) => void
+  updateCombo: (propName: string, propValue: string) => void,
+  mode?: string // edit(default), view
 };
 
 class QuestionBlock extends React.Component<Props, State> {
@@ -56,26 +56,38 @@ class QuestionBlock extends React.Component<Props, State> {
 
   render() {
     const { id, type, text, index } = this.state;
+    const isViewMode = this.props.mode == 'view';
+    const displayQuestionStyle = {
+      height: '36px',
+      fontSize: '1.2rem',
+      lineHeight: '36px'
+    };
     return (
-      <div className="fx-ctn">
-        <div className="fi-10">Q{index + 1}</div>
-        <div className="fi-50">
-          <Input
-            type="text"
-            value={text}
-            handleBlur={this.updateQuestionText}
-            placeholder="Enter your question"
-            cssClass="form-control"
-          />
+      <div className="fx-ctn field is-grouped">
+        <div className="fi-10 control v-center-h-right">Q{index + 1}</div>
+        <div className="fi-60 control">
+          {isViewMode ? (
+            <p className="display-question" style={displayQuestionStyle}>
+              {text}
+            </p>
+          ) : (
+            <Input
+              type="text"
+              value={text}
+              handleBlur={this.updateQuestionText}
+              placeholder="Enter your question"
+            />
+          )}
         </div>
-        <div className="fi-40">
-          <Select
-            value={type}
-            options={questionTypes}
-            handleChange={this.updateComboType}
-            cssClass="form-control"
-          />
-        </div>
+        {isViewMode ? null : (
+          <div className="fi-30 control">
+            <Select
+              value={type}
+              options={questionTypes}
+              handleChange={this.updateComboType}
+            />
+          </div>
+        )}
       </div>
     );
   }

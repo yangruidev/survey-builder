@@ -13,17 +13,19 @@ type Props = {
 const Select = (props: Props) => {
   const { value, handleChange, options, label, showLabel, cssClass } = props;
   const dropdown = (
-    <select
-      value={value}
-      onChange={e => selfHandleChange(e, handleChange)}
-      className={cssClass}
-    >
-      {options.map(o => (
-        <option value={o.value} key={o.value}>
-          {o.text}
-        </option>
-      ))}
-    </select>
+    <div className="select">
+      <select
+        value={value}
+        onChange={e => selfHandleChange(e, handleChange)}
+        className={cssClass}
+      >
+        {options.map(o => (
+          <option value={o.value} key={o.value}>
+            {o.text}
+          </option>
+        ))}
+      </select>
+    </div>
   );
   return showLabel ? (
     <div>

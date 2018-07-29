@@ -1,39 +1,57 @@
 //@flow
 import React from 'react';
 import { connect } from 'react-redux';
-import type { QuestionType, ComboType } from '../SurverEditor/models/schema';
+import type {
+  QuestionType,
+  ComboType,
+  ChoiceType
+} from '../SurverEditor/models/schema';
 import {
-  addNewQuestion,
+  initializeNewCombo,
+  initializeNewChoiceUnder,
   updateQuestion,
+  updateChoice,
+  removeChoice,
   updateCombo,
-  saveCombo
-} from '../SurverEditor/buildActions';
-import ComboContainer from '../SurverEditor/ComboContainer';
+  editCombo,
+  deleteCombo
+} from '../SurverEditor/actions/buildActions';
+import FormEditor from '../SurverEditor/FormEditor';
 
 const mapStateToProps = state => {
-  const { choices } = state.optionsReducer;
   const { combos, currentComboId } = state.buildReducer;
 
   return {
     combos,
-    currentComboId,
-    choices
+    currentComboId
   };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    addNewQuestion: () => {
-      dispatch(addNewQuestion());
+    initializeNewCombo: () => {
+      dispatch(initializeNewCombo());
     },
-    updateQuestion: (comboId: string, question: QuestionType) => {
-      dispatch(updateQuestion(comboId, question));
+    initializeNewChoiceUnder: (id: string) => {
+      dispatch(initializeNewChoiceUnder(id));
     },
-    updateCombo: (comboId: string, propName: string, propValue: string) => {
-      dispatch(updateCombo(comboId, propName, propValue));
+    updateQuestion: (question: QuestionType) => {
+      dispatch(updateQuestion(question));
     },
-    saveCombo: (combo: ComboType) => {
-      dispatch(saveCombo(combo));
+    updateChoice: (choice: ChoiceType) => {
+      dispatch(updateChoice(choice));
+    },
+    removeChoice: (choiceId: string) => {
+      dispatch(removeChoice(choiceId));
+    },
+    updateCombo: (propName: string, propValue: Object) => {
+      dispatch(updateCombo(propName, propValue));
+    },
+    editCombo: (comboId: string) => {
+      dispatch(editCombo(comboId));
+    },
+    deleteCombo: (comboId: string) => {
+      dispatch(deleteCombo(comboId));
     }
   };
 };
@@ -41,6 +59,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 const Edit = connect(
   mapStateToProps,
   mapDispatchToProps
-)(ComboContainer);
+)(FormEditor);
 
 export default Edit;

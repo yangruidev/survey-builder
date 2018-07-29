@@ -1,6 +1,6 @@
 //@flow
 import React from 'react';
-import { BaseButton } from '../Base/Button';
+import Button from '../Base/Button';
 
 type Props = {
   add: () => void
@@ -11,14 +11,14 @@ const AddNewQuestion = (props: Props) => {
   const style = {
     width: '100%',
     height: '10em',
-    border: '1px dashed #AAA',
+    border: '1px dashed #aaa',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center'
   };
   return (
     <div style={style}>
-      <BaseButton onClick={add}>New Question</BaseButton>
+      <Button type="primary" text="New Question" handleClick={add} />
     </div>
   );
 };

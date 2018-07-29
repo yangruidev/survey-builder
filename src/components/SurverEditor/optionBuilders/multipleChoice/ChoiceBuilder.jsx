@@ -6,7 +6,9 @@ import Input from '../../../Base/Input';
 type Props = {
   index: number,
   choice: ChoiceType,
-  updateChoice: (c: ChoiceType) => void
+  removeChoice: (id: string) => void,
+  updateChoice: (c: ChoiceType) => void,
+  initializeNewChoiceUnder: (id: string) => void
 };
 
 class ChoiceBuilder extends Component<Props, ChoiceType> {
@@ -35,22 +37,37 @@ class ChoiceBuilder extends Component<Props, ChoiceType> {
 
   render() {
     const { text } = this.state;
-    const { index } = this.props;
+    const {
+      index,
+      choice,
+      removeChoice,
+      initializeNewChoiceUnder
+    } = this.props;
     return (
-      <div>
-        <div className="fx-ctn">
-          <div className="fi-10">Label {index + 1}</div>
-          <div className="fi-80">
-            <Input
-              type="text"
-              value={text}
-              handleBlur={this.updateText}
-              placeholder="Enter your option"
-              cssClass="form-control"
-            />
-          </div>
-          <div className="fi-10">x</div>
+      <div className="fx-ctn field is-grouped is-horizontal">
+        <div className="fi-10 control v-center-h-right">Label {index + 1}</div>
+        <div className="fi-60 control">
+          <Input
+            type="text"
+            value={text}
+            handleBlur={this.updateText}
+            placeholder="Enter your option"
+            cssClass="form-control"
+          />
         </div>
+        <a
+          type="button"
+          className="button control is-primary"
+          onClick={() => initializeNewChoiceUnder(choice.id)}
+        >
+          <span>Add</span>
+        </a>
+        <a
+          className="button control is-light"
+          onClick={() => removeChoice(choice.id)}
+        >
+          <span>Remove</span>
+        </a>
       </div>
     );
   }

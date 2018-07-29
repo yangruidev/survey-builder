@@ -1,51 +1,65 @@
 //@flow
 import React from 'react';
-import type { QuestionType, ComboType } from './models/schema';
+import type { QuestionType, ComboType, ChoiceType } from './models/schema';
+import DismissButton from '../Base/DismissButton';
 import QuestionBuilder from './QuestionBuilder';
-import OptionsMgr from './OptionsMgr';
+import OptionsBuilderMgr from './optionBuilders/OptionsBuilderMgr';
+import OptionsViewerMgr from './optionsViewers/OptionsViewerMgr';
+import ComboContainer from './ComboContainer';
 
 type Props = {
-  current?: string, //combo that checked out being edit
   combos: Array<ComboType>,
-  updateQuestion: (id: string, q: QuestionType) => void,
-  updateCombo: (comboId: string, propName: string, propValue: string) => void,
-  saveCombo: (combo: ComboType) => void
+  currentComboId: string,
+  initializeNewChoiceUnder: (id: string) => void,
+  updateCombo: (propName: string, propValue: string) => void,
+  updateChoice: (choice: ChoiceType) => void,
+  editCombo: (comboId: string) => void,
+  deleteCombo: (comboId: string) => void,
+  removeChoice: (choiceId: string) => void,
+  updateQuestion: (question: QuestionType) => void
+};
+
+const renderComboList = ({ combos, currentComboId, ...functions }) => {
+  return combos.map((combo, index) => {
+    return (
+      <ComboContainer
+        key={combo.id}
+        isCurrent={combo.id == currentComboId}
+        combo={combo}
+        index={index}
+        {...functions}
+        render={renderCombo}
+      />
+    );
+  });
+};
+
+const renderCombo = props => {
+  const { isCurrent, question, options, index, ...funcs } = props;
+  const mode = isCurrent ? 'edit' : 'view';
+  return (
+    <React.Fragment>
+      <QuestionBuilder
+        question={question}
+        {...funcs}
+        index={index}
+        mode={mode}
+      />
+      {isCurrent ? (
+        <OptionsBuilderMgr options={options} type={question.type} {...funcs} />
+      ) : (
+        <OptionsViewerMgr options={options} type={question.type} />
+      )}
+    </React.Fragment>
+  );
 };
 
 const ComboList = (props: Props) => {
   if (props.combos) {
-    return <div>{renderList(props)}</div>;
+    return <React.Fragment>{renderComboList(props)}</React.Fragment>;
   } else {
     return <div>No question yet</div>;
   }
-};
-
-const renderList = ({
-  combos,
-  updateQuestion,
-  updateCombo,
-  saveCombo,
-  current
-}) => {
-  return combos.map((combo, index) => {
-    const { id, question, options } = combo;
-    if (current && combo.id == current) {
-      return (
-        <div key={id}>
-          <QuestionBuilder
-            question={question}
-            updateQuestion={question => updateQuestion(id, question)}
-            updateCombo={(name, value) => updateCombo(id, name, value)}
-            index={index}
-          />
-          <OptionsMgr type={question.type} options={options} />
-          <button onClick={() => saveCombo(combo)}>Save</button>
-        </div>
-      );
-    } else {
-      return <div key={id}>view only</div>;
-    }
-  });
 };
 
 export default ComboList;

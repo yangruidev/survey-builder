@@ -1,4 +1,6 @@
 //@flow
+import { Action, ThunkAction, PromiseAction, State } from 'redux';
+
 export type ComboType = {
   id: string,
   question: QuestionType,
@@ -12,7 +14,7 @@ export type ReduxAction = {
 
 export type OptionsType = {
   type: string,
-  optionsObject: ?Object
+  value: ?Array<Object>
 };
 
 export type QuestionType = {
@@ -25,3 +27,12 @@ export type ChoiceType = {
   id: string,
   text: string
 };
+
+export type DispatchType = (
+  action: Action | ThunkAction | PromiseAction
+) => any;
+export type GetStateType = () => State;
+export type ThunkActionType = (
+  dispatch: DispatchType,
+  getState: GetStateType
+) => any;

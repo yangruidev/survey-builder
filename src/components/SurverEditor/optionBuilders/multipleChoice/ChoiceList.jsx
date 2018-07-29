@@ -5,22 +5,17 @@ import type { ChoiceType } from '../../models/schema';
 
 type Props = {
   choices: Array<ChoiceType>,
-  currentChoiceId: string,
-  updateChoice: (choice: ChoiceType) => void
+  updateChoice: (choice: ChoiceType) => void,
+  removeChoice: (id: string) => void,
+  initializeNewChoiceUnder: (id: string) => void
 };
 
 const ChoiceList = (props: Props) => {
-  const { choices, updateChoice } = props;
+  const { choices, ...functions } = props;
   if (choices.length > 0) {
-    //$FlowFixMe
-    return choices.map((c, index) => {
+    return (choices: any).map((c, index) => {
       return (
-        <ChoiceBuilder
-          key={c.id}
-          choice={c}
-          updateChoice={updateChoice}
-          index={index}
-        />
+        <ChoiceBuilder key={c.id} index={index} choice={c} {...functions} />
       );
     });
   } else {

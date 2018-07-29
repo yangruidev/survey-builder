@@ -1,48 +1,47 @@
 //@flow
 import React from 'react';
 import type { QuestionType, ComboType, ChoiceType } from './models/schema';
-import ComboList from './ComboList';
-import AddNewQuestion from './AddNewQuestion';
+import DismissButton from '../Base/DismissButton';
+import Button from '../Base/Button';
+import ButtonGroup from '../Base/ButtonGroup';
 
 type Props = {
-  combos: Array<ComboType>,
-  choices: Array<ChoiceType>,
-  currentComboId: string,
-  addNewQuestion: () => void,
-  saveCombo: (combo: ComboType) => void,
-  updateQuestion: (id: string, q: QuestionType) => void,
-  updateCombo: (comboId: string, propName: string, propValue: string) => void
+  render: Object => any,
+  isCurrent: boolean,
+  combo: ComboType,
+  initializeNewChoiceUnder: (id: string) => void,
+  updateCombo: (propName: string, propValue: string) => void,
+  updateChoice: (choice: ChoiceType) => void,
+  editCombo: (comboId: string) => void,
+  deleteCombo: (comboId: string) => void,
+  removeChoice: (choiceId: string) => void,
+  updateQuestion: (question: QuestionType) => void
 };
 
 const ComboContainer = (props: Props) => {
   const {
-    combos,
-    choices,
-    currentComboId,
-    addNewQuestion,
-    updateQuestion,
-    saveCombo,
-    updateCombo
+    render,
+    combo,
+    deleteCombo,
+    editCombo,
+    isCurrent,
+    ...functions
   } = props;
 
-  const updatedCombos = combos.map(c => {
-    if (c.id !== currentComboId) {
-      return c;
-    } else {
-      return { ...c, options: { ...c.options, optionsObject: choices } };
-    }
-  });
-
   return (
-    <div>
-      <ComboList
-        combos={updatedCombos}
-        current={currentComboId}
-        updateQuestion={updateQuestion}
-        updateCombo={updateCombo}
-        saveCombo={saveCombo}
-      />
-      <AddNewQuestion add={addNewQuestion} saveCombo={saveCombo} />
+    <div className="well is-light">
+      {render({ ...combo, ...functions, isCurrent })}
+      <ButtonGroup customClass="top-right-corner">
+        {isCurrent ? null : (
+          <Button
+            type="warning"
+            size="small"
+            text="Edit"
+            handleClick={() => editCombo(combo.id)}
+          />
+        )}
+        <DismissButton handleClick={() => deleteCombo(combo.id)} />
+      </ButtonGroup>
     </div>
   );
 };

@@ -4,17 +4,14 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './styles/override-bootstrap.scss';
-import './styles/basic.scss';
+import '../styles/site.scss';
 import App from './Pages/App';
-import buildReducer from './SurverEditor/buildReducer';
-import optionsReducer from './SurverEditor/optionBuilders/optionsReducer';
+import buildReducer from './SurverEditor/actions/buildReducer';
 
 const store = createStore(
   combineReducers({
-    buildReducer,
-    optionsReducer
+    buildReducer
+    //more reducers...
   }),
   applyMiddleware(thunk)
 );
