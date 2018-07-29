@@ -6,7 +6,7 @@ import { createStore, applyMiddleware, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
 import '../styles/site.scss';
 import App from './Pages/App';
-import buildReducer from './SurverEditor/buildReducer';
+import buildReducer from './SurverEditor/actions/buildReducer';
 
 const store = createStore(
   combineReducers({

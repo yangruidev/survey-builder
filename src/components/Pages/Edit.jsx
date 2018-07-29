@@ -15,7 +15,7 @@ import {
   updateCombo,
   editCombo,
   deleteCombo
-} from '../SurverEditor/buildActions';
+} from '../SurverEditor/actions/buildActions';
 import FormEditor from '../SurverEditor/FormEditor';
 
 const mapStateToProps = state => {

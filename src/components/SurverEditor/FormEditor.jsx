@@ -3,7 +3,7 @@ import React from 'react';
 import type { QuestionType, ComboType, ChoiceType } from './models/schema';
 import ComboList from './ComboList';
 import AddNewQuestion from './AddNewQuestion';
-import { updateChoice, removeChoice } from './buildActions';
+import { updateChoice, removeChoice } from './actions/buildActions';
 
 type Props = {
   combos: Array<ComboType>,

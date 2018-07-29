@@ -7,7 +7,7 @@ import type {
   GetStateType,
   DispatchType,
   ThunkActionType
-} from './models/schema';
+} from '../models/schema';
 import {
   INITIALIZE_NEW_COMBO,
   UPDATE_QUESTION,
@@ -18,7 +18,7 @@ import {
   UPDATE_CHOICE,
   INITIALIZE_NEW_CHOICE,
   REMOVE_CHOICE
-} from './models/constant';
+} from '../models/constant';
 
 const initializeNewCombo = (all: State) => {
   return {

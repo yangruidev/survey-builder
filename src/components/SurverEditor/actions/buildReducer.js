@@ -1,7 +1,7 @@
 //@flow
 import uuidv4 from 'uuid';
-import type { QuestionType, ComboType, ReduxAction } from './models/schema';
-import { QuestionTypes as questionTypes, ChoiceType } from './models/config';
+import type { QuestionType, ComboType, ReduxAction } from '../models/schema';
+import { QuestionTypes as questionTypes, ChoiceType } from '../models/config';
 import {
   INITIALIZE_NEW_COMBO,
   UPDATE_QUESTION,
@@ -12,16 +12,14 @@ import {
   INITIALIZE_NEW_CHOICE,
   UPDATE_CHOICE,
   REMOVE_CHOICE
-} from '../SurverEditor/models/constant';
+} from '../../SurverEditor/models/constant';
 import {
   insertItem,
   removeItemById,
   updateItemPropInArray,
   updateItemInArray,
   createOrUpdateItemInArray
-} from '../../utilities';
-import ChoiceBuilder from './optionBuilders/multipleChoice/ChoiceBuilder';
-import ChoiceList from './optionBuilders/multipleChoice/ChoiceList';
+} from '../../../utilities';
 
 type State = {
   combos: Array<ComboType>,
