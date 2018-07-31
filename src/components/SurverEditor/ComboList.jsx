@@ -4,7 +4,7 @@ import type { QuestionType, ComboType, ChoiceType } from './models/schema';
 import DismissButton from '../Base/DismissButton';
 import QuestionBuilder from './QuestionBuilder';
 import OptionsBuilderMgr from './optionBuilders/OptionsBuilderMgr';
-import OptionsViewerMgr from './optionsViewers/OptionsViewerMgr';
+import OptViewerMgr from './optionsViewers/OptViewerMgr';
 import ComboContainer from './ComboContainer';
 
 type Props = {
@@ -53,7 +53,7 @@ const renderCombo = props => {
       {isCurrent ? (
         <OptionsBuilderMgr options={options} type={question.type} {...funcs} />
       ) : (
-        <OptionsViewerMgr options={options} type={question.type} />
+        <OptViewerMgr options={options} type={question.type} />
       )}
     </React.Fragment>
   );
