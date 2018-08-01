@@ -1,5 +1,6 @@
 //@flow
 import uuidv4 from 'uuid';
+import { loadComboList } from '../../../seed';
 import type { QuestionType, ComboType, ReduxAction } from '../models/schema';
 import { QuestionTypes as questionTypes, ChoiceType } from '../models/config';
 import {
@@ -28,7 +29,7 @@ type State = {
 };
 
 const DEFAULT_STATE: State = {
-  combos: [],
+  combos: loadComboList(),
   currentComboId: ''
 };
 

@@ -19,8 +19,7 @@ export type OptionsType = {
 
 export type QuestionType = {
   type: string,
-  text: string,
-  dirty: boolean
+  text: string
 };
 
 export type ChoiceType = {

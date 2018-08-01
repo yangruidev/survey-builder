@@ -21,8 +21,8 @@ const NavBar = (props: Props) => {
           </Link>
         </li>
         <li className="level-item">
-          <Link to="/manage" className="button is-light">
-            Manage
+          <Link to="/preview" className="button is-light">
+            Preview
           </Link>
         </li>
       </div>

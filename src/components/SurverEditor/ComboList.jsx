@@ -24,21 +24,6 @@ type Props = {
   discardChange: () => void
 };
 
-const renderComboList = ({ combos, currentComboId, ...functions }) => {
-  return combos.map((combo, index) => {
-    return (
-      <ComboContainer
-        key={combo.id}
-        isCurrent={combo.id == currentComboId}
-        combo={combo}
-        index={index}
-        {...functions}
-        render={renderCombo}
-      />
-    );
-  });
-};
-
 const renderCombo = props => {
   const { isCurrent, question, options, index, ...funcs } = props;
   const mode = isCurrent ? 'edit' : 'view';
@@ -57,6 +42,21 @@ const renderCombo = props => {
       )}
     </React.Fragment>
   );
+};
+
+const renderComboList = ({ combos, currentComboId, ...functions }) => {
+  return combos.map((combo, index) => {
+    return (
+      <ComboContainer
+        key={combo.id}
+        isCurrent={combo.id == currentComboId}
+        combo={combo}
+        index={index}
+        {...functions}
+        render={renderCombo}
+      />
+    );
+  });
 };
 
 const ComboList = (props: Props) => {
