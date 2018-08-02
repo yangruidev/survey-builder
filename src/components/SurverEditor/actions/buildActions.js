@@ -13,6 +13,7 @@ import {
   UPDATE_QUESTION,
   SAVE_COMBO,
   UPDATE_COMBO,
+  COPY_COMBO,
   EDIT_COMBO,
   DELETE_COMBO,
   UPDATE_CHOICE,
@@ -77,6 +78,13 @@ const editCombo = (comboId: string) => {
   };
 };
 
+const copyCombo = (comboId: string) => {
+  return {
+    type: COPY_COMBO,
+    payload: { comboId }
+  };
+};
+
 const deleteCombo = (comboId: string) => {
   return {
     type: DELETE_COMBO,
@@ -115,6 +123,7 @@ export {
   removeChoice,
   updateCombo,
   editCombo,
+  copyCombo,
   deleteCombo,
   saveCombo,
   discardChange,

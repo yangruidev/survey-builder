@@ -10,17 +10,20 @@ import {
   UPDATE_COMBO,
   EDIT_COMBO,
   DELETE_COMBO,
+  COPY_COMBO,
+  MOVE_COMBO,
   INITIALIZE_NEW_CHOICE,
   UPDATE_CHOICE,
   REMOVE_CHOICE,
   DISCARD_CHANGE
 } from '../../SurverEditor/models/constant';
 import {
-  insertItem,
+  insertItemToArray,
   removeItemById,
   updateItemPropInArray,
   updateItemInArray,
-  createOrUpdateItemInArray
+  createOrUpdateItemInArray,
+  copyItemInArray
 } from '../../../utilities';
 
 type State = {
@@ -103,6 +106,10 @@ const buildReducer = (state: State, action: ReduxAction) => {
 
     case EDIT_COMBO:
       return { ...state, currentComboId: comboId };
+
+    case COPY_COMBO:
+      newComboList = copyItemInArray(comboList, comboId);
+      return { ...state, combos: newComboList };
 
     case DELETE_COMBO:
       newComboList = removeItemById(comboList, comboId);

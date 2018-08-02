@@ -13,6 +13,7 @@ type Props = {
   updateCombo: (propName: string, propValue: string) => void,
   editCombo: (comboId: string) => void,
   deleteCombo: (comboId: string) => void,
+  copyCombo: (comboId: string) => void,
   saveCombo: () => void,
   //question / option
   initializeNewChoiceUnder: (id: string) => void,
@@ -28,6 +29,7 @@ const ComboContainer = (props: Props) => {
     render,
     combo,
     deleteCombo,
+    copyCombo,
     editCombo,
     saveCombo,
     discardChange,
@@ -39,6 +41,14 @@ const ComboContainer = (props: Props) => {
     <div className="well is-light">
       {render({ ...combo, ...functions, isCurrent })}
       <ButtonGroup customClass="top-right-corner">
+        {isCurrent ? null : (
+          <Button
+            type="success"
+            size="small"
+            text="Copy"
+            handleClick={() => copyCombo(combo.id)}
+          />
+        )}
         {isCurrent ? null : (
           <Button
             type="warning"

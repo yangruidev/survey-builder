@@ -13,6 +13,7 @@ type Props = {
   updateCombo: (propName: string, propValue: string) => void,
   editCombo: (comboId: string) => void,
   deleteCombo: (comboId: string) => void,
+  copyCombo: (comboId: string) => void,
   saveCombo: () => void,
   //question / option
   initializeNewChoiceUnder: (id: string) => void,

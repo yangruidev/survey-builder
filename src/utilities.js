@@ -1,6 +1,18 @@
-function insertItem<T>(array: Array<T>, item: T, index: number) {
+import uuidv4 from 'uuid';
+
+function insertItemToArray<T>(array: Array<T>, item: T, index: number) {
   let newArray: Array<T> = array.slice();
   newArray.splice(index, 0, item);
+  return newArray;
+}
+
+function copyItemInArray<T>(array: Array<T>, id: string) {
+  let item = Object.assign({}, array.filter(i => i.id === id)[0]);
+  item.id = uuidv4();
+  let newArray = array.slice();
+  if (item) {
+    newArray = insertItemToArray(newArray, item, array.indexOf(item) + 1);
+  }
   return newArray;
 }
 
@@ -59,7 +71,8 @@ function updateItemPropInArray<T>(
 }
 
 export {
-  insertItem,
+  insertItemToArray,
+  copyItemInArray,
   removeItemById,
   updateItemInArray,
   updateItemPropInArray,

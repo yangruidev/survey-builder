@@ -15,6 +15,7 @@ import {
   updateCombo,
   editCombo,
   deleteCombo,
+  copyCombo,
   saveCombo,
   discardChange
 } from '../SurverEditor/actions/buildActions';
@@ -51,6 +52,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
     editCombo: (comboId: string) => {
       dispatch(editCombo(comboId));
+    },
+    copyCombo: (comboId: string) => {
+      dispatch(copyCombo(comboId));
     },
     deleteCombo: (comboId: string) => {
       dispatch(deleteCombo(comboId));
