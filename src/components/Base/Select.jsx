@@ -2,12 +2,12 @@
 import React from 'react';
 
 type Props = {
-  showLabel?: boolean,
-  label?: string,
-  cssClass?: string,
   value: string,
   handleChange: (value: string) => void,
-  options: Array<{ value: string, text: string }>
+  options: Array<{ value: string, text: string }>,
+  showLabel?: boolean,
+  label?: string,
+  cssClass?: string
 };
 
 const Select = (props: Props) => {

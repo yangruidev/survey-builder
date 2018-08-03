@@ -5,7 +5,7 @@ import type {
   QuestionType,
   ComboType,
   ChoiceType
-} from '../SurverEditor/models/schema';
+} from '../SurveyEditor/models/schema';
 import {
   initializeNewCombo,
   initializeNewChoiceUnder,
@@ -17,17 +17,14 @@ import {
   deleteCombo,
   copyCombo,
   saveCombo,
+  launchComboModal,
+  closeComboModal,
   discardChange
-} from '../SurverEditor/actions/buildActions';
-import FormEditor from '../SurverEditor/FormEditor';
+} from '../SurveyEditor/actions/buildActions';
+import FormEditor from '../SurveyEditor/FormEditor';
 
 const mapStateToProps = state => {
-  const { combos, currentComboId } = state.buildReducer;
-
-  return {
-    combos,
-    currentComboId
-  };
+  return { ...state.buildReducer };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
@@ -58,6 +55,12 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
     deleteCombo: (comboId: string) => {
       dispatch(deleteCombo(comboId));
+    },
+    launchComboModal: (comboId: string) => {
+      dispatch(launchComboModal(comboId));
+    },
+    closeComboModal: () => {
+      dispatch(closeComboModal());
     },
     saveCombo: () => {
       dispatch(saveCombo());

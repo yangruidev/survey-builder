@@ -1,5 +1,5 @@
 import uuidv4 from 'uuid';
-import { QuestionTypeCodes } from './components/SurverEditor/models/constant';
+import { QuestionTypeCodes } from './components/SurveyEditor/models/constant';
 //@flow
 const loadComboList = () => {
   return [

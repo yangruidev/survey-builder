@@ -6,16 +6,21 @@ import QuestionBuilder from './QuestionBuilder';
 import OptionsBuilderMgr from './optionBuilders/OptionsBuilderMgr';
 import OptViewerMgr from './optionsViewers/OptViewerMgr';
 import ComboContainer from './ComboContainer';
+import Modal from '../Base/Modal';
+import ComboEditor from './ComboEditor';
 
 type Props = {
   combos: Array<ComboType>,
   currentComboId: string,
+  isComboModalOpen: boolean,
   //combo
   updateCombo: (propName: string, propValue: string) => void,
   editCombo: (comboId: string) => void,
   deleteCombo: (comboId: string) => void,
   copyCombo: (comboId: string) => void,
   saveCombo: () => void,
+  launchComboModal: (comboId: string) => void,
+  closeComboModal: () => void,
   //question / option
   initializeNewChoiceUnder: (id: string) => void,
   updateChoice: (choice: ChoiceType) => void,
@@ -23,6 +28,10 @@ type Props = {
   updateQuestion: (question: QuestionType) => void,
   //general
   discardChange: () => void
+};
+
+const handleSave = () => {
+  console.log('save');
 };
 
 const renderCombo = props => {
@@ -62,7 +71,29 @@ const renderComboList = ({ combos, currentComboId, ...functions }) => {
 
 const ComboList = (props: Props) => {
   if (props.combos) {
-    return <React.Fragment>{renderComboList(props)}</React.Fragment>;
+    const { isComboModalOpen, closeComboModal, ...rest } = props;
+    return (
+      <React.Fragment>
+        {isComboModalOpen ? (
+          <Modal
+            title="Move this question to..."
+            isOpen={isComboModalOpen}
+            handleClose={closeComboModal}
+            {...rest}
+          >
+            {({ combos, currentModalComboId }) => (
+              <ComboEditor
+                combos={combos}
+                currentModalComboId={currentModalComboId}
+              />
+            )}
+          </Modal>
+        ) : (
+          ''
+        )}
+        {renderComboList(props)}
+      </React.Fragment>
+    );
   } else {
     return <div>No question yet</div>;
   }

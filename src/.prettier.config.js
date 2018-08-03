@@ -1,4 +1,4 @@
 module.exports = {
-  printWidth: '160',
+  printWidth: '220',
   jsxBracketSameLine: true
 };

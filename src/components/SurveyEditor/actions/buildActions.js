@@ -16,6 +16,8 @@ import {
   COPY_COMBO,
   EDIT_COMBO,
   DELETE_COMBO,
+  LAUNCH_COMBO_MODAL,
+  CLOSE_COMBO_MODAL,
   UPDATE_CHOICE,
   INITIALIZE_NEW_CHOICE,
   REMOVE_CHOICE,
@@ -99,6 +101,22 @@ const saveCombo = () => {
   };
 };
 
+const launchComboModal = (comboId: string) => {
+  return {
+    type: LAUNCH_COMBO_MODAL,
+    payload: {
+      comboId
+    }
+  };
+};
+
+const closeComboModal = () => {
+  return {
+    type: CLOSE_COMBO_MODAL,
+    payload: {}
+  };
+};
+
 const discardChange = () => {
   return {
     type: DISCARD_CHANGE,
@@ -126,6 +144,8 @@ export {
   copyCombo,
   deleteCombo,
   saveCombo,
+  launchComboModal,
+  closeComboModal,
   discardChange,
   invokeWithAllData
 };

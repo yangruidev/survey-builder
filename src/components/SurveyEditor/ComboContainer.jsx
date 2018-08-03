@@ -3,7 +3,7 @@ import React from 'react';
 import type { QuestionType, ComboType, ChoiceType } from './models/schema';
 import DismissButton from '../Base/DismissButton';
 import Button from '../Base/Button';
-import ButtonGroup from '../Base/ButtonGroup';
+import Group from '../Base/Group';
 
 type Props = {
   render: Object => any,
@@ -15,6 +15,7 @@ type Props = {
   deleteCombo: (comboId: string) => void,
   copyCombo: (comboId: string) => void,
   saveCombo: () => void,
+  launchComboModal: (comboId: string) => void,
   //question / option
   initializeNewChoiceUnder: (id: string) => void,
   updateChoice: (choice: ChoiceType) => void,
@@ -32,6 +33,7 @@ const ComboContainer = (props: Props) => {
     copyCombo,
     editCombo,
     saveCombo,
+    launchComboModal,
     discardChange,
     isCurrent,
     ...functions
@@ -40,13 +42,21 @@ const ComboContainer = (props: Props) => {
   return (
     <div className="well is-light">
       {render({ ...combo, ...functions, isCurrent })}
-      <ButtonGroup customClass="top-right-corner">
+      <Group customClass="top-right-corner">
         {isCurrent ? null : (
           <Button
             type="success"
             size="small"
             text="Copy"
             handleClick={() => copyCombo(combo.id)}
+          />
+        )}
+        {isCurrent ? null : (
+          <Button
+            type="success"
+            size="small"
+            text="Move"
+            handleClick={() => launchComboModal(combo.id)}
           />
         )}
         {isCurrent ? null : (
@@ -58,10 +68,10 @@ const ComboContainer = (props: Props) => {
           />
         )}
         <DismissButton handleClick={() => deleteCombo(combo.id)} />
-      </ButtonGroup>
+      </Group>
       {isCurrent ? (
         <div className="well-footer">
-          <ButtonGroup>
+          <Group>
             <Button
               type="primary"
               text="Save"
@@ -72,7 +82,7 @@ const ComboContainer = (props: Props) => {
               text="Cancel"
               handleClick={() => discardChange()}
             />
-          </ButtonGroup>
+          </Group>
         </div>
       ) : null}
     </div>
