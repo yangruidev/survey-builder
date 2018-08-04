@@ -50,6 +50,30 @@ const loadComboList = () => {
           }
         ]
       }
+    },
+    {
+      id: uuidv4(),
+      question: {
+        text: 'Which soccer player is your favorite?',
+        type: QuestionTypeCodes.MULTIPLE_CHOICE
+      },
+      options: {
+        type: QuestionTypeCodes.MULTIPLE_CHOICE,
+        value: [
+          {
+            id: uuidv4(),
+            text: 'Zlatan Ibrahimovic'
+          },
+          {
+            id: uuidv4(),
+            text: 'Luca Modric'
+          },
+          {
+            id: uuidv4(),
+            text: 'Leonardo Bonucci'
+          }
+        ]
+      }
     }
   ];
 };

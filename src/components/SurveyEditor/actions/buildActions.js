@@ -4,6 +4,7 @@ import type {
   QuestionType,
   ChoiceType,
   ComboType,
+  MoveType,
   GetStateType,
   DispatchType,
   ThunkActionType
@@ -16,6 +17,7 @@ import {
   COPY_COMBO,
   EDIT_COMBO,
   DELETE_COMBO,
+  SAVE_COMBO_MOVE,
   LAUNCH_COMBO_MODAL,
   CLOSE_COMBO_MODAL,
   UPDATE_CHOICE,
@@ -101,6 +103,13 @@ const saveCombo = () => {
   };
 };
 
+const saveComboMove = (move: MoveType) => {
+  return {
+    type: SAVE_COMBO_MOVE,
+    payload: move
+  };
+};
+
 const launchComboModal = (comboId: string) => {
   return {
     type: LAUNCH_COMBO_MODAL,
@@ -144,6 +153,7 @@ export {
   copyCombo,
   deleteCombo,
   saveCombo,
+  saveComboMove,
   launchComboModal,
   closeComboModal,
   discardChange,

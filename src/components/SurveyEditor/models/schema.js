@@ -27,6 +27,12 @@ export type ChoiceType = {
   text: string
 };
 
+export type MoveType = {
+  page: number,
+  position: string,
+  selectedComboId: string
+};
+
 export type DispatchType = (
   action: Action | ThunkAction | PromiseAction
 ) => any;

@@ -29,7 +29,7 @@ const Select = (props: Props) => {
   );
   return showLabel ? (
     <div>
-      <label>
+      <label style={{ display: 'flex', alignItems: 'center' }}>
         <span>{label}</span>
         {dropdown}
       </label>

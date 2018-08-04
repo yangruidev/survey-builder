@@ -70,11 +70,31 @@ function updateItemPropInArray<T>(
   });
 }
 
+function moveItemInArrayToBeforeOrAfterTargetItem<T>(
+  array: Array<T>,
+  itemToMoveId: string,
+  targetItemId: string,
+  position: string
+) {
+  const positionChange = position == 'before' ? -1 : 1;
+
+  const itemToMove = array.filter(c => c.id === itemToMoveId)[0];
+  const arrayAfterRemove = array.filter(c => c.id !== itemToMoveId);
+  const targetPosition = arrayAfterRemove.map(c => c.id).indexOf(targetItemId);
+  const arrayAfterAddBack = insertItemToArray(
+    arrayAfterRemove,
+    itemToMove,
+    targetPosition + positionChange
+  );
+  return arrayAfterAddBack;
+}
+
 export {
   insertItemToArray,
   copyItemInArray,
   removeItemById,
   updateItemInArray,
   updateItemPropInArray,
-  createOrUpdateItemInArray
+  createOrUpdateItemInArray,
+  moveItemInArrayToBeforeOrAfterTargetItem
 };

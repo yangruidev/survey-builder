@@ -30,10 +30,6 @@ type Props = {
   discardChange: () => void
 };
 
-const handleSave = () => {
-  console.log('save');
-};
-
 const renderCombo = props => {
   const { isCurrent, question, options, index, ...funcs } = props;
   const mode = isCurrent ? 'edit' : 'view';
@@ -69,28 +65,36 @@ const renderComboList = ({ combos, currentComboId, ...functions }) => {
   });
 };
 
+const renderModalWithComboEditor = ({
+  closeComboModal,
+  isComboModalOpen,
+  ...rest
+}) => {
+  return (
+    <Modal
+      title="Move this question to..."
+      isOpen={isComboModalOpen}
+      handleClose={closeComboModal}
+      {...rest}
+    >
+      {({ combos, currentModalComboId, saveComboMove }) => (
+        <ComboEditor
+          combos={combos}
+          currentModalComboId={currentModalComboId}
+          saveComboMove={saveComboMove}
+          cancelAction={closeComboModal}
+        />
+      )}
+    </Modal>
+  );
+};
+
 const ComboList = (props: Props) => {
-  if (props.combos) {
-    const { isComboModalOpen, closeComboModal, ...rest } = props;
+  const { isComboModalOpen, combos } = props;
+  if (combos) {
     return (
       <React.Fragment>
-        {isComboModalOpen ? (
-          <Modal
-            title="Move this question to..."
-            isOpen={isComboModalOpen}
-            handleClose={closeComboModal}
-            {...rest}
-          >
-            {({ combos, currentModalComboId }) => (
-              <ComboEditor
-                combos={combos}
-                currentModalComboId={currentModalComboId}
-              />
-            )}
-          </Modal>
-        ) : (
-          ''
-        )}
+        {isComboModalOpen ? renderModalWithComboEditor(props) : ''}
         {renderComboList(props)}
       </React.Fragment>
     );

@@ -1,6 +1,11 @@
 //@flow
 import React from 'react';
-import type { QuestionType, ComboType, ChoiceType } from './models/schema';
+import type {
+  QuestionType,
+  ComboType,
+  ChoiceType,
+  MoveType
+} from './models/schema';
 import ComboList from './ComboList';
 import AddNewQuestion from './AddNewQuestion';
 import { updateChoice, removeChoice } from './actions/buildActions';
@@ -18,6 +23,7 @@ type Props = {
   copyCombo: (comboId: string) => void,
   saveCombo: () => void,
   launchComboModal: (comboId: string) => void,
+  saveComboMove: (move: MoveType) => void,
   closeComboModal: () => void,
   //question / option
   initializeNewChoiceUnder: (id: string) => void,

@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 import type {
   QuestionType,
   ComboType,
-  ChoiceType
+  ChoiceType,
+  MoveType
 } from '../SurveyEditor/models/schema';
 import {
   initializeNewCombo,
@@ -17,6 +18,7 @@ import {
   deleteCombo,
   copyCombo,
   saveCombo,
+  saveComboMove,
   launchComboModal,
   closeComboModal,
   discardChange
@@ -58,6 +60,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
     launchComboModal: (comboId: string) => {
       dispatch(launchComboModal(comboId));
+    },
+    saveComboMove: (move: MoveType) => {
+      dispatch(saveComboMove(move));
     },
     closeComboModal: () => {
       dispatch(closeComboModal());

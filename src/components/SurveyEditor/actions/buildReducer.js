@@ -17,7 +17,8 @@ import {
   INITIALIZE_NEW_CHOICE,
   UPDATE_CHOICE,
   REMOVE_CHOICE,
-  DISCARD_CHANGE
+  DISCARD_CHANGE,
+  SAVE_COMBO_MOVE
 } from '../../SurveyEditor/models/constant';
 import {
   insertItemToArray,
@@ -25,7 +26,8 @@ import {
   updateItemPropInArray,
   updateItemInArray,
   createOrUpdateItemInArray,
-  copyItemInArray
+  copyItemInArray,
+  moveItemInArrayToBeforeOrAfterTargetItem
 } from '../../../utilities';
 import {
   initializeQuestion,
@@ -40,7 +42,9 @@ import {
 
 type State = {
   combos: Array<ComboType>,
-  currentComboId: string
+  currentComboId: string,
+  isComboModalOpen: boolean,
+  currentModalComboId: string
 };
 
 const DEFAULT_STATE: State = {
@@ -113,6 +117,23 @@ const buildReducer = (state: State, action: ReduxAction) => {
         propValue
       ).map(c => updateToAlignWithComboType(c));
       return { ...state, combos: newComboList };
+
+    case SAVE_COMBO_MOVE:
+      const { selectedComboId, page, position } = action.payload;
+      const { currentModalComboId } = state;
+      newComboList = moveItemInArrayToBeforeOrAfterTargetItem(
+        comboList,
+        currentModalComboId,
+        selectedComboId,
+        position
+      );
+
+      return {
+        ...state,
+        currentModalComboId: null,
+        isComboModalOpen: false,
+        combos: newComboList
+      };
 
     case SAVE_COMBO:
       //TODO: Implement SAVE_COMBO

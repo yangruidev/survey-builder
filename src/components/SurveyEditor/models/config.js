@@ -20,4 +20,9 @@ const DefaultMultipleChoiceOptions = [
   { id: uuidv4(), text: 'baz' }
 ];
 
-export { QuestionTypes, DefaultMultipleChoiceOptions };
+const ComboMovePositionConfig = [
+  { text: 'After', value: 'after' },
+  { text: 'Before', value: 'before' }
+];
+
+export { QuestionTypes, DefaultMultipleChoiceOptions, ComboMovePositionConfig };
