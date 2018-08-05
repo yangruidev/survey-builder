@@ -7,11 +7,18 @@ function insertItemToArray<T>(array: Array<T>, item: T, index: number) {
 }
 
 function copyItemInArray<T>(array: Array<T>, id: string) {
-  let item = Object.assign({}, array.filter(i => i.id === id)[0]);
-  item.id = uuidv4();
+  let itemToCopy = array.filter(i => i.id === id)[0];
   let newArray = array.slice();
-  if (item) {
-    newArray = insertItemToArray(newArray, item, array.indexOf(item) + 1);
+  if (itemToCopy) {
+    let newItem = Object.assign({}, array.filter(i => i.id === id)[0]);
+    newItem.id = uuidv4();
+    if (newItem) {
+      newArray = insertItemToArray(
+        newArray,
+        newItem,
+        array.indexOf(itemToCopy) + 1
+      );
+    }
   }
   return newArray;
 }

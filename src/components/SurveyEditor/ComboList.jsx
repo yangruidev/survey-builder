@@ -31,20 +31,21 @@ type Props = {
 };
 
 const renderCombo = props => {
-  const { isCurrent, question, options, index, ...funcs } = props;
+  const { isCurrent, type, question, options, index, ...funcs } = props;
   const mode = isCurrent ? 'edit' : 'view';
   return (
     <React.Fragment>
       <QuestionBuilder
         question={question}
+        type={type}
         {...funcs}
         index={index}
         mode={mode}
       />
       {isCurrent ? (
-        <OptionsBuilderMgr options={options} type={question.type} {...funcs} />
+        <OptionsBuilderMgr options={options} type={type} {...funcs} />
       ) : (
-        <OptViewerMgr options={options} type={question.type} />
+        <OptViewerMgr options={options} type={type} />
       )}
     </React.Fragment>
   );

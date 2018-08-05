@@ -2,7 +2,7 @@
 import uuidv4 from 'uuid';
 import { loadComboList } from '../../../seed';
 import type { QuestionType, ComboType, ReduxAction } from '../models/schema';
-import { QuestionTypes as questionTypes, ChoiceType } from '../models/config';
+import { QuestionTypes, ChoiceType } from '../models/config';
 import {
   INITIALIZE_NEW_COMBO,
   UPDATE_QUESTION,
@@ -18,7 +18,8 @@ import {
   UPDATE_CHOICE,
   REMOVE_CHOICE,
   DISCARD_CHANGE,
-  SAVE_COMBO_MOVE
+  SAVE_COMBO_MOVE,
+  MULTIPLE_CHOICE
 } from '../../SurveyEditor/models/constant';
 import {
   insertItemToArray,
@@ -77,7 +78,7 @@ const buildReducer = (state: State, action: ReduxAction) => {
 
   switch (action.type) {
     case INITIALIZE_NEW_COMBO:
-      const newCombo: ComboType = initializeCombo();
+      const newCombo: ComboType = initializeCombo(QuestionTypes[0].value);
       comboList.push(newCombo);
       return { ...state, combos: comboList, currentComboId: newCombo.id };
 
@@ -93,19 +94,25 @@ const buildReducer = (state: State, action: ReduxAction) => {
       throw new Error('Cannot add new choice when currentCombo is not chosen.');
 
     case UPDATE_CHOICE:
-      newComboList = updateChoiceInCurrentCombo(
-        comboList,
-        currentCombo,
-        action.payload.choice
-      );
+      newComboList = comboList;
+      if (currentCombo) {
+        newComboList = updateChoiceInCurrentCombo(
+          comboList,
+          currentCombo,
+          action.payload.choice
+        );
+      }
       return { ...state, combos: newComboList };
 
     case REMOVE_CHOICE:
-      newComboList = removeChoiceFromCurrentCombo(
-        comboList,
-        currentCombo,
-        action.payload.choiceId
-      );
+      newComboList = comboList;
+      if (currentCombo && comboList) {
+        newComboList = removeChoiceFromCurrentCombo(
+          comboList,
+          currentCombo,
+          action.payload.choiceId
+        );
+      }
       return { ...state, combos: newComboList };
 
     case UPDATE_COMBO:
@@ -115,7 +122,12 @@ const buildReducer = (state: State, action: ReduxAction) => {
         state.currentComboId,
         propName,
         propValue
-      ).map(c => updateToAlignWithComboType(c));
+      ).map(c => {
+        if (c.id === state.currentComboId) {
+          return updateToAlignWithComboType(c);
+        }
+        return c;
+      });
       return { ...state, combos: newComboList };
 
     case SAVE_COMBO_MOVE:

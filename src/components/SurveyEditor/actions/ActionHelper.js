@@ -1,24 +1,39 @@
-const initializeQuestion = type => {
+//@flow
+import uuidv4 from 'uuid';
+import type { QuestionType, ChoiceType, ComboType } from '../models/schema';
+import {
+  insertItemToArray,
+  removeItemById,
+  updateItemPropInArray,
+  updateItemInArray,
+  createOrUpdateItemInArray,
+  copyItemInArray,
+  moveItemInArrayToBeforeOrAfterTargetItem
+} from '../../../utilities';
+import { QuestionTypes } from '../models/config';
+
+const initializeQuestion = () => {
   return {
+    id: uuidv4(),
     text: '',
-    type: type || questionTypes[0].value,
     dirty: false
   };
 };
 
-const initializeCombo = (type = questionTypes[0].value) => {
+const initializeCombo = (type: string) => {
   return {
     id: uuidv4(),
-    question: initializeQuestion(type),
+    question: initializeQuestion(),
     type: type,
     options: {
-      type: type,
+      id: uuidv4(),
+      type: type || QuestionTypes[0].value,
       value: [initializeChoice(type)]
     }
   };
 };
 
-const initializeChoice = type => {
+const initializeChoice = (type: string) => {
   switch (type) {
     case 'Multiple Choice':
       return {
@@ -33,14 +48,18 @@ const initializeChoice = type => {
   }
 };
 
-const updateToAlignWithComboType = combo => {
+const updateToAlignWithComboType = (combo: ComboType) => {
   const q = { ...combo.question, type: combo.type };
   const o = { ...combo.options, type: combo.type };
   const c = { ...combo, question: q, options: o };
   return c;
 };
 
-const saveOptionsToCurrentCombo = (comboList, currentComboId, options) => {
+const saveOptionsToCurrentCombo = (
+  comboList: Array<ComboType>,
+  currentComboId: string,
+  options: Array<Object>
+) => {
   return (comboList: any).map(c => {
     if (c.id == currentComboId) {
       return { ...c, options: { ...c.options, value: options } };
@@ -57,7 +76,7 @@ const initializeChoiceInCurrentCombo = (
 ) => {
   let newComboList = comboList;
   if (currentCombo && currentCombo.question) {
-    const newChoice: ChoiceType = initializeChoice(currentCombo.question.type);
+    const newChoice: ChoiceType = initializeChoice(currentCombo.type);
     newComboList = (comboList: any).map(c => {
       if (c.id === currentCombo.id) {
         if (c.options.value && c.options.value.length > 0) {
@@ -81,7 +100,11 @@ const initializeChoiceInCurrentCombo = (
   return newComboList;
 };
 
-const updateChoiceInCurrentCombo = (comboList, currentCombo, choice) => {
+const updateChoiceInCurrentCombo = (
+  comboList: Array<ComboType>,
+  currentCombo: ComboType,
+  choice: ChoiceType
+) => {
   let newComboList = comboList;
   if (currentCombo && currentCombo.question) {
     newComboList = (comboList: any).map(c => {
@@ -102,7 +125,11 @@ const updateChoiceInCurrentCombo = (comboList, currentCombo, choice) => {
   return newComboList;
 };
 
-const removeChoiceFromCurrentCombo = (comboList, currentCombo, choiceId) => {
+const removeChoiceFromCurrentCombo = (
+  comboList: Array<ComboType>,
+  currentCombo: ComboType,
+  choiceId: string
+) => {
   let newComboList = comboList;
   if (currentCombo && currentCombo.question) {
     newComboList = (comboList: any).map(c => {

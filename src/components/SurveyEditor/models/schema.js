@@ -3,6 +3,7 @@ import { Action, ThunkAction, PromiseAction, State } from 'redux';
 
 export type ComboType = {
   id: string,
+  type: string,
   question: QuestionType,
   options: OptionsType
 };
@@ -13,12 +14,13 @@ export type ReduxAction = {
 };
 
 export type OptionsType = {
+  id: string,
   type: string,
   value: ?Array<Object>
 };
 
 export type QuestionType = {
-  type: string,
+  id: string,
   text: string
 };
 

@@ -5,9 +5,9 @@ const loadComboList = () => {
   return [
     {
       id: uuidv4(),
+      type: QuestionTypeCodes.MULTIPLE_CHOICE,
       question: {
-        text: 'Do you feel get too much exercise?',
-        type: QuestionTypeCodes.MULTIPLE_CHOICE
+        text: 'Do you feel get too much exercise?'
       },
       options: {
         type: QuestionTypeCodes.MULTIPLE_CHOICE,
@@ -29,9 +29,9 @@ const loadComboList = () => {
     },
     {
       id: uuidv4(),
+      type: QuestionTypeCodes.DROPDOWN,
       question: {
-        text: 'Which NBA team is your favorite?',
-        type: QuestionTypeCodes.DROPDOWN
+        text: 'Which NBA team is your favorite?'
       },
       options: {
         type: QuestionTypeCodes.DROPDOWN,
@@ -53,9 +53,9 @@ const loadComboList = () => {
     },
     {
       id: uuidv4(),
+      type: QuestionTypeCodes.MULTIPLE_CHOICE,
       question: {
-        text: 'Which soccer player is your favorite?',
-        type: QuestionTypeCodes.MULTIPLE_CHOICE
+        text: 'Which soccer player is your favorite?'
       },
       options: {
         type: QuestionTypeCodes.MULTIPLE_CHOICE,
