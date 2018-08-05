@@ -7,15 +7,13 @@ type Props = {
   choices: Array<ChoiceType>,
   initializeNewChoiceUnder: (id: string) => void,
   updateChoice: (q: ChoiceType) => void,
-  removeChoice: (id: string) => void
+  removeChoice: (id: string) => void,
+  isSingle?: boolean, // default false
+  allowRichEditor?: boolean // default false
 };
 
-const MultipleChoiceContainer = (props: Props) => {
-  return (
-    <div>
-      <ChoiceList {...props} />
-    </div>
-  );
+const ChoiceCollector = (props: Props) => {
+  return <ChoiceList {...props} />;
 };
 
-export default MultipleChoiceContainer;
+export default ChoiceCollector;

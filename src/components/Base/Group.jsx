@@ -6,7 +6,7 @@ type Props<T> = {
   customClass?: string
 };
 
-const ButtonGroup = (props: Props<any>) => {
+const Group = (props: Props<any>) => {
   const { customClass } = props;
   const className =
     'field is-grouped' + `${customClass ? ' ' + customClass : ''}`;
@@ -26,4 +26,4 @@ const ButtonGroup = (props: Props<any>) => {
   );
 };
 
-export default ButtonGroup;
+export default Group;

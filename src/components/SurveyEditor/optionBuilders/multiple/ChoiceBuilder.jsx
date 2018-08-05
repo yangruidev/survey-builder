@@ -5,6 +5,7 @@ import Input from '../../../Base/Input';
 
 type Props = {
   index: number,
+  showRemove: boolean,
   choice: ChoiceType,
   removeChoice: (id: string) => void,
   updateChoice: (c: ChoiceType) => void,
@@ -35,14 +36,39 @@ class ChoiceBuilder extends Component<Props, ChoiceType> {
     return props.choice;
   }
 
+  renderButtons(props: any) {
+    const {
+      initializeNewChoiceUnder,
+      removeChoice,
+      choice,
+      showRemove
+    } = props;
+    return (
+      <React.Fragment>
+        <a
+          type="button"
+          className="button control is-primary"
+          onClick={() => initializeNewChoiceUnder(choice.id)}
+        >
+          <span>Add</span>
+        </a>
+        {showRemove ? (
+          <a
+            className="button control is-light"
+            onClick={() => removeChoice(choice.id)}
+          >
+            <span>Remove</span>
+          </a>
+        ) : (
+          ''
+        )}
+      </React.Fragment>
+    );
+  }
+
   render() {
     const { text } = this.state;
-    const {
-      index,
-      choice,
-      removeChoice,
-      initializeNewChoiceUnder
-    } = this.props;
+    const { index } = this.props;
     return (
       <div className="fx-ctn field is-grouped is-horizontal">
         <div className="fi-10 control v-center-h-right">Label {index + 1}</div>
@@ -55,19 +81,7 @@ class ChoiceBuilder extends Component<Props, ChoiceType> {
             cssClass="form-control"
           />
         </div>
-        <a
-          type="button"
-          className="button control is-primary"
-          onClick={() => initializeNewChoiceUnder(choice.id)}
-        >
-          <span>Add</span>
-        </a>
-        <a
-          className="button control is-light"
-          onClick={() => removeChoice(choice.id)}
-        >
-          <span>Remove</span>
-        </a>
+        {this.renderButtons(this.props)}
       </div>
     );
   }

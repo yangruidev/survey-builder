@@ -4,8 +4,9 @@ import { connect } from 'react-redux';
 import type {
   QuestionType,
   ComboType,
-  ChoiceType
-} from '../SurverEditor/models/schema';
+  ChoiceType,
+  MoveType
+} from '../SurveyEditor/models/schema';
 import {
   initializeNewCombo,
   initializeNewChoiceUnder,
@@ -14,17 +15,18 @@ import {
   removeChoice,
   updateCombo,
   editCombo,
-  deleteCombo
-} from '../SurverEditor/actions/buildActions';
-import FormEditor from '../SurverEditor/FormEditor';
+  deleteCombo,
+  copyCombo,
+  saveCombo,
+  saveComboMove,
+  launchComboModal,
+  closeComboModal,
+  discardChange
+} from '../SurveyEditor/actions/buildActions';
+import FormEditor from '../SurveyEditor/FormEditor';
 
 const mapStateToProps = state => {
-  const { combos, currentComboId } = state.buildReducer;
-
-  return {
-    combos,
-    currentComboId
-  };
+  return { ...state.buildReducer };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
@@ -50,8 +52,26 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     editCombo: (comboId: string) => {
       dispatch(editCombo(comboId));
     },
+    copyCombo: (comboId: string) => {
+      dispatch(copyCombo(comboId));
+    },
     deleteCombo: (comboId: string) => {
       dispatch(deleteCombo(comboId));
+    },
+    launchComboModal: (comboId: string) => {
+      dispatch(launchComboModal(comboId));
+    },
+    saveComboMove: (move: MoveType) => {
+      dispatch(saveComboMove(move));
+    },
+    closeComboModal: () => {
+      dispatch(closeComboModal());
+    },
+    saveCombo: () => {
+      dispatch(saveCombo());
+    },
+    discardChange: () => {
+      dispatch(discardChange());
     }
   };
 };

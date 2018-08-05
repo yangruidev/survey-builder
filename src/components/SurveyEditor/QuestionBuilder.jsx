@@ -15,6 +15,7 @@ type State = {
 
 type Props = {
   question: QuestionType,
+  type: string,
   updateQuestion: (q: QuestionType) => void,
   updateCombo: (propName: string, propValue: string) => void,
   mode?: string // edit(default), view
@@ -41,13 +42,13 @@ class QuestionBlock extends React.Component<Props, State> {
   }
 
   updateComboType(type: string) {
-    if (type !== this.props.question.type) {
+    if (type !== this.props.type) {
       this.props.updateCombo('type', type);
     }
   }
 
   componentDidMount() {
-    this.setState({ ...this.props.question });
+    this.setState({ type: this.props.type, ...this.props.question });
   }
 
   static getDerivedStateFromProps(props: Props, state: State) {

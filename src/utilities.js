@@ -1,6 +1,25 @@
-function insertItem<T>(array: Array<T>, item: T, index: number) {
+import uuidv4 from 'uuid';
+
+function insertItemToArray<T>(array: Array<T>, item: T, index: number) {
   let newArray: Array<T> = array.slice();
   newArray.splice(index, 0, item);
+  return newArray;
+}
+
+function copyItemInArray<T>(array: Array<T>, id: string) {
+  let itemToCopy = array.filter(i => i.id === id)[0];
+  let newArray = array.slice();
+  if (itemToCopy) {
+    let newItem = Object.assign({}, array.filter(i => i.id === id)[0]);
+    newItem.id = uuidv4();
+    if (newItem) {
+      newArray = insertItemToArray(
+        newArray,
+        newItem,
+        array.indexOf(itemToCopy) + 1
+      );
+    }
+  }
   return newArray;
 }
 
@@ -58,10 +77,31 @@ function updateItemPropInArray<T>(
   });
 }
 
+function moveItemInArrayToBeforeOrAfterTargetItem<T>(
+  array: Array<T>,
+  itemToMoveId: string,
+  targetItemId: string,
+  position: string
+) {
+  const positionChange = position == 'before' ? -1 : 1;
+
+  const itemToMove = array.filter(c => c.id === itemToMoveId)[0];
+  const arrayAfterRemove = array.filter(c => c.id !== itemToMoveId);
+  const targetPosition = arrayAfterRemove.map(c => c.id).indexOf(targetItemId);
+  const arrayAfterAddBack = insertItemToArray(
+    arrayAfterRemove,
+    itemToMove,
+    targetPosition + positionChange
+  );
+  return arrayAfterAddBack;
+}
+
 export {
-  insertItem,
+  insertItemToArray,
+  copyItemInArray,
   removeItemById,
   updateItemInArray,
   updateItemPropInArray,
-  createOrUpdateItemInArray
+  createOrUpdateItemInArray,
+  moveItemInArrayToBeforeOrAfterTargetItem
 };

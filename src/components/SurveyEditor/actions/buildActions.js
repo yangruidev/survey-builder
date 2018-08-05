@@ -4,6 +4,7 @@ import type {
   QuestionType,
   ChoiceType,
   ComboType,
+  MoveType,
   GetStateType,
   DispatchType,
   ThunkActionType
@@ -13,11 +14,16 @@ import {
   UPDATE_QUESTION,
   SAVE_COMBO,
   UPDATE_COMBO,
+  COPY_COMBO,
   EDIT_COMBO,
   DELETE_COMBO,
+  SAVE_COMBO_MOVE,
+  LAUNCH_COMBO_MODAL,
+  CLOSE_COMBO_MODAL,
   UPDATE_CHOICE,
   INITIALIZE_NEW_CHOICE,
-  REMOVE_CHOICE
+  REMOVE_CHOICE,
+  DISCARD_CHANGE
 } from '../models/constant';
 
 const initializeNewCombo = (all: State) => {
@@ -76,10 +82,54 @@ const editCombo = (comboId: string) => {
   };
 };
 
+const copyCombo = (comboId: string) => {
+  return {
+    type: COPY_COMBO,
+    payload: { comboId }
+  };
+};
+
 const deleteCombo = (comboId: string) => {
   return {
     type: DELETE_COMBO,
     payload: { comboId }
+  };
+};
+
+const saveCombo = () => {
+  return {
+    type: SAVE_COMBO,
+    payload: {}
+  };
+};
+
+const saveComboMove = (move: MoveType) => {
+  return {
+    type: SAVE_COMBO_MOVE,
+    payload: move
+  };
+};
+
+const launchComboModal = (comboId: string) => {
+  return {
+    type: LAUNCH_COMBO_MODAL,
+    payload: {
+      comboId
+    }
+  };
+};
+
+const closeComboModal = () => {
+  return {
+    type: CLOSE_COMBO_MODAL,
+    payload: {}
+  };
+};
+
+const discardChange = () => {
+  return {
+    type: DISCARD_CHANGE,
+    payload: {}
   };
 };
 
@@ -100,6 +150,12 @@ export {
   removeChoice,
   updateCombo,
   editCombo,
+  copyCombo,
   deleteCombo,
+  saveCombo,
+  saveComboMove,
+  launchComboModal,
+  closeComboModal,
+  discardChange,
   invokeWithAllData
 };
