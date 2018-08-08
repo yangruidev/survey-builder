@@ -10,6 +10,9 @@ import type {
   ThunkActionType
 } from '../models/schema';
 import {
+  FETCH_COMBO_STARTED,
+  FETCH_COMBO_SUCCESS,
+  FETCH_COMBO_FAILURE,
   INITIALIZE_NEW_COMBO,
   UPDATE_QUESTION,
   SAVE_COMBO,
@@ -25,6 +28,41 @@ import {
   REMOVE_CHOICE,
   DISCARD_CHANGE
 } from '../models/constant';
+
+type Props = {
+  add: () => void
+};
+
+const fetchCombosThunk = () => {
+  return (dispatch: DispatchType) => {
+    dispatch(fetchCombosStart());
+
+    fetch('http://localhost:3000/combos').then(res => {
+      res
+        .json()
+        .then(value => {
+          dispatch(fetchCombosSuccess(value));
+        })
+        .catch(error => {
+          dispatch(fetchCombosFailure(error));
+        });
+    });
+  };
+};
+
+const fetchCombosStart = () => ({
+  type: FETCH_COMBO_STARTED
+});
+
+const fetchCombosSuccess = combos => ({
+  type: FETCH_COMBO_SUCCESS,
+  payload: { combos }
+});
+
+const fetchCombosFailure = error => ({
+  type: FETCH_COMBO_FAILURE,
+  payload: { error }
+});
 
 const initializeNewCombo = (all: State) => {
   return {
@@ -148,6 +186,7 @@ export {
   updateQuestion,
   updateChoice,
   removeChoice,
+  fetchCombosThunk,
   updateCombo,
   editCombo,
   copyCombo,

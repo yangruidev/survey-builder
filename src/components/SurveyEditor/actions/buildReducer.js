@@ -1,9 +1,11 @@
 //@flow
 import uuidv4 from 'uuid';
-import { loadComboList } from '../../../seed';
 import type { QuestionType, ComboType, ReduxAction } from '../models/schema';
 import { QuestionTypes, ChoiceType } from '../models/config';
 import {
+  FETCH_COMBO_STARTED,
+  FETCH_COMBO_SUCCESS,
+  FETCH_COMBO_FAILURE,
   INITIALIZE_NEW_COMBO,
   UPDATE_QUESTION,
   SAVE_COMBO,
@@ -49,7 +51,7 @@ type State = {
 };
 
 const DEFAULT_STATE: State = {
-  combos: loadComboList(),
+  combos: [],
   currentComboId: '',
   isComboModalOpen: false,
   currentModalComboId: ''
@@ -77,6 +79,16 @@ const buildReducer = (state: State, action: ReduxAction) => {
   }
 
   switch (action.type) {
+    case FETCH_COMBO_STARTED:
+      console.log('Loading...');
+      return { ...state };
+
+    case FETCH_COMBO_SUCCESS:
+      return { ...state, combos: action.payload.combos };
+
+    case FETCH_COMBO_FAILURE:
+      return { ...state };
+
     case INITIALIZE_NEW_COMBO:
       const newCombo: ComboType = initializeCombo(QuestionTypes[0].value);
       comboList.push(newCombo);

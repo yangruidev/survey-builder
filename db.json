@@ -1,0 +1,43 @@
+{
+  "combos": [
+    {
+      "id": "combo001",
+      "type": "multipleChoice",
+      "question": {
+        "id": "question001",
+        "text": "What's your favorite NBA team?"
+      },
+      "options": {
+        "id": "ooptions001",
+        "type": "multipleChoice",
+        "value": [
+          { "id": "choice00101", "text": "Boston Celtics" },
+          { "id": "choice00102", "text": "Golden State Warriors" },
+          { "id": "choice00103", "text": "Houston Rocket" },
+          { "id": "choice00104", "text": "New Yorks Nicks" },
+          { "id": "choice00105", "text": "Los Angeles Lakers" }
+        ]
+      }
+    },
+    {
+      "id": "combo002",
+      "type": "multipleChoice",
+      "question": {
+        "id": "question002",
+        "text": "Who's your favorite soccer player?"
+      },
+      "options": {
+        "id": "ooptions001",
+        "type": "dropdown",
+        "value": [
+          { "id": "choice00201", "text": "Zlatan Ibrahimovic" },
+          { "id": "choice00202", "text": "Paul Pogba" },
+          { "id": "choice00203", "text": "Toni Kroos" },
+          { "id": "choice00204", "text": "David Silva" },
+          { "id": "choice00205", "text": "Luca Modric" },
+          { "id": "choice00206", "text": "Mario Balotelli" }
+        ]
+      }
+    }
+  ]
+}

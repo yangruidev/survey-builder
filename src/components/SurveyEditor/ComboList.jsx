@@ -2,12 +2,10 @@
 import React from 'react';
 import type { QuestionType, ComboType, ChoiceType } from './models/schema';
 import DismissButton from '../Base/DismissButton';
-import QuestionBuilder from './QuestionBuilder';
-import OptionsBuilderMgr from './optionBuilders/OptionsBuilderMgr';
-import OptViewerMgr from './optionsViewers/OptViewerMgr';
 import ComboContainer from './ComboContainer';
 import Modal from '../Base/Modal';
 import ComboEditor from './ComboEditor';
+import Combo from './Combo';
 
 type Props = {
   combos: Array<ComboType>,
@@ -30,27 +28,6 @@ type Props = {
   discardChange: () => void
 };
 
-const renderCombo = props => {
-  const { isCurrent, type, question, options, index, ...funcs } = props;
-  const mode = isCurrent ? 'edit' : 'view';
-  return (
-    <React.Fragment>
-      <QuestionBuilder
-        question={question}
-        type={type}
-        {...funcs}
-        index={index}
-        mode={mode}
-      />
-      {isCurrent ? (
-        <OptionsBuilderMgr options={options} type={type} {...funcs} />
-      ) : (
-        <OptViewerMgr options={options} type={type} />
-      )}
-    </React.Fragment>
-  );
-};
-
 const renderComboList = ({ combos, currentComboId, ...functions }) => {
   return combos.map((combo, index) => {
     return (
@@ -60,8 +37,9 @@ const renderComboList = ({ combos, currentComboId, ...functions }) => {
         combo={combo}
         index={index}
         {...functions}
-        render={renderCombo}
-      />
+      >
+        {props => <Combo {...props} />}
+      </ComboContainer>
     );
   });
 };

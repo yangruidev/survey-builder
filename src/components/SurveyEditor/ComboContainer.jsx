@@ -6,7 +6,7 @@ import Button from '../Base/Button';
 import Group from '../Base/Group';
 
 type Props = {
-  render: Object => any,
+  children: Object => any,
   isCurrent: boolean,
   combo: ComboType,
   //combo
@@ -27,7 +27,7 @@ type Props = {
 
 const ComboContainer = (props: Props) => {
   const {
-    render,
+    children,
     combo,
     deleteCombo,
     copyCombo,
@@ -41,7 +41,7 @@ const ComboContainer = (props: Props) => {
 
   return (
     <div className="well is-light">
-      {render({ ...combo, ...functions, isCurrent })}
+      {children({ ...combo, ...functions, isCurrent })}
       <Group customClass="top-right-corner">
         {isCurrent ? null : (
           <Button

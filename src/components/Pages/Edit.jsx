@@ -8,6 +8,7 @@ import type {
   MoveType
 } from '../SurveyEditor/models/schema';
 import {
+  fetchCombosThunk,
   initializeNewCombo,
   initializeNewChoiceUnder,
   updateQuestion,
@@ -31,6 +32,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
+    fetchCombos: () => {
+      dispatch(fetchCombosThunk());
+    },
     initializeNewCombo: () => {
       dispatch(initializeNewCombo());
     },
