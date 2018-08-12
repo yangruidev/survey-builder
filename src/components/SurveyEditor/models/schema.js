@@ -8,6 +8,21 @@ export type ComboType = {
   options: OptionsType
 };
 
+export type LogicGroupType = {
+  rules: Array<LogicType>
+};
+
+export type LogicCondition = 'is' | 'not';
+export type LogicAction = 'skipTo';
+
+export type LogicType = {
+  id: string,
+  type: string,
+  condition: LogicCondition,
+  resultAction: LogicAction,
+  resultTarget: number
+};
+
 export type ReduxAction = {
   type: String,
   payload: Object
