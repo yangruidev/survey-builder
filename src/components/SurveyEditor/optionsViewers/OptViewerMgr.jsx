@@ -22,12 +22,18 @@ const OptViewerMgr = (props: Props) => {
     case QuestionTypeCodes.MULTIPLE_CHOICE:
       viewer = <MultipleChoiceViewer choices={choices} />;
       break;
+
     case QuestionTypeCodes.DROPDOWN:
       const dropdownOptions = choices.map(c => {
         return { value: c.text, text: c.text };
       });
       viewer = <DropdownViewer options={dropdownOptions} />;
       break;
+
+    case QuestionTypeCodes.SINGLE_TEXTBOX:
+      viewer = <SingleTextboxViewer />;
+      break;
+
     default:
       viewer = <div>{`Option type ${options.type} is not supported yet`}</div>;
       break;
