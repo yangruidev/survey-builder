@@ -1,7 +1,7 @@
 {
-  "name": "react_app_starter",
+  "name": "survery-builder",
   "version": "1.0.0",
-  "description": "Boilerplate code for React app with Webpack",
+  "description": "A React app to builder survey",
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --mode development --open --hot",

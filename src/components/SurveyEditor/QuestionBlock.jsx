@@ -4,18 +4,21 @@ import type { QuestionType } from './models/schema';
 import { QuestionTypes as questionTypes } from './models/config';
 import Select from '../Base/Select';
 import Input from '../Base/Input';
+import RTEditor from '../Base/Editor';
 
 type State = {
   index: number,
   id: string,
   text: string,
   type: string,
-  dirty: boolean
+  dirty: boolean,
+  useRTEditor: boolean
 };
 
 type Props = {
   question: QuestionType,
   type: string,
+  index: number,
   updateQuestion: (q: QuestionType) => void,
   updateCombo: (propName: string, propValue: string) => void,
   mode?: string // edit(default), view
@@ -29,7 +32,8 @@ class QuestionBlock extends React.Component<Props, State> {
       id: '0',
       text: '',
       type: '',
-      dirty: false
+      dirty: false,
+      useRTEditor: false
     };
     (this: any).updateQuestionText = this.updateQuestionText.bind(this);
     (this: any).updateComboType = this.updateComboType.bind(this);
@@ -47,8 +51,28 @@ class QuestionBlock extends React.Component<Props, State> {
     }
   }
 
+  handleSave(output: string | JSON) {
+    console.log(output);
+  }
+
+  renderQuestionEditor(useRTEditor: boolean, text: string) {
+    if (useRTEditor) {
+      return <RTEditor onSave={this.handleSave} inputType="json" />;
+    } else {
+      return (
+        <Input
+          type="text"
+          value={text}
+          handleBlur={this.updateQuestionText}
+          placeholder="Enter your question"
+        />
+      );
+    }
+  }
+
   componentDidMount() {
-    this.setState({ type: this.props.type, ...this.props.question });
+    const { type, index } = this.props;
+    this.setState({ type, index, ...this.props.question });
   }
 
   static getDerivedStateFromProps(props: Props, state: State) {
@@ -56,7 +80,7 @@ class QuestionBlock extends React.Component<Props, State> {
   }
 
   render() {
-    const { id, type, text, index } = this.state;
+    const { id, type, text, index, useRTEditor } = this.state;
     const isViewMode = this.props.mode == 'view';
     const displayQuestionStyle = {
       height: '36px',
@@ -72,12 +96,7 @@ class QuestionBlock extends React.Component<Props, State> {
               {text}
             </p>
           ) : (
-            <Input
-              type="text"
-              value={text}
-              handleBlur={this.updateQuestionText}
-              placeholder="Enter your question"
-            />
+            this.renderQuestionEditor(useRTEditor, text)
           )}
         </div>
         {isViewMode ? null : (

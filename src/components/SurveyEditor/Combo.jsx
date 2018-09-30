@@ -1,5 +1,5 @@
 import React from 'react';
-import QuestionBuilder from './QuestionBuilder';
+import QuestionBlock from './QuestionBlock';
 import OptionsBuilderMgr from './optionBuilders/OptionsBuilderMgr';
 import OptViewerMgr from './optionsViewers/OptViewerMgr';
 
@@ -8,7 +8,7 @@ const Combo = props => {
   const mode = isCurrent ? 'edit' : 'view';
   return (
     <React.Fragment>
-      <QuestionBuilder
+      <QuestionBlock
         question={question}
         type={type}
         {...funcs}

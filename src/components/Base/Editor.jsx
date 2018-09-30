@@ -23,7 +23,7 @@ type State = {
   editorState: Object
 };
 
-class EditorConvertToHTML extends Component<Props, State> {
+class RTEditor extends Component<Props, State> {
   state = {
     editorState: EditorState.createEmpty()
   };
@@ -73,16 +73,14 @@ class EditorConvertToHTML extends Component<Props, State> {
   render() {
     const { editorState } = this.state;
     return (
-      <div>
-        <Editor
-          editorState={editorState}
-          wrapperClassName="demo-wrapper"
-          editorClassName="demo-editor"
-          onEditorStateChange={this.onEditorStateChange}
-        />
-        <button onClick={this.handleSave.bind(this)}>Save</button>
-      </div>
+      <Editor
+        editorState={editorState}
+        wrapperClassName="demo-wrapper"
+        editorClassName="demo-editor"
+        onEditorStateChange={this.onEditorStateChange}
+        onBlur={this.handleSave.bind(this)}
+      />
     );
   }
 }
-export default EditorConvertToHTML;
+export default RTEditor;

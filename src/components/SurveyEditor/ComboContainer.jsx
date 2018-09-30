@@ -41,7 +41,9 @@ const ComboContainer = (props: Props) => {
 
   return (
     <div className="well is-light">
-      {children({ ...combo, ...functions, isCurrent })}
+      <div style={{ marginBottom: '10px' }}>
+        {children({ ...combo, ...functions, isCurrent })}
+      </div>
       <Group customClass="top-right-corner">
         {isCurrent ? null : (
           <Button
