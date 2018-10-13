@@ -4,15 +4,13 @@ import type { QuestionType } from './models/schema';
 import { QuestionTypes as questionTypes } from './models/config';
 import Select from '../Base/Select';
 import Input from '../Base/Input';
-import RTEditor from '../Base/Editor';
 
 type State = {
   index: number,
   id: string,
   text: string,
   type: string,
-  dirty: boolean,
-  useRTEditor: boolean
+  dirty: boolean
 };
 
 type Props = {
@@ -32,8 +30,7 @@ class QuestionBlock extends React.Component<Props, State> {
       id: '0',
       text: '',
       type: '',
-      dirty: false,
-      useRTEditor: false
+      dirty: false
     };
     (this: any).updateQuestionText = this.updateQuestionText.bind(this);
     (this: any).updateComboType = this.updateComboType.bind(this);
@@ -55,19 +52,15 @@ class QuestionBlock extends React.Component<Props, State> {
     console.log(output);
   }
 
-  renderQuestionEditor(useRTEditor: boolean, text: string) {
-    if (useRTEditor) {
-      return <RTEditor onSave={this.handleSave} inputType="json" />;
-    } else {
-      return (
-        <Input
-          type="text"
-          value={text}
-          handleBlur={this.updateQuestionText}
-          placeholder="Enter your question"
-        />
-      );
-    }
+  renderQuestionEditor(text: string) {
+    return (
+      <Input
+        type="text"
+        value={text}
+        handleBlur={this.updateQuestionText}
+        placeholder="Enter your question"
+      />
+    );
   }
 
   componentDidMount() {
@@ -80,7 +73,7 @@ class QuestionBlock extends React.Component<Props, State> {
   }
 
   render() {
-    const { id, type, text, index, useRTEditor } = this.state;
+    const { id, type, text, index } = this.state;
     const isViewMode = this.props.mode == 'view';
     const displayQuestionStyle = {
       height: '36px',
@@ -96,7 +89,7 @@ class QuestionBlock extends React.Component<Props, State> {
               {text}
             </p>
           ) : (
-            this.renderQuestionEditor(useRTEditor, text)
+            this.renderQuestionEditor(text)
           )}
         </div>
         {isViewMode ? null : (
