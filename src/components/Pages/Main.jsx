@@ -10,8 +10,7 @@ type Props = {};
 const Main = (props: Props) => {
   return (
     <Switch>
-      {/*temp change for dev*/}
-      <Route path="/" component={Edit} />
+      <Route path="/edit" component={Edit} />
       <Route path="/preview" component={Preview} />
       <Route path="/" component={Home} />
     </Switch>

@@ -21,8 +21,8 @@ const NavBar = (props: Props) => {
           {title}
         </a>
         <li className="level-item">
-          <Link to="/new" className="button is-light">
-            Create
+          <Link to="/edit" className="button is-light">
+            Edit
           </Link>
         </li>
         <li className="level-item">

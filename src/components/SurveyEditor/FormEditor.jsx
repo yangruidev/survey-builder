@@ -1,5 +1,6 @@
 //@flow
 import React, { Component } from 'react';
+import styled from 'react-emotion';
 import type {
   QuestionType,
   ComboType,
@@ -9,6 +10,11 @@ import type {
 import ComboList from './ComboList';
 import AddNewQuestion from './AddNewQuestion';
 import { updateChoice, removeChoice } from './actions/buildActions';
+
+const NewWrapper = styled('div')`
+  margin-top: 0.75rem;
+`;
+
 type State = {};
 type Props = {
   combos: Array<ComboType>,
@@ -45,9 +51,9 @@ class FormEditor extends Component<Props, State> {
     return (
       <React.Fragment>
         <ComboList {...rest} />
-        <div style={{ marginTop: '0.75rem' }}>
+        <NewWrapper>
           <AddNewQuestion add={initializeNewCombo} />
-        </div>
+        </NewWrapper>
       </React.Fragment>
     );
   }
