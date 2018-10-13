@@ -1,16 +1,21 @@
 //@flow
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import styled from 'react-emotion';
 
 type Props = {
   title: string
 };
 
+const NavBarWrapper = styled('nav')`
+  padding: 15px 0;
+`;
+
 const NavBar = (props: Props) => {
   const { title } = props;
 
   return (
-    <nav className="level">
+    <NavBarWrapper className="level">
       <div className="level-left">
         <a className="level-item" href="/">
           {title}
@@ -26,7 +31,7 @@ const NavBar = (props: Props) => {
           </Link>
         </li>
       </div>
-    </nav>
+    </NavBarWrapper>
   );
 };
 

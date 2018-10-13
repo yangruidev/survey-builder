@@ -1,9 +1,17 @@
 //@flow
 import React from 'react';
+import styled from 'react-emotion';
 import type { QuestionType } from './models/schema';
 import { QuestionTypes as questionTypes } from './models/config';
 import Select from '../Base/Select';
 import Input from '../Base/Input';
+import { BLUE } from '../constants';
+
+const Label = styled('div')`
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+`;
 
 type State = {
   index: number,
@@ -78,22 +86,21 @@ class QuestionBlock extends React.Component<Props, State> {
     const displayQuestionStyle = {
       height: '36px',
       fontSize: '1.2rem',
-      lineHeight: '36px'
+      lineHeight: '36px',
+      color: `${BLUE}`
     };
     return (
-      <div className="fx-ctn field is-grouped">
-        <div className="fi-10 control v-center-h-right">Q{index + 1}</div>
-        <div className="fi-60 control">
+      <div className="flex-container field is-grouped">
+        <Label className="flex-item-10 control">Q{index + 1}</Label>
+        <div className="flex-item-60 control">
           {isViewMode ? (
-            <p className="display-question" style={displayQuestionStyle}>
-              {text}
-            </p>
+            <p style={displayQuestionStyle}>{text}</p>
           ) : (
             this.renderQuestionEditor(text)
           )}
         </div>
         {isViewMode ? null : (
-          <div className="fi-30 control">
+          <div className="flex-item-30 control">
             <Select
               value={type}
               options={questionTypes}

@@ -1,9 +1,30 @@
 //@flow
 import React from 'react';
+import styled from 'react-emotion';
 import type { QuestionType, ComboType, ChoiceType } from './models/schema';
 import DismissButton from '../Base/DismissButton';
 import Button from '../Base/Button';
 import Group from '../Base/Group';
+
+const Well = styled('div')`
+  position: relative;
+  padding: 1.25rem 0;
+  border-bottom: 1px solid #eee;
+`;
+
+const WellFooter = styled('div')`
+  padding: 0.75rem;
+  padding-bottom: 0;
+  display: flex;
+  justify-content: flex-end;
+  border-top: 2px solid white;
+`;
+
+const TopRight = styled('div')`
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+`;
 
 type Props = {
   children: Object => any,
@@ -40,39 +61,40 @@ const ComboContainer = (props: Props) => {
   } = props;
 
   return (
-    <div className="well is-light">
+    <Well>
       <div style={{ marginBottom: '10px' }}>
         {children({ ...combo, ...functions, isCurrent })}
       </div>
-      <Group customClass="top-right-corner">
-        {isCurrent ? null : (
-          <Button
-            type="success"
-            size="small"
-            text="Copy"
-            handleClick={() => copyCombo(combo.id)}
-          />
-        )}
-        {isCurrent ? null : (
-          <Button
-            type="success"
-            size="small"
-            text="Move"
-            handleClick={() => launchComboModal(combo.id)}
-          />
-        )}
-        {isCurrent ? null : (
-          <Button
-            type="warning"
-            size="small"
-            text="Edit"
-            handleClick={() => editCombo(combo.id)}
-          />
-        )}
-        <DismissButton handleClick={() => deleteCombo(combo.id)} />
-      </Group>
+      {isCurrent ? null : (
+        <TopRight>
+          <Group>
+            <Button
+              type="success"
+              size="small"
+              text="Copy"
+              handleClick={() => copyCombo(combo.id)}
+            />
+
+            <Button
+              type="success"
+              size="small"
+              text="Move"
+              handleClick={() => launchComboModal(combo.id)}
+            />
+
+            <Button
+              type="warning"
+              size="small"
+              text="Edit"
+              handleClick={() => editCombo(combo.id)}
+            />
+
+            <DismissButton handleClick={() => deleteCombo(combo.id)} />
+          </Group>
+        </TopRight>
+      )}
       {isCurrent ? (
-        <div className="well-footer">
+        <WellFooter>
           <Group>
             <Button
               type="primary"
@@ -85,9 +107,9 @@ const ComboContainer = (props: Props) => {
               handleClick={() => discardChange()}
             />
           </Group>
-        </div>
+        </WellFooter>
       ) : null}
-    </div>
+    </Well>
   );
 };
 

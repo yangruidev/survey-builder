@@ -1,6 +1,19 @@
 //@flow
 // The value change won't be lifted up until the input is not longer focused
 import React, { Component } from 'react';
+import { css } from 'react-emotion';
+
+const inputView = css`
+  background: transparent;
+  &:focus {
+    border: none;
+    box-shadow: none;
+  }
+  &:hover {
+    border: none;
+    box-shadow: none;
+  }
+`;
 
 type Props = {
   value: string,
@@ -44,7 +57,13 @@ class Input extends Component<Props, State> {
     const { type, handleBlur, placeholder, cssClass, mode } = this.props;
     const classNames = [
       `input`,
-      `${mode == 'view' ? 'input-view' : ''}`,
+      `${
+        mode == 'view'
+          ? css`
+              ${inputView};
+            `
+          : ''
+      }`,
       `${cssClass ? cssClass : ''}`
     ];
 

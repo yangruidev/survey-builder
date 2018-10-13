@@ -1,7 +1,14 @@
 //@flow
 import React, { Component } from 'react';
+import styled from 'react-emotion';
 import type { ChoiceType } from '../../models/schema';
 import Input from '../../../Base/Input';
+
+const Label = styled('div')`
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+`;
 
 type Props = {
   index: number,
@@ -70,9 +77,9 @@ class ChoiceBuilder extends Component<Props, ChoiceType> {
     const { text } = this.state;
     const { index } = this.props;
     return (
-      <div className="fx-ctn field is-grouped is-horizontal">
-        <div className="fi-10 control v-center-h-right">Label {index + 1}</div>
-        <div className="fi-60 control">
+      <div className="flex-container field is-grouped is-horizontal">
+        <Label className="flex-item-10 control">Label {index + 1}</Label>
+        <div className="flex-item-60 control">
           <Input
             type="text"
             value={text}

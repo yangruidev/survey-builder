@@ -7,9 +7,9 @@ type Props = {
 
 const OptViewerContainer = (props: Props) => {
   return (
-    <div className="fx-ctn field is-grouped">
-      <div className="fi-10 control" />
-      <div className="fi-60">{props.children}</div>
+    <div className="flex-container field is-grouped">
+      <div className="flex-item-10 control" />
+      <div className="flex-item-60">{props.children}</div>
     </div>
   );
 };
