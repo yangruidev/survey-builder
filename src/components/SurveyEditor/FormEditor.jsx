@@ -1,21 +1,15 @@
 //@flow
-import React, { Component } from 'react';
-import styled from 'react-emotion';
-import type {
-  QuestionType,
-  ComboType,
-  ChoiceType,
-  MoveType
-} from './models/schema';
-import ComboList from './ComboList';
-import AddNewQuestion from './AddNewQuestion';
-import { updateChoice, removeChoice } from './actions/buildActions';
+import React, { useEffect } from 'react'
+import styled from 'react-emotion'
+import type { QuestionType, ComboType, ChoiceType, MoveType } from './models/schema'
+import ComboList from './ComboList'
+import AddNewQuestion from './AddNewQuestion'
+import { updateChoice, removeChoice } from './actions/buildActions'
 
 const NewWrapper = styled('div')`
   margin-top: 0.75rem;
-`;
+`
 
-type State = {};
 type Props = {
   combos: Array<ComboType>,
   currentComboId: string,
@@ -38,25 +32,23 @@ type Props = {
   removeChoice: (choiceId: string) => void,
   updateQuestion: (question: QuestionType) => void,
   //general
-  discardChange: () => void
-};
-
-class FormEditor extends Component<Props, State> {
-  componentDidMount() {
-    this.props.fetchCombos();
-  }
-
-  render() {
-    const { initializeNewCombo, ...rest } = this.props;
-    return (
-      <React.Fragment>
-        <ComboList {...rest} />
-        <NewWrapper>
-          <AddNewQuestion add={initializeNewCombo} />
-        </NewWrapper>
-      </React.Fragment>
-    );
-  }
+  discardChange: () => void,
 }
 
-export default FormEditor;
+const FormEditor = props => {
+  useEffect(() => props.fetchCombos(), [
+    /*run once*/
+  ])
+
+  const { initializeNewCombo, ...rest } = props
+  return (
+    <React.Fragment>
+      <ComboList {...rest} />
+      <NewWrapper>
+        <AddNewQuestion add={initializeNewCombo} />
+      </NewWrapper>
+    </React.Fragment>
+  )
+}
+
+export default FormEditor

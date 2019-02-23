@@ -2,7 +2,7 @@
 import React from 'react';
 import { QuestionTypeCodes } from '../models/constant';
 import type { OptionsType, ChoiceType } from '../models/schema';
-import ChoiceCollector from '../optionBuilders/multiple/ChoiceCollector';
+import ChoiceList from '../optionBuilders/multiple/ChoiceList';
 import SingleTextboxOptionBuilder from '../optionBuilders/singleTextbox/SingleTextboxOptionBuilder';
 
 type Props = {
@@ -25,34 +25,11 @@ const OptionsBuilderMgr = (props: Props) => {
     case QuestionTypeCodes.MULTIPLE_CHOICE:
     case QuestionTypeCodes.MULTIPLE_TEXTBOX:
     case QuestionTypeCodes.CHECKBOXES:
-      return (
-        <ChoiceCollector
-          choices={choices}
-          allowRichEditor={true}
-          isSingle={false}
-          {...props}
-        />
-      );
-
     case QuestionTypeCodes.DROPDOWN:
-      return (
-        <ChoiceCollector
-          choices={choices}
-          allowRichEditor={false}
-          isSingle={false}
-          {...props}
-        />
-      );
+      return <ChoiceList choices={choices} isSingle={false} {...props} />;
 
     case QuestionTypeCodes.SINGLE_TEXTBOX:
-      return (
-        <ChoiceCollector
-          choices={choices}
-          allowRichEditor={true}
-          isSingle={true}
-          {...props}
-        />
-      );
+      return <ChoiceList choices={choices} isSingle={true} {...props} />;
 
     default:
       return <div>{`Question type ${props.type} is not supported yet.`}</div>;

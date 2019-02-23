@@ -1,3 +1,6 @@
+/* builder for all question types that can be abstracted to multiple choices regardless
+of the presentation form of the question, such as multiple choices(radio, checkbox), dropdown */
+
 //@flow
 import React, { Component, useState } from 'react';
 import styled from 'react-emotion';

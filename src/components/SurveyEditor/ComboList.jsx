@@ -1,11 +1,11 @@
 //@flow
-import React from 'react';
-import type { QuestionType, ComboType, ChoiceType } from './models/schema';
-import DismissButton from '../Base/DismissButton';
-import ComboContainer from './ComboContainer';
-import Modal from '../Base/Modal';
-import ComboEditor from './ComboEditor';
-import Combo from './Combo';
+import React from 'react'
+import type { QuestionType, ComboType, ChoiceType } from './models/schema'
+import DismissButton from '../Base/DismissButton'
+import ComboContainer from './ComboContainer'
+import Modal from '../Base/Modal'
+import ComboMover from './ComboMover'
+import Combo from './Combo'
 
 type Props = {
   combos: Array<ComboType>,
@@ -25,23 +25,14 @@ type Props = {
   removeChoice: (choiceId: string) => void,
   updateQuestion: (question: QuestionType) => void,
   //general
-  discardChange: () => void
-};
+  discardChange: () => void,
+}
 
-const ModalWithComboEditor = ({
-  closeComboModal,
-  isComboModalOpen,
-  ...rest
-}) => {
+const ModalWithComboEditor = ({ closeComboModal, isComboModalOpen, ...rest }) => {
   return (
-    <Modal
-      title="Move this question to..."
-      isOpen={isComboModalOpen}
-      handleClose={closeComboModal}
-      {...rest}
-    >
+    <Modal title="Move this question to..." isOpen={isComboModalOpen} handleClose={closeComboModal} {...rest}>
       {({ combos, currentModalComboId, saveComboMove }) => (
-        <ComboEditor
+        <ComboMover
           combos={combos}
           currentModalComboId={currentModalComboId}
           saveComboMove={saveComboMove}
@@ -49,11 +40,11 @@ const ModalWithComboEditor = ({
         />
       )}
     </Modal>
-  );
-};
+  )
+}
 
 const ComboList = (props: Props) => {
-  const { isComboModalOpen, combos, currentComboId, ...functions } = props;
+  const { isComboModalOpen, combos, currentComboId, ...functions } = props
   if (combos) {
     return (
       <React.Fragment>
@@ -64,16 +55,15 @@ const ComboList = (props: Props) => {
             isCurrent={combo.id == currentComboId}
             combo={combo}
             index={index}
-            {...functions}
-          >
+            {...functions}>
             {props => <Combo {...props} />}
           </ComboContainer>
         ))}
       </React.Fragment>
-    );
+    )
   } else {
-    return <div>No question yet</div>;
+    return <div>No question yet</div>
   }
-};
+}
 
-export default ComboList;
+export default ComboList
