@@ -1,8 +1,9 @@
 //@flow
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import styled from 'react-emotion';
 import type { ChoiceType } from '../../models/schema';
 import Input from '../../../Base/Input';
+import Button from '../../../Base/Button';
 
 const Label = styled('div')`
   display: flex;
@@ -19,79 +20,58 @@ type Props = {
   initializeNewChoiceUnder: (id: string) => void
 };
 
-class ChoiceBuilder extends Component<Props, ChoiceType> {
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      id: '0',
-      text: ''
-    };
-    (this: any).updateText = this.updateText.bind(this);
-  }
+const ChoiceBuilder = (props: Props, choiceType: ChoiceType) => {
+  const initial = props.choice.text || '';
+  const [text, setText] = useState(initial);
 
-  updateText(text: string) {
-    if (text !== this.props.choice.text) {
-      this.props.updateChoice({ ...this.props.choice, text });
-    }
-  }
+  const updateText = text => {
+    props.updateChoice({ ...props.choice, text });
+  };
 
-  componentDidMount() {
-    this.setState({ ...this.props.choice });
-  }
-
-  static getDerivedStateFromProps(props: Props, state: ChoiceType) {
-    return props.choice;
-  }
-
-  renderButtons(props: any) {
-    const {
-      initializeNewChoiceUnder,
-      removeChoice,
-      choice,
-      showRemove
-    } = props;
+  const Buttons = ({
+    initializeNewChoiceUnder,
+    removeChoice,
+    choice,
+    showRemove
+  }) => {
     return (
       <React.Fragment>
-        <a
-          type="button"
-          className="button control is-primary"
-          onClick={() => initializeNewChoiceUnder(choice.id)}
+        <Button
+          type="primary"
+          handleClick={() => initializeNewChoiceUnder(choice.id)}
         >
-          <span>Add</span>
-        </a>
+          Add
+        </Button>
         {showRemove ? (
-          <a
-            className="button control is-light"
-            onClick={() => removeChoice(choice.id)}
+          <Button
+            type="default"
+            handleClick={() => removeChoice(choice.id)}
+            customStyle={{ marginLeft: '5px' }}
           >
-            <span>Remove</span>
-          </a>
+            Remove
+          </Button>
         ) : (
           ''
         )}
       </React.Fragment>
     );
-  }
+  };
 
-  render() {
-    const { text } = this.state;
-    const { index } = this.props;
-    return (
-      <div className="flex-container field is-grouped is-horizontal">
-        <Label className="flex-item-10 control">Label {index + 1}</Label>
-        <div className="flex-item-60 control">
-          <Input
-            type="text"
-            value={text}
-            handleBlur={this.updateText}
-            placeholder="Enter your option"
-            cssClass="form-control"
-          />
-        </div>
-        {this.renderButtons(this.props)}
+  return (
+    <div className="flex-container field is-grouped is-horizontal">
+      <Label className="flex-item-10 control">Label {props.index + 1}</Label>
+      <div className="flex-item-60 control">
+        <Input
+          type="text"
+          value={text}
+          handleBlur={updateText}
+          placeholder="Enter your option"
+          cssClass="form-control"
+        />
       </div>
-    );
-  }
-}
+      <Buttons {...props} />
+    </div>
+  );
+};
 
 export default ChoiceBuilder;

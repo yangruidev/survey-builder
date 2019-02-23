@@ -13,17 +13,15 @@ type Props = {
 const ChoiceList = (props: Props) => {
   const { choices, ...functions } = props;
   if (choices.length > 0) {
-    return (choices: any).map((c, index) => {
-      return (
-        <ChoiceBuilder
-          key={c.id}
-          index={index}
-          choice={c}
-          showRemove={choices.length > 1}
-          {...functions}
-        />
-      );
-    });
+    return (choices: any).map((c, index) => (
+      <ChoiceBuilder
+        key={c.id}
+        index={index}
+        choice={c}
+        showRemove={choices.length > 1}
+        {...functions}
+      />
+    ));
   } else {
     return 'click to add new choice';
   }

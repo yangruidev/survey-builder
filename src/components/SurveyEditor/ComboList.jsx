@@ -28,23 +28,7 @@ type Props = {
   discardChange: () => void
 };
 
-const renderComboList = ({ combos, currentComboId, ...functions }) => {
-  return combos.map((combo, index) => {
-    return (
-      <ComboContainer
-        key={combo.id}
-        isCurrent={combo.id == currentComboId}
-        combo={combo}
-        index={index}
-        {...functions}
-      >
-        {props => <Combo {...props} />}
-      </ComboContainer>
-    );
-  });
-};
-
-const renderModalWithComboEditor = ({
+const ModalWithComboEditor = ({
   closeComboModal,
   isComboModalOpen,
   ...rest
@@ -69,12 +53,22 @@ const renderModalWithComboEditor = ({
 };
 
 const ComboList = (props: Props) => {
-  const { isComboModalOpen, combos } = props;
+  const { isComboModalOpen, combos, currentComboId, ...functions } = props;
   if (combos) {
     return (
       <React.Fragment>
-        {isComboModalOpen ? renderModalWithComboEditor(props) : ''}
-        {renderComboList(props)}
+        {isComboModalOpen ? <ModalWithComboEditor {...props} /> : ''}
+        {combos.map((combo, index) => (
+          <ComboContainer
+            key={combo.id}
+            isCurrent={combo.id == currentComboId}
+            combo={combo}
+            index={index}
+            {...functions}
+          >
+            {props => <Combo {...props} />}
+          </ComboContainer>
+        ))}
       </React.Fragment>
     );
   } else {

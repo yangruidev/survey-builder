@@ -1,6 +1,6 @@
 //@flow
 // The value change won't be lifted up until the input is not longer focused
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { css } from 'react-emotion';
 
 const inputView = css`
@@ -25,65 +25,36 @@ type Props = {
   mode?: string //view, edit(default)
 };
 
-type State = {
-  value: string
+const Input = (props: Props) => {
+  const [value, setValue] = useState(props.value || '');
+  const { type, handleBlur, placeholder, cssClass, mode } = props;
+  const classNames = [
+    `input`,
+    `${
+      mode == 'view'
+        ? css`
+            ${inputView};
+          `
+        : ''
+    }`,
+    `${cssClass ? cssClass : ''}`
+  ];
+
+  const inputProps = {
+    readOnly: mode == 'view'
+  };
+
+  return (
+    <input
+      type={type || 'text'}
+      value={value}
+      onBlur={e => props.handleBlur(e.target.value)}
+      onChange={e => setValue(e.target.value)}
+      className={classNames.filter(c => !!c).join(' ')}
+      placeholder={placeholder}
+      {...inputProps}
+    />
+  );
 };
-
-class Input extends Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      value: ''
-    };
-    (this: any).handleChange = this.handleChange.bind(this);
-    (this: any).selfHandleBlur = this.selfHandleBlur.bind(this);
-  }
-
-  handleChange(event: Object) {
-    this.setState({ value: event.target.value });
-  }
-
-  selfHandleBlur(event: Object, handleBlur: (value: string) => void) {
-    if (event.target && event.target.value && handleBlur) {
-      handleBlur(event.target.value);
-    }
-  }
-
-  componentDidMount() {
-    this.setState({ value: this.props.value });
-  }
-
-  render() {
-    const { type, handleBlur, placeholder, cssClass, mode } = this.props;
-    const classNames = [
-      `input`,
-      `${
-        mode == 'view'
-          ? css`
-              ${inputView};
-            `
-          : ''
-      }`,
-      `${cssClass ? cssClass : ''}`
-    ];
-
-    const { value } = this.state;
-    const inputProps = {
-      disabled: mode == 'view'
-    };
-
-    return (
-      <input
-        type={type || 'text'}
-        value={value}
-        onBlur={e => this.selfHandleBlur(e, handleBlur)}
-        onChange={this.handleChange}
-        className={classNames.filter(c => !!c).join(' ')}
-        placeholder={placeholder}
-        {...inputProps}
-      />
-    );
-  }
-}
 
 export default Input;

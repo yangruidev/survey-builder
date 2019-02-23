@@ -13,6 +13,7 @@ type Props = {
   isRounded?: boolean,
   isTextOnLeft?: boolean,
   customClass?: string,
+  customStyle?: Object,
   children?: Object
 };
 
@@ -28,6 +29,7 @@ const Button = (props: Props) => {
     isInverted,
     isTextOnLeft,
     customClass,
+    customStyle,
     state
   } = props;
 
@@ -45,7 +47,8 @@ const Button = (props: Props) => {
   const buttonProps = {
     className: classNames.filter(c => c.length > 0).join(' '),
     onClick: handleClick,
-    disabled: isDisabled
+    disabled: isDisabled,
+    style: customStyle
   };
 
   return <a {...buttonProps}>{renderTextAndChildren(props)}</a>;
