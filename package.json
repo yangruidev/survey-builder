@@ -8,8 +8,7 @@
     "build": "webpack --mode production",
     "test": "jest --coverage",
     "test:watch": "jest --watch",
-    "dev": "concurrently --kill-others-on-fail \"json-server db.json\" \"yarn start\"",
-    "update:packages": "node wipe-dependencies.js && rm -rf node_modules && npm update --save-dev&& npm update --save"
+    "dev": "concurrently --kill-others-on-fail \"json-server db.json\" \"yarn start\""
   },
   "author": "Ray Feng",
   "license": "MIT",
