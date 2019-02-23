@@ -6,11 +6,13 @@ import { createStore, applyMiddleware, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
 import '../styles/site.scss';
 import App from './Pages/App';
-import buildReducer from './SurveyEditor/actions/buildReducer';
+import buildReducer from './SurveyEditor/reducers/buildReducer';
+import viewReducer from './SurveyEditor/reducers/viewReducer';
 
 const store = createStore(
   combineReducers({
-    buildReducer
+    buildReducer,
+    viewReducer
     //more reducers...
   }),
   applyMiddleware(thunk)

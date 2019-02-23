@@ -22,7 +22,7 @@ import {
   DISCARD_CHANGE,
   SAVE_COMBO_MOVE,
   MULTIPLE_CHOICE
-} from '../../SurveyEditor/models/constant';
+} from '../models/constant';
 import {
   insertItemToArray,
   removeItemById,
@@ -41,7 +41,7 @@ import {
   updateChoiceInCurrentCombo,
   saveOptionsToCurrentCombo,
   removeChoiceFromCurrentCombo
-} from './ActionHelper';
+} from '../actions/buildActionHelper';
 
 type State = {
   combos: Array<ComboType>,
@@ -80,7 +80,6 @@ const buildReducer = (state: State, action: ReduxAction) => {
 
   switch (action.type) {
     case FETCH_COMBO_STARTED:
-      console.log('Loading...');
       return { ...state };
 
     case FETCH_COMBO_SUCCESS:
